@@ -60,7 +60,7 @@ dev = [
 [project.optional-dependencies]
 anthropic = ["langchain-anthropic>=0.3.0"]
 google = ["langchain-google-genai>=2.1.0"]
-mcp = ["mcp>=1.2.0,<2"]
+mcp = ["mcp>=1.2.0,<3"]
 all = [
     "hyper-knowledge[anthropic,google,mcp]",
 ]
