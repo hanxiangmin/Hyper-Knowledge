@@ -1,0 +1,110 @@
+[project]
+name = "hyper-knowledge"
+version = "0.8.0"
+description = "A provenance-aware higher-order knowledge graph extraction, modeling, analysis, and visualization toolkit"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = [
+    "llm",
+    "knowledge-extraction",
+    "higher-order-knowledge-graph",
+    "hypergraph",
+    "langchain",
+    "faiss",
+    "semantic-search",
+    "pydantic",
+    "nlp",
+    "rag",
+]
+authors = [{ name = "hanxiangmin" }]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "faiss-cpu>=1.13.2",
+    "langchain>=1.2.6",
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.1.7",
+    "structlog>=25.5.0",
+    "ontomem>=0.2.3",
+    "ontosight>=0.1.8",
+    "python-dotenv>=1.2.1",
+    "semhash>=0.4.1",
+    # cli dependencies
+    "typer>=0.13.0",
+    "rich>=13.7.0",
+    "tomli-w>=1.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.7.1",
+    "mkdocs-static-i18n>=1.0.0",
+    "mkdocstrings[python]>=1.0.0",
+    "pymdown-extensions>=10.0",
+    "mike>=2.0",
+    "pytest>=9.0.2",
+]
+
+
+[project.optional-dependencies]
+anthropic = ["langchain-anthropic>=0.3.0"]
+google = ["langchain-google-genai>=2.1.0"]
+mcp = ["mcp>=1.2.0,<2"]
+all = [
+    "hyper-knowledge[anthropic,google,mcp]",
+]
+
+[project.urls]
+Homepage = "https://github.com/hanxiangmin/Hyper-Knowledge"
+Repository = "https://github.com/hanxiangmin/Hyper-Knowledge"
+Issues = "https://github.com/hanxiangmin/Hyper-Knowledge/issues"
+
+[project.scripts]
+hk = "hyperknowledge.cli:app"
+hk-mcp = "hyperknowledge.mcp_server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+exclude = [
+    "docs/",
+    "tests/",
+    ".github/",
+    "mkdocs.yml",
+    "docs_hooks.py",
+    ".env",
+    ".env.example",
+    ".python-version",
+    "uv.lock",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hyperknowledge"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"hyper-knowledge" = "hyperknowledge/skill"
+
+[tool.ruff.lint]
+ignore = [
+    "E731",   # Lambda assignment is fine
+    "BLE001", # Blind except Exception — common pattern in this codebase
+    "DTZ005", # datetime.now() without tz — not needed for this project
+    "SIM102", # Nested if/else style preference
+    "TRY002", # Custom exception class design preference
+    "TRY004", # TypeError vs ValueError preference
+    "S110",   # try/except/pass — intentional in some places
+    "TC010",  # String forward-ref in X | Y union — needed for recursive types
+]

@@ -1,0 +1,43 @@
+name: Lint
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "hyperknowledge/**/*.py"
+      - "hyper-knowledge/**/*"
+      - "pyproject.toml"
+      - ".github/workflows/lint.yml"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "hyperknowledge/**/*.py"
+      - "hyper-knowledge/**/*"
+      - "pyproject.toml"
+      - ".github/workflows/lint.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ruff:
+    name: Ruff
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install ruff
+        run: uv tool install ruff
+
+      - name: Run ruff linter
+        run: ruff check hyperknowledge
+
+      - name: Run ruff formatter check
+        run: ruff format --check hyperknowledge

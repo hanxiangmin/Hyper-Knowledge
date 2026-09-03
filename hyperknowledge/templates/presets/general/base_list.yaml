@@ -1,0 +1,47 @@
+language: [zh, en]
+
+name: list
+type: list
+tags: [general, list]
+
+description:
+  zh: '通用列表结构知识模板 - 从任意文本中提取项目列表，每个项目可以是关键词、标签、要点或任意文本片段。'
+  en: 'General-purpose List Knowledge Template - Extracts a list of items from any text, where items can be keywords, tags, points, or any text fragments.'
+
+output:
+  description:
+    zh: '从文本中提取的列表结果。'
+    en: 'List result extracted from the text.'
+  fields:
+  - name: item
+    type: str
+    description:
+      zh: '列表项内容，直接引用或概括原文中的相关内容。'
+      en: 'Content of the list item, directly quoted or summarized from the source text.'
+  - name: type
+    type: str
+    description:
+      zh: '列表项的类型或分类标签。例如：技术栈/功能模块/风险项/依赖项/约束条件/里程碑/交付物等'
+      en: 'Type or category label of the list item. Examples: tech_stack/feature_module/risk_item/dependency/constraint/milestone/deliverable, etc.'
+    required: false
+  - name: description
+    type: str
+    description:
+      zh: '列表项的具体描述、说明或相关属性信息。'
+      en: 'Specific description, explanation, or related attribute information of the list item.'
+    required: false
+
+guideline:
+  target:
+    zh: '你是一位列表提取专家。请从文本中提取所有符合要求的列表项。'
+    en: 'You are a list extraction expert. Extract all qualifying list items from the text.'
+  rules:
+    zh:
+    - '提取所有符合要求的列表项，不遗漏。'
+    - '去除无意义或重复的列表项。'
+    en:
+    - 'Extract all qualifying list items without omission.'
+    - 'Remove meaningless or duplicate items.'
+
+display:
+  label: '{item}'

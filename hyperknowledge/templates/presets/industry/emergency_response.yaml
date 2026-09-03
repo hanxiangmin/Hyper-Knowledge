@@ -1,0 +1,100 @@
+language: [zh, en]
+
+name: emergency_response
+type: graph
+tags: [industry, emergency, response, safety]
+
+description:
+  zh: '应急响应图模板 - 从应急预案中提取事故场景、响应动作和责任人的关系'
+  en: 'Emergency Response Graph Template - Extract relationships between accident scenarios, response actions, and responsible persons from emergency plans'
+
+output:
+  description:
+    zh: '事故到响应动作到责任人的触发链'
+    en: 'Accident to response action to responsible person trigger chain'
+  entities:
+    description:
+      zh: '应急响应要素'
+      en: 'Emergency response elements'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '要素名称'
+          en: 'Element name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '要素类型：事故场景/响应动作/资源/责任人/应急设备等'
+          en: 'Element type: accident_scenario/response_action/resource/responsible_person/emergency_equipment, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '说明'
+          en: 'Description'
+        required: false
+  relations:
+    description:
+      zh: '事故、响应动作和责任人的关系'
+      en: 'Relationships between accidents, response actions, and responsible persons'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源要素'
+          en: 'Source element'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标要素'
+          en: 'Target element'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：触发/执行/需要/通知/协调/上报等'
+          en: 'Relation type: triggers/executed_by/requires/notifies/coordinates/reports_to, etc.'
+        required: true
+      - name: responsible_role
+        type: str
+        description:
+          zh: '责任角色'
+          en: 'Responsible role'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的应急管理专家，负责从应急预案中准确提取应急响应关系。'
+    en: 'You are a professional emergency management expert responsible for accurately extracting emergency response relationships from emergency plans.'
+  rules_for_entities:
+    zh:
+      - '提取事故场景作为实体'
+      - '提取响应动作作为实体'
+      - '提取所需资源作为实体'
+    en:
+      - 'Extract accident scenarios as entities'
+      - 'Extract response actions as entities'
+      - 'Extract required resources as entities'
+  rules_for_relations:
+    zh:
+      - 'type为"触发"表示触发响应'
+      - 'type为"执行"表示执行责任人'
+      - 'type为"需要"表示所需资源'
+    en:
+      - 'type triggers indicates triggering response'
+      - 'type executed_by indicates executing responsible person'
+      - 'type requires indicates required resources'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

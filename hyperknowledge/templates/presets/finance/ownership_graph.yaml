@@ -1,0 +1,102 @@
+language: [zh, en]
+
+name: ownership_graph
+type: graph
+tags: [finance, corporate, ownership, shareholder]
+
+description:
+  zh: '股权结构图模板 - 从招股说明书和年报中提取股东持股关系和控制结构'
+  en: 'Ownership Structure Graph Template - Extract shareholder ownership relationships and control structure from IPO prospectuses and annual reports'
+
+output:
+  description:
+    zh: '公司股权层级结构和管理关系'
+    en: 'Corporate ownership hierarchy and control relationships'
+  entities:
+    description:
+      zh: '股东和公司实体'
+      en: 'Shareholder and company entities'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '股东或公司名称'
+          en: 'Shareholder or company name'
+        required: true
+      - name: shareholder_type
+        type: str
+        description:
+          zh: '股东类型：机构投资者/个人/关联方/上市公司等'
+          en: 'Shareholder type: institutional investor/individual/related party/public company, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '股东或公司说明'
+          en: 'Shareholder or company description'
+        required: false
+  relations:
+    description:
+      zh: '股东持股和控制关系'
+      en: 'Shareholding and control relationships'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '控股股东名称'
+          en: 'Controlling shareholder name'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '被控股公司名称'
+          en: 'Controlled company name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：控制/属于/持股/一致行动等'
+          en: 'Relation type: controls/belongs_to/holds_shares/acting_in_concert, etc.'
+        required: true
+      - name: ownership_percentage
+        type: str
+        description:
+          zh: '持股比例'
+          en: 'Ownership percentage'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的企业分析师，负责从IPO招股说明书和年报中准确提取股权结构信息。'
+    en: 'You are a professional corporate analyst responsible for accurately extracting ownership structure information from IPO prospectuses and annual reports.'
+  rules_for_entities:
+    zh:
+      - '提取具有独立法律地位的股东实体'
+      - '股东类型应根据实际性质分类'
+      - '机构投资者应标注具体类型（基金/保险/券商等）'
+    en:
+      - 'Extract shareholder entities with independent legal status'
+      - 'Shareholder type should be classified based on actual nature'
+      - 'Institutional investors should specify type (fund/insurance/securities, etc.)'
+  rules_for_relations:
+    zh:
+      - '优先提取文本中明确描述的持股和控制关系'
+      - '持股比例应与原文保持一致'
+      - '注意区分直接持股和间接持股'
+      - '仅提取文本中明确表达的关系'
+    en:
+      - 'Prioritize explicitly described shareholding and control relationships in the text'
+      - 'Ownership percentage should match the source text'
+      - 'Distinguish between direct and indirect shareholding'
+      - 'Only extract relationships explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type} {ownership_percentage}'

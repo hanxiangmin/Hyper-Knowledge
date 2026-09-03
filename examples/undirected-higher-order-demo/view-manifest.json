@@ -1,0 +1,57 @@
+{
+  "schema_version": "hk.view/v11",
+  "public_name": "Hyper-Knowledge",
+  "interface_model": "unified_higher_order_knowledge_graph",
+  "bundle_id": "bundle_52875d176f43be0e",
+  "view": "contour",
+  "default_representation": "regularized_enclosure",
+  "representation_order": [
+    "regularized_enclosure",
+    "incidence_bipartite",
+    "pairwise_projection"
+  ],
+  "quality": "showcase",
+  "graph_projection": "clique_expansion_default",
+  "graph_projection_modes": [
+    "clique_expansion",
+    "star_expansion"
+  ],
+  "hypergraph_projection": "regularized_enclosure_default",
+  "hypergraph_views": [
+    "regularized_enclosure",
+    "incidence_bipartite"
+  ],
+  "representations": [
+    "regularized_enclosure",
+    "incidence_bipartite",
+    "pairwise_projection"
+  ],
+  "selection_policy": "relation_or_shared_node_incident_hyperedge_union",
+  "reset_policy": "clear_focus_selection_view_transform_and_drag_overrides",
+  "languages": [
+    "en",
+    "zh-CN"
+  ],
+  "layout": "undirected_force_or_membership_boundary",
+  "label_policy": "adaptive_wrapped_opaque_blocks",
+  "interaction_policy": "draggable_nodes_with_live_edge_and_enclosure_reflow",
+  "layout_seed": 17,
+  "supported_topologies": [
+    "pairwise",
+    "hyperedge"
+  ],
+  "offline": true,
+  "output": "workbench.html",
+  "output_sha256": "a5123b86956c9220c9811c3378463f0cfe523f6c8cdefcddc7f2b20fc90151d1",
+  "validation": {
+    "checks": 60,
+    "errors": 0,
+    "warnings": 0,
+    "nodes": 10,
+    "assertions": 3,
+    "members": 11,
+    "unresolved_members": 0,
+    "assertions_with_evidence": 3
+  },
+  "visual_review": "pending"
+}

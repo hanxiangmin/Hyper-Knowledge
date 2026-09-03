@@ -1,0 +1,102 @@
+language: [zh, en]
+
+name: case_citation
+type: graph
+tags: [legal, case, citation, precedent]
+
+description:
+  zh: '判例引用图模板 - 从判决书和法律意见书中提取判例引用关系'
+  en: 'Case Citation Graph Template - Extract case citation relationships from judgments and legal opinions'
+
+output:
+  description:
+    zh: '判例之间的引用关系网络'
+    en: 'Citation relationship network between cases'
+  entities:
+    description:
+      zh: '案件和引用条款'
+      en: 'Cases and cited provisions'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '案件名称或条款编号'
+          en: 'Case name or provision number'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '实体类型：案件/条款/法规/司法解释/指导意见等'
+          en: 'Entity type: case/provision/regulation/judicial_interpretation/guiding_opinion, etc.'
+        required: true
+      - name: court
+        type: str
+        description:
+          zh: '审理法院'
+          en: 'Adjudicating court'
+        required: false
+  relations:
+    description:
+      zh: '案件之间的引用和效力关系'
+      en: 'Citation and authority relationships between cases'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '引用方'
+          en: 'Citing case'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '被引用方'
+          en: 'Cited case'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：引用/区分/推翻/遵循/参照等'
+          en: 'Relation type: cites/distinguished_from/overruled_by/follows/refers_to, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '引用说明'
+          en: 'Citation description'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的法律研究员，负责从判决书和法律意见书中准确提取判例引用关系。'
+    en: 'You are a professional legal researcher responsible for accurately extracting case citation relationships from judgments and legal opinions.'
+  rules_for_entities:
+    zh:
+      - '提取案件名称作为核心实体'
+      - '条款实体应包含完整的条款编号'
+      - '法院信息应准确标注'
+    en:
+      - 'Extract case names as core entities'
+      - 'Provision entities should include complete provision numbers'
+      - 'Court information should be accurately labeled'
+  rules_for_relations:
+    zh:
+      - 'type为"引用"表示引用关系'
+      - 'type为"区分"表示区分解释'
+      - 'type为"推翻"表示被推翻'
+      - '仅提取文本中明确提及的引用关系'
+    en:
+      - 'type cites indicates citation relationship'
+      - 'type distinguished_from indicates distinguishing explanation'
+      - 'type overruled_by indicates being overruled'
+      - 'Only extract citation relationships explicitly mentioned in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

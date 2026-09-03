@@ -1,0 +1,4364 @@
+{
+  "claim_boundary": "Offline preflight validates files and dataset contracts only; it does not measure extraction accuracy or model quality.",
+  "dataset_manifest_sha256": "5d0f6f07cc7b1debb2e5f8d7887674671078ae65d1328ae9dc5ad91cfeebcd37",
+  "datasets": [
+    {
+      "character_count": 2911,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2909 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": null,
+      "language": null,
+      "line_count": 40,
+      "path": "docs/assets/examples/en/transformer_paper.txt",
+      "relative_path": "transformer_paper.txt",
+      "sha256": "0d4d1d8f4aaefd7fe1f855cec7493c8b44e530fd7519f89c5b2fa320f35c8e71",
+      "size_bytes": 2911,
+      "status": "passed"
+    },
+    {
+      "character_count": 1014,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1012 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": null,
+      "language": null,
+      "line_count": 40,
+      "path": "docs/assets/examples/zh/transformer_paper.txt",
+      "relative_path": "transformer_paper.txt",
+      "sha256": "c21e86817b2269a345b5ec3dadb17cc23a179b9ce087611f641edcd7d4057e97",
+      "size_bytes": 2382,
+      "status": "passed"
+    },
+    {
+      "character_count": 5218,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5216 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": null,
+      "language": null,
+      "line_count": 78,
+      "path": "examples/en/tesla.md",
+      "relative_path": "tesla.md",
+      "sha256": "001f7652c153207891fd5c60ade282d66fc8816223c4755e66809fdff397adfb",
+      "size_bytes": 5218,
+      "status": "passed"
+    },
+    {
+      "character_count": 2663,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2661 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": null,
+      "language": null,
+      "line_count": 77,
+      "path": "examples/zh/sushi.md",
+      "relative_path": "sushi.md",
+      "sha256": "237ccbb081e3010afb33863f8312076d35b0bc9969120ed346c05a314d59a4d9",
+      "size_bytes": 7130,
+      "status": "passed"
+    },
+    {
+      "character_count": 334,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "330 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "passed": false
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "severity": "warning",
+          "subject": "tests/kg.md",
+          "supported_fix": "Add a descriptive Markdown heading or document the exception"
+        }
+      ],
+      "domain": null,
+      "language": null,
+      "line_count": 2,
+      "path": "tests/kg.md",
+      "relative_path": "kg.md",
+      "sha256": "6033ee3fcb13c950d28cf1f48dc154509791d03ed56faf6c0e2c8180a6f6d9dd",
+      "size_bytes": 888,
+      "status": "passed"
+    },
+    {
+      "character_count": 13980,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "13978 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/annual_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 239,
+      "path": "tests/test_data/en/finance/annual_report_sample.md",
+      "relative_path": "en/finance/annual_report_sample.md",
+      "sha256": "a1bfb12e7a5a3bedcbbdc244d720f0927655d09a25072862290728a8fe30f561",
+      "size_bytes": 13980,
+      "status": "passed"
+    },
+    {
+      "character_count": 13761,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "13759 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/earnings_call_transcript_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 238,
+      "path": "tests/test_data/en/finance/earnings_call_transcript_sample.md",
+      "relative_path": "en/finance/earnings_call_transcript_sample.md",
+      "sha256": "1f41bc7fbd412017a2d2dc66ff656977764a44e83f213c5007cf9db8086cbe13",
+      "size_bytes": 13769,
+      "status": "passed"
+    },
+    {
+      "character_count": 6789,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "6787 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/equity_research_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 98,
+      "path": "tests/test_data/en/finance/equity_research_report_sample.md",
+      "relative_path": "en/finance/equity_research_report_sample.md",
+      "sha256": "c9029e56ea46d74d85a477d1a98e45eeaa8a820e94644ccaaf38e28b19f4cadd",
+      "size_bytes": 6791,
+      "status": "passed"
+    },
+    {
+      "character_count": 6860,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "6858 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/financial_news_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 169,
+      "path": "tests/test_data/en/finance/financial_news_sample.md",
+      "relative_path": "en/finance/financial_news_sample.md",
+      "sha256": "befe0663e1bd72d48daf634af817e6726294fec87a828b1cf74f9592b3a118c5",
+      "size_bytes": 6860,
+      "status": "passed"
+    },
+    {
+      "character_count": 7758,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "7756 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/ipo_prospectus_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 101,
+      "path": "tests/test_data/en/finance/ipo_prospectus_sample.md",
+      "relative_path": "en/finance/ipo_prospectus_sample.md",
+      "sha256": "3770afe5151b8583962a7413f8e6ba7df8496c03a0d020e3271419132f2940ee",
+      "size_bytes": 7776,
+      "status": "passed"
+    },
+    {
+      "character_count": 6304,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "6302 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/finance/supply_chain_analysis_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "en",
+      "line_count": 100,
+      "path": "tests/test_data/en/finance/supply_chain_analysis_sample.md",
+      "relative_path": "en/finance/supply_chain_analysis_sample.md",
+      "sha256": "54299d30f40e59550f9314d3d358c31cecbb6cfa3da1de06f168eaf5f8564670",
+      "size_bytes": 6332,
+      "status": "passed"
+    },
+    {
+      "character_count": 4232,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4230 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/arbitrary_tech_news.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 96,
+      "path": "tests/test_data/en/general/arbitrary_tech_news.md",
+      "relative_path": "en/general/arbitrary_tech_news.md",
+      "sha256": "62039d6be6ceca8cddf9774450a450fa0e0673dfcf3546902be51c4db66cd8bb",
+      "size_bytes": 4248,
+      "status": "passed"
+    },
+    {
+      "character_count": 4649,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4647 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/biography_scientist.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 80,
+      "path": "tests/test_data/en/general/biography_scientist.md",
+      "relative_path": "en/general/biography_scientist.md",
+      "sha256": "00a5fd9d02c57324200f342ad5b83f95fdfee877873cce9bb682c4c3367eaa70",
+      "size_bytes": 4659,
+      "status": "passed"
+    },
+    {
+      "character_count": 5889,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5887 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/cross_reference_coffee.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 61,
+      "path": "tests/test_data/en/general/cross_reference_coffee.md",
+      "relative_path": "en/general/cross_reference_coffee.md",
+      "sha256": "fb49341e07e8f3eba24ccdc76ddc3fa611d92ccfb98ef8ea7a6861b98a789f01",
+      "size_bytes": 5909,
+      "status": "passed"
+    },
+    {
+      "character_count": 9428,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "9426 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/encyclopedia_machine_learning.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 290,
+      "path": "tests/test_data/en/general/encyclopedia_machine_learning.md",
+      "relative_path": "en/general/encyclopedia_machine_learning.md",
+      "sha256": "7ae0c1631cca61a52fc2f67b949e450e408d91d3b0f5baf0c6562f5037e1c118",
+      "size_bytes": 9436,
+      "status": "passed"
+    },
+    {
+      "character_count": 3612,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3610 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/regulation_company_policy.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 79,
+      "path": "tests/test_data/en/general/regulation_company_policy.md",
+      "relative_path": "en/general/regulation_company_policy.md",
+      "sha256": "8c093d21c04fc53ccf68f37871b3f35aad0cfe11f0be2907f03b3239edde62c5",
+      "size_bytes": 3612,
+      "status": "passed"
+    },
+    {
+      "character_count": 9461,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "9459 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/social_network_entrepreneur_story.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 37,
+      "path": "tests/test_data/en/general/social_network_entrepreneur_story.md",
+      "relative_path": "en/general/social_network_entrepreneur_story.md",
+      "sha256": "f1fce71303633b2f59e4a5ce90c0e06d0cc093f44c00b32edc7fa0633fc32d68",
+      "size_bytes": 9483,
+      "status": "passed"
+    },
+    {
+      "character_count": 5615,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5613 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/general/spatio_temporal_event_report.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "en",
+      "line_count": 103,
+      "path": "tests/test_data/en/general/spatio_temporal_event_report.md",
+      "relative_path": "en/general/spatio_temporal_event_report.md",
+      "sha256": "f51fd5463796119d576f1ef5bb232528eb2aa14ff12ceaa54bdce5d987c602f2",
+      "size_bytes": 5615,
+      "status": "passed"
+    },
+    {
+      "character_count": 3218,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3216 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/industry/equipment_technical_manual.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "en",
+      "line_count": 101,
+      "path": "tests/test_data/en/industry/equipment_technical_manual.md",
+      "relative_path": "en/industry/equipment_technical_manual.md",
+      "sha256": "beb73a5fa60cd754fae65cf87932c8bf0fff91c0b276695227afe7c9cbd920c6",
+      "size_bytes": 3226,
+      "status": "passed"
+    },
+    {
+      "character_count": 2827,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2825 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/industry/failure_analysis_report.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "en",
+      "line_count": 79,
+      "path": "tests/test_data/en/industry/failure_analysis_report.md",
+      "relative_path": "en/industry/failure_analysis_report.md",
+      "sha256": "a87c9f35a800996bf7af69963bb7e0259df5c79f114462bd3aefb484dec447ca",
+      "size_bytes": 2829,
+      "status": "passed"
+    },
+    {
+      "character_count": 3632,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3630 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/industry/operation_maintenance_manual.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "en",
+      "line_count": 80,
+      "path": "tests/test_data/en/industry/operation_maintenance_manual.md",
+      "relative_path": "en/industry/operation_maintenance_manual.md",
+      "sha256": "9385629105c0da6f1aea2d8848ce81006ce1b2244d80717f6df0ca1ddabcbcef",
+      "size_bytes": 3666,
+      "status": "passed"
+    },
+    {
+      "character_count": 4877,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4875 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/industry/safety_management_handbook.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "en",
+      "line_count": 79,
+      "path": "tests/test_data/en/industry/safety_management_handbook.md",
+      "relative_path": "en/industry/safety_management_handbook.md",
+      "sha256": "3251e2371c9d2f92acff621ab6561a573ea80493d3e8bbf64f5bf098a4935994",
+      "size_bytes": 4877,
+      "status": "passed"
+    },
+    {
+      "character_count": 3463,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3461 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/legal/compliance_filing_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "en",
+      "line_count": 81,
+      "path": "tests/test_data/en/legal/compliance_filing_sample.md",
+      "relative_path": "en/legal/compliance_filing_sample.md",
+      "sha256": "4db73a18b1cfe48b5509948275905746a8f8cc6717a1b9ff7e794c0eec6fed70",
+      "size_bytes": 3463,
+      "status": "passed"
+    },
+    {
+      "character_count": 5412,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5410 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/legal/court_judgment_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "en",
+      "line_count": 81,
+      "path": "tests/test_data/en/legal/court_judgment_sample.md",
+      "relative_path": "en/legal/court_judgment_sample.md",
+      "sha256": "90bb5d94ec3ac849bdf6d81541f725702d75724b9f494fd2ad705e6130cbf770",
+      "size_bytes": 5412,
+      "status": "passed"
+    },
+    {
+      "character_count": 4486,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4484 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/legal/legal_treatise_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "en",
+      "line_count": 80,
+      "path": "tests/test_data/en/legal/legal_treatise_sample.md",
+      "relative_path": "en/legal/legal_treatise_sample.md",
+      "sha256": "0464f5cae09e721246835ec62574bbf812ddbb6eb1344c118a7194237a86457f",
+      "size_bytes": 4490,
+      "status": "passed"
+    },
+    {
+      "character_count": 4833,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4831 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/legal/msa_contract_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "en",
+      "line_count": 99,
+      "path": "tests/test_data/en/legal/msa_contract_sample.md",
+      "relative_path": "en/legal/msa_contract_sample.md",
+      "sha256": "faedc8e02d8d86945216fcaf88358b1e180554298b4fb309baee1531ff61def0",
+      "size_bytes": 4833,
+      "status": "passed"
+    },
+    {
+      "character_count": 3968,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3966 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/medicine/clinical_guideline_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "en",
+      "line_count": 100,
+      "path": "tests/test_data/en/medicine/clinical_guideline_sample.md",
+      "relative_path": "en/medicine/clinical_guideline_sample.md",
+      "sha256": "19e625751fdb49fc62eb1608240ab8067703282beab9ad4d54de3989518ae3a6",
+      "size_bytes": 3983,
+      "status": "passed"
+    },
+    {
+      "character_count": 5698,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5696 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/medicine/discharge_summary_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "en",
+      "line_count": 90,
+      "path": "tests/test_data/en/medicine/discharge_summary_sample.md",
+      "relative_path": "en/medicine/discharge_summary_sample.md",
+      "sha256": "29560e28067f94a2ff0316a08cce18d4947684d38a390e0b5542aa08528ccc5e",
+      "size_bytes": 5715,
+      "status": "passed"
+    },
+    {
+      "character_count": 4181,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4179 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/medicine/package_insert_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "en",
+      "line_count": 80,
+      "path": "tests/test_data/en/medicine/package_insert_sample.md",
+      "relative_path": "en/medicine/package_insert_sample.md",
+      "sha256": "c68ec5bb591754e773221cdf66bf6ff767c573bb113a8f6353efd6d5e51544c7",
+      "size_bytes": 4184,
+      "status": "passed"
+    },
+    {
+      "character_count": 2908,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2906 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/medicine/pathology_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "en",
+      "line_count": 80,
+      "path": "tests/test_data/en/medicine/pathology_report_sample.md",
+      "relative_path": "en/medicine/pathology_report_sample.md",
+      "sha256": "a5eeed3be6da235b968c52018673fcfe93fc91e88d5cc51d9fabddfc301e520f",
+      "size_bytes": 2914,
+      "status": "passed"
+    },
+    {
+      "character_count": 3547,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3545 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/medicine/textbook_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "en",
+      "line_count": 79,
+      "path": "tests/test_data/en/medicine/textbook_sample.md",
+      "relative_path": "en/medicine/textbook_sample.md",
+      "sha256": "7fada0760655c3c3bcb35251ec1c40351e3ff820c78530bd13e2b10002376c5b",
+      "size_bytes": 3555,
+      "status": "passed"
+    },
+    {
+      "character_count": 902,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "900 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/herb_property_single.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 18,
+      "path": "tests/test_data/en/tcm/herb_property_single.md",
+      "relative_path": "en/tcm/herb_property_single.md",
+      "sha256": "83044f2097bbf8f2709fb6066e2b4b2c4695e61a76da4354d41add80f8c205fb",
+      "size_bytes": 902,
+      "status": "passed"
+    },
+    {
+      "character_count": 3134,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3132 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/herbal_compendium_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 55,
+      "path": "tests/test_data/en/tcm/herbal_compendium_sample.md",
+      "relative_path": "en/tcm/herbal_compendium_sample.md",
+      "sha256": "1fdd722dc75d3f2feb82923b79f9f35b9d592e86b4e65e04a66afa33c366e7dd",
+      "size_bytes": 3138,
+      "status": "passed"
+    },
+    {
+      "character_count": 4738,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4736 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/medical_case_record_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 61,
+      "path": "tests/test_data/en/tcm/medical_case_record_sample.md",
+      "relative_path": "en/tcm/medical_case_record_sample.md",
+      "sha256": "4c3e0345148299c068a7b091175a88b9d40224f4da243f21ea0116ab4c6c6647",
+      "size_bytes": 4740,
+      "status": "passed"
+    },
+    {
+      "character_count": 7287,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "7285 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/meridian_treatise_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 53,
+      "path": "tests/test_data/en/tcm/meridian_treatise_sample.md",
+      "relative_path": "en/tcm/meridian_treatise_sample.md",
+      "sha256": "6437623f0b2cd5a8e443e118cd84960e7688005ac70fe89079b26492794d8ae9",
+      "size_bytes": 7287,
+      "status": "passed"
+    },
+    {
+      "character_count": 4861,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4859 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/prescription_formulary_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 52,
+      "path": "tests/test_data/en/tcm/prescription_formulary_sample.md",
+      "relative_path": "en/tcm/prescription_formulary_sample.md",
+      "sha256": "24a148bcab4f621ad7c04e10c15f8e7c7e98950b826394f8df73bc23f70987bf",
+      "size_bytes": 4861,
+      "status": "passed"
+    },
+    {
+      "character_count": 3065,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3063 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=en",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=zh/tcm/prescription_modification_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "en",
+      "line_count": 59,
+      "path": "tests/test_data/en/tcm/prescription_modification_sample.md",
+      "relative_path": "en/tcm/prescription_modification_sample.md",
+      "sha256": "c533f9a014df93cb5b3c4f2693cf152c99d31f67411b99e21e1793c9bcf334c7",
+      "size_bytes": 3065,
+      "status": "passed"
+    },
+    {
+      "character_count": 5916,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5914 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/annual_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 239,
+      "path": "tests/test_data/zh/finance/annual_report_sample.md",
+      "relative_path": "zh/finance/annual_report_sample.md",
+      "sha256": "37d04d67158835e2957710433750f1e292e286b3e46d03765144ad55ea5e32f8",
+      "size_bytes": 11360,
+      "status": "passed"
+    },
+    {
+      "character_count": 4752,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4750 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/earnings_call_transcript_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 238,
+      "path": "tests/test_data/zh/finance/earnings_call_transcript_sample.md",
+      "relative_path": "zh/finance/earnings_call_transcript_sample.md",
+      "sha256": "6bba15b213d47b5ac4b3ec7848825980e0cc73cae66ff3577ebe95535c3d9797",
+      "size_bytes": 11032,
+      "status": "passed"
+    },
+    {
+      "character_count": 4776,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4774 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/equity_research_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 181,
+      "path": "tests/test_data/zh/finance/equity_research_report_sample.md",
+      "relative_path": "zh/finance/equity_research_report_sample.md",
+      "sha256": "74f818a5a4f674e05c9cf9637ef5bd5a47f2304a05170a4cfdfd2db9b8166013",
+      "size_bytes": 9362,
+      "status": "passed"
+    },
+    {
+      "character_count": 2701,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2699 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/financial_news_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 169,
+      "path": "tests/test_data/zh/finance/financial_news_sample.md",
+      "relative_path": "zh/finance/financial_news_sample.md",
+      "sha256": "d4e5c92e3c670729bf00f1afe9b72a2afc55d39c1466bbbd9c99df2476ca1b94",
+      "size_bytes": 5563,
+      "status": "passed"
+    },
+    {
+      "character_count": 5614,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5612 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/ipo_prospectus_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 190,
+      "path": "tests/test_data/zh/finance/ipo_prospectus_sample.md",
+      "relative_path": "zh/finance/ipo_prospectus_sample.md",
+      "sha256": "517fe88b33db3acda01289b6ff53d22cebf00d818313b5b63d2d0e7fea1b61eb",
+      "size_bytes": 11894,
+      "status": "passed"
+    },
+    {
+      "character_count": 5628,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "5626 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=finance",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/finance/supply_chain_analysis_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "finance",
+      "language": "zh",
+      "line_count": 223,
+      "path": "tests/test_data/zh/finance/supply_chain_analysis_sample.md",
+      "relative_path": "zh/finance/supply_chain_analysis_sample.md",
+      "sha256": "2b097b75e11dd004c4a21919ac80bd89d5c2f8c205ffcc527fb0439e6615bd17",
+      "size_bytes": 11956,
+      "status": "passed"
+    },
+    {
+      "character_count": 1608,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1606 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/arbitrary_tech_news.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 96,
+      "path": "tests/test_data/zh/general/arbitrary_tech_news.md",
+      "relative_path": "zh/general/arbitrary_tech_news.md",
+      "sha256": "83ac11c8e817af7ca5a67f65f12da0d14c798caa0426dd2c451e6aefeb324565",
+      "size_bytes": 3488,
+      "status": "passed"
+    },
+    {
+      "character_count": 3067,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3065 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/biography_scientist.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 165,
+      "path": "tests/test_data/zh/general/biography_scientist.md",
+      "relative_path": "zh/general/biography_scientist.md",
+      "sha256": "7d2fd73569c0c035ecfbc90a7399191436efb65dae49710fdfba8d4ba9eed076",
+      "size_bytes": 7354,
+      "status": "passed"
+    },
+    {
+      "character_count": 1833,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1831 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/cross_reference_coffee.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 63,
+      "path": "tests/test_data/zh/general/cross_reference_coffee.md",
+      "relative_path": "zh/general/cross_reference_coffee.md",
+      "sha256": "14c8afc7d92405b33d0b325cf13942327a1b0ee54611fefa975f41f1bd13ad71",
+      "size_bytes": 5033,
+      "status": "passed"
+    },
+    {
+      "character_count": 4533,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4531 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/encyclopedia_machine_learning.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 268,
+      "path": "tests/test_data/zh/general/encyclopedia_machine_learning.md",
+      "relative_path": "zh/general/encyclopedia_machine_learning.md",
+      "sha256": "e91860b25c03bbf2441679e159b1984196458f0cab46653df193a14d0801a3f9",
+      "size_bytes": 8271,
+      "status": "passed"
+    },
+    {
+      "character_count": 6875,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "6873 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/regulation_company_policy.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 361,
+      "path": "tests/test_data/zh/general/regulation_company_policy.md",
+      "relative_path": "zh/general/regulation_company_policy.md",
+      "sha256": "d32433a4d9a363f5850204a07273db919becaf8e4713ec5bd34304683f9ebb80",
+      "size_bytes": 14179,
+      "status": "passed"
+    },
+    {
+      "character_count": 2669,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2667 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/social_network_entrepreneur_story.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 37,
+      "path": "tests/test_data/zh/general/social_network_entrepreneur_story.md",
+      "relative_path": "zh/general/social_network_entrepreneur_story.md",
+      "sha256": "87a916a5d12cb0b8cf41f315c0ccc4b61e8e2dbce9cc64a00f6fad00e0b8feb3",
+      "size_bytes": 7591,
+      "status": "passed"
+    },
+    {
+      "character_count": 3685,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3683 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=general",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/general/spatio_temporal_event_report.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "general",
+      "language": "zh",
+      "line_count": 209,
+      "path": "tests/test_data/zh/general/spatio_temporal_event_report.md",
+      "relative_path": "zh/general/spatio_temporal_event_report.md",
+      "sha256": "3e1bbcb87579c818235bac818f0223cc0c343f3e9da312c2ee498f1724b2caf3",
+      "size_bytes": 7489,
+      "status": "passed"
+    },
+    {
+      "character_count": 8617,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "8615 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/industry/equipment_technical_manual.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "zh",
+      "line_count": 376,
+      "path": "tests/test_data/zh/industry/equipment_technical_manual.md",
+      "relative_path": "zh/industry/equipment_technical_manual.md",
+      "sha256": "1b173e3d9cdffa5526e56e85a33fe4c5792525bf9dd51f08deea3ead9e25059d",
+      "size_bytes": 15229,
+      "status": "passed"
+    },
+    {
+      "character_count": 1727,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1725 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/industry/failure_analysis_report.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "zh",
+      "line_count": 121,
+      "path": "tests/test_data/zh/industry/failure_analysis_report.md",
+      "relative_path": "zh/industry/failure_analysis_report.md",
+      "sha256": "0344e7738d55d737a44e1e54bb9043c61cfe93cae576e340b6b4583cec7eb6f4",
+      "size_bytes": 3561,
+      "status": "passed"
+    },
+    {
+      "character_count": 7924,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "7922 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/industry/operation_maintenance_manual.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "zh",
+      "line_count": 448,
+      "path": "tests/test_data/zh/industry/operation_maintenance_manual.md",
+      "relative_path": "zh/industry/operation_maintenance_manual.md",
+      "sha256": "7347e1a801ec1b56686b8b3b6906d657dd78477a44c9f2e8a6bb2aeafbdbe2db",
+      "size_bytes": 16416,
+      "status": "passed"
+    },
+    {
+      "character_count": 6358,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "6356 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=industry",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/industry/safety_management_handbook.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "industry",
+      "language": "zh",
+      "line_count": 304,
+      "path": "tests/test_data/zh/industry/safety_management_handbook.md",
+      "relative_path": "zh/industry/safety_management_handbook.md",
+      "sha256": "46610b61c85e45c2d7e2534983f3980b8c9d6770efc9bf34e0c733eca87b8538",
+      "size_bytes": 12428,
+      "status": "passed"
+    },
+    {
+      "character_count": 4496,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4494 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/legal/compliance_filing_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "zh",
+      "line_count": 236,
+      "path": "tests/test_data/zh/legal/compliance_filing_sample.md",
+      "relative_path": "zh/legal/compliance_filing_sample.md",
+      "sha256": "5809fa840ff470e17c92bf496eb9ae6ce80acb5ef7cd4f9ea76e55b04c23b132",
+      "size_bytes": 8552,
+      "status": "passed"
+    },
+    {
+      "character_count": 3046,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3044 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/legal/court_judgment_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "zh",
+      "line_count": 140,
+      "path": "tests/test_data/zh/legal/court_judgment_sample.md",
+      "relative_path": "zh/legal/court_judgment_sample.md",
+      "sha256": "20a1b8369ddd0108327cb71440e3e4e094442d0018ff7b7f4db34021755eb377",
+      "size_bytes": 7486,
+      "status": "passed"
+    },
+    {
+      "character_count": 1846,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1844 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/legal/legal_treatise_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "zh",
+      "line_count": 104,
+      "path": "tests/test_data/zh/legal/legal_treatise_sample.md",
+      "relative_path": "zh/legal/legal_treatise_sample.md",
+      "sha256": "eb4f6fea52ad968c57139817417af1b8e4537b20067773c28600835bebd0d92d",
+      "size_bytes": 4558,
+      "status": "passed"
+    },
+    {
+      "character_count": 4008,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "4006 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=legal",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/legal/msa_contract_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "legal",
+      "language": "zh",
+      "line_count": 231,
+      "path": "tests/test_data/zh/legal/msa_contract_sample.md",
+      "relative_path": "zh/legal/msa_contract_sample.md",
+      "sha256": "3ca22480c38d48c309b92b1ec3d9b49bf1d643480ddb641453bd8560c4f33f8c",
+      "size_bytes": 8948,
+      "status": "passed"
+    },
+    {
+      "character_count": 2352,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2352 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/medicine/clinical_guideline_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "zh",
+      "line_count": 142,
+      "path": "tests/test_data/zh/medicine/clinical_guideline_sample.md",
+      "relative_path": "zh/medicine/clinical_guideline_sample.md",
+      "sha256": "6ad5f5f154ca32f37f637448dab14a37792627f48a55925d4749a78bf4003345",
+      "size_bytes": 4809,
+      "status": "passed"
+    },
+    {
+      "character_count": 2384,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2384 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/medicine/discharge_summary_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "zh",
+      "line_count": 90,
+      "path": "tests/test_data/zh/medicine/discharge_summary_sample.md",
+      "relative_path": "zh/medicine/discharge_summary_sample.md",
+      "sha256": "eac08b02482886329ed48f3fb80a3bf043b861257d195b197594f0346b7208d7",
+      "size_bytes": 5029,
+      "status": "passed"
+    },
+    {
+      "character_count": 3415,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "3415 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/medicine/package_insert_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "zh",
+      "line_count": 158,
+      "path": "tests/test_data/zh/medicine/package_insert_sample.md",
+      "relative_path": "zh/medicine/package_insert_sample.md",
+      "sha256": "d0484e3d8cf491e7907bb35b1e9521255e72dd6f587a8cc7a6594f0fc08a8c59",
+      "size_bytes": 7360,
+      "status": "passed"
+    },
+    {
+      "character_count": 1411,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1411 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/medicine/pathology_report_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "zh",
+      "line_count": 82,
+      "path": "tests/test_data/zh/medicine/pathology_report_sample.md",
+      "relative_path": "zh/medicine/pathology_report_sample.md",
+      "sha256": "1e37ef03e6be7d8351576905615e49f96570facf75e16564554269028425570c",
+      "size_bytes": 2617,
+      "status": "passed"
+    },
+    {
+      "character_count": 1883,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1883 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=medicine",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/medicine/textbook_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "medicine",
+      "language": "zh",
+      "line_count": 113,
+      "path": "tests/test_data/zh/medicine/textbook_sample.md",
+      "relative_path": "zh/medicine/textbook_sample.md",
+      "sha256": "12ff355f2623437442b8a7a16490553aed253da0952bd23ceabe30f4724b103a",
+      "size_bytes": 4315,
+      "status": "passed"
+    },
+    {
+      "character_count": 214,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "212 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/herb_property_single.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 18,
+      "path": "tests/test_data/zh/tcm/herb_property_single.md",
+      "relative_path": "zh/tcm/herb_property_single.md",
+      "sha256": "b9adb1047c8205d0b47658cdc2fd8d504db2773d3a932ca35485f72859c0b59e",
+      "size_bytes": 514,
+      "status": "passed"
+    },
+    {
+      "character_count": 722,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "720 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/herbal_compendium_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 55,
+      "path": "tests/test_data/zh/tcm/herbal_compendium_sample.md",
+      "relative_path": "zh/tcm/herbal_compendium_sample.md",
+      "sha256": "02ce2f96190ec00b51d75dcd49d90414a45c46b2c60c5edb449966285c6632ed",
+      "size_bytes": 1768,
+      "status": "passed"
+    },
+    {
+      "character_count": 1051,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1049 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/medical_case_record_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 61,
+      "path": "tests/test_data/zh/tcm/medical_case_record_sample.md",
+      "relative_path": "zh/tcm/medical_case_record_sample.md",
+      "sha256": "3c8c936a3338ef70b9f2a4d5a8f59b7633a1b3feae026e047f4214152fcefcfb",
+      "size_bytes": 2743,
+      "status": "passed"
+    },
+    {
+      "character_count": 2193,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "2191 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/meridian_treatise_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 57,
+      "path": "tests/test_data/zh/tcm/meridian_treatise_sample.md",
+      "relative_path": "zh/tcm/meridian_treatise_sample.md",
+      "sha256": "3e6ad369a75bcfd6153458e04e555e65d5c499cc488cda2d84101c85ab72bbb5",
+      "size_bytes": 6191,
+      "status": "passed"
+    },
+    {
+      "character_count": 1020,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "1020 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/prescription_formulary_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 52,
+      "path": "tests/test_data/zh/tcm/prescription_formulary_sample.md",
+      "relative_path": "zh/tcm/prescription_formulary_sample.md",
+      "sha256": "8d23a79b51472513732f186b32dfd0f9545deb18245c0347e039886072406031",
+      "size_bytes": 2690,
+      "status": "passed"
+    },
+    {
+      "character_count": 807,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "805 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "Markdown heading found",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_language",
+          "evidence": "language=zh",
+          "passed": true
+        },
+        {
+          "code": "dataset.known_domain",
+          "evidence": "domain=tcm",
+          "passed": true
+        },
+        {
+          "code": "dataset.bilingual_peer",
+          "evidence": "peer=en/tcm/prescription_modification_sample.md",
+          "passed": true
+        }
+      ],
+      "diagnostics": [],
+      "domain": "tcm",
+      "language": "zh",
+      "line_count": 59,
+      "path": "tests/test_data/zh/tcm/prescription_modification_sample.md",
+      "relative_path": "zh/tcm/prescription_modification_sample.md",
+      "sha256": "bf70e412edd9e501c711e51c35d3953844771d93fb045371a365332f88eb2a95",
+      "size_bytes": 1919,
+      "status": "passed"
+    }
+  ],
+  "generated_at": "2026-09-01T02:36:54.229418+00:00",
+  "inputs": [
+    "tests/test_data",
+    "examples/en/tesla.md",
+    "examples/zh/sushi.md",
+    "docs/assets/examples/en/transformer_paper.txt",
+    "docs/assets/examples/zh/transformer_paper.txt",
+    "tests/kg.md"
+  ],
+  "mode": "offline_preflight",
+  "schema_version": "hk.dataset-benchmark/v1",
+  "status": "passed",
+  "summary": {
+    "failed": 0,
+    "live_semantic_extraction": "not_run",
+    "passed": 69,
+    "total": 69,
+    "warnings": 1
+  }
+}

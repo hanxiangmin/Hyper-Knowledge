@@ -1,0 +1,100 @@
+language: [zh, en]
+
+name: graph
+type: graph
+tags: [general, graph]
+
+description:
+  zh: '通用图结构知识模板 - 从任意文本中提取实体节点及实体之间的二元关系，构建简单知识图谱。'
+  en: 'General-purpose Graph Knowledge Template - Extracts entity nodes and binary relations between entities from any text, constructing a simple knowledge graph.'
+
+output:
+  description:
+    zh: '由实体节点和关系边组成的知识图谱结果。'
+    en: 'Knowledge graph result consisting of entity nodes and relation edges.'
+  entities:
+    description:
+      zh: '文本中可独立识别、可参与关系连接的实体节点。'
+      en: 'Entity nodes that can be independently identified and participate in relation connections.'
+    fields:
+    - name: name
+      type: str
+      description:
+        zh: '实体名称，使用文本中最明确、最稳定的称呼。'
+        en: 'Entity name, using the most explicit and stable designation in the text.'
+    - name: type
+      type: str
+      description:
+        zh: '实体类型。例如：人物/地点/组织/物品/概念/事件/制度/技术/产品/服务等'
+        en: 'Entity type. Examples: person/location/organization/object/concept/event/institution/technology/product/service, etc.'
+    - name: description
+      type: str
+      description:
+        zh: '对实体身份、含义或其在当前文本中作用的简要说明。'
+        en: 'Brief description of the entity identity, meaning, or its role in the current text.'
+      required: false
+  relations:
+    description:
+      zh: '实体之间的显式语义关系边。'
+      en: 'Explicit semantic relation edges between entities.'
+    fields:
+    - name: source
+      type: str
+      description:
+        zh: '无向关系的第一个序列化端点，必须对应已提取实体的名称；不表示起点。'
+        en: 'First serialized endpoint of the undirected relation; it must match an extracted entity and does not denote an origin.'
+    - name: target
+      type: str
+      description:
+        zh: '无向关系的第二个序列化端点，必须对应已提取实体的名称；不表示终点。'
+        en: 'Second serialized endpoint of the undirected relation; it must match an extracted entity and does not denote a destination.'
+    - name: type
+      type: str
+      description:
+        zh: '无向关系类型，使用简洁明确的语义词概括两个实体之间的对称联系。例如：相关、相似、共现、邻接、协作等。'
+        en: 'Undirected relation type describing a symmetric connection, such as associated_with, similar_to, co_occurs_with, adjacent_to, or collaborates_with.'
+    - name: description
+      type: str
+      description:
+        zh: '对关系依据或上下文含义的简要说明。'
+        en: 'Brief description of the relation basis or contextual meaning.'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位知识抽取与知识图谱构建专家。请从文本中识别关键实体，并构建这些实体之间的二元关系。'
+    en: 'You are an expert in knowledge extraction and knowledge graph construction. Identify key entities from the text and construct binary relations between them.'
+  rules_for_entities:
+    zh:
+    - '提取对理解文本事实、结构或逻辑有价值的实体。'
+    - '同一实体在全文中保持命名一致。'
+    - '不要提取纯代词、泛称或无独立指代意义的词语。'
+    en:
+    - 'Extract entities that are valuable for understanding text facts, structure, or logic.'
+    - 'Maintain consistent naming for the same entity throughout the text.'
+    - 'Do not extract pure pronouns, generic terms, or phrases without independent referential meaning.'
+  rules_for_relations:
+    zh:
+    - '只提取对称、无向的二元关系；source 与 target 仅用于稳定序列化，不表示语义方向。'
+    - '仅在文本明确表达两个实体之间存在语义联系时创建关系，不要凭常识补充隐含关系。'
+    - '避免重复关系；若同一对实体存在多种不同关系，可分别记录。'
+    - '优先使用文本中明确出现的关系词，不要过度抽象化。'
+    en:
+    - 'Extract only symmetric, undirected binary relations; source and target are serialization fields and do not encode semantic direction.'
+    - 'Create relation edges only when the text explicitly expresses a semantic connection between two entities.'
+    - 'Avoid duplicate relations; if the same pair of entities has multiple different relations, record them separately.'
+    - 'Prefer relation words that explicitly appear in the text; avoid over-abstraction.'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+options:
+  extraction_mode: two_stage
+
+display:
+  entity_label: '{name} ({type})'
+  relation_label: '{type}'

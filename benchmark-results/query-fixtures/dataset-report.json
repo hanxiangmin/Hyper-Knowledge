@@ -1,0 +1,135 @@
+{
+  "claim_boundary": "Offline preflight validates files and dataset contracts only; it does not measure extraction accuracy or model quality.",
+  "dataset_manifest_sha256": "8c9f6da95c12c8e5c6ec93063fa4a40caf6ba8c06ad3302b3b9eb826813dcf43",
+  "datasets": [
+    {
+      "character_count": 191,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "191 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "passed": false
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "severity": "warning",
+          "subject": "examples/en/tesla_question.md",
+          "supported_fix": "Add a descriptive Markdown heading or document the exception"
+        }
+      ],
+      "domain": null,
+      "language": null,
+      "line_count": 3,
+      "path": "examples/en/tesla_question.md",
+      "relative_path": "tesla_question.md",
+      "sha256": "e9da7052d5e750636ddc49cf6dda5e257c115d12b253032ea54772db04677022",
+      "size_bytes": 191,
+      "status": "passed"
+    },
+    {
+      "character_count": 62,
+      "checks": [
+        {
+          "code": "dataset.utf8",
+          "evidence": "valid UTF-8",
+          "passed": true
+        },
+        {
+          "code": "dataset.non_empty",
+          "evidence": "60 non-whitespace characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_nul",
+          "evidence": "no NUL bytes",
+          "passed": true
+        },
+        {
+          "code": "dataset.no_replacement_character",
+          "evidence": "no Unicode replacement characters",
+          "passed": true
+        },
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "passed": false
+        },
+        {
+          "code": "dataset.no_credential_like_text",
+          "evidence": "no credential-like text",
+          "passed": true
+        },
+        {
+          "code": "dataset.not_symlink",
+          "evidence": "regular file",
+          "passed": true
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "dataset.markdown_heading",
+          "evidence": "no Markdown heading found",
+          "severity": "warning",
+          "subject": "examples/zh/sushi_question.md",
+          "supported_fix": "Add a descriptive Markdown heading or document the exception"
+        }
+      ],
+      "domain": null,
+      "language": null,
+      "line_count": 3,
+      "path": "examples/zh/sushi_question.md",
+      "relative_path": "sushi_question.md",
+      "sha256": "0d84fac6ce1943d8889e29ba9442d00c0b7e563cdcc9f75709e25a5c9aa6f712",
+      "size_bytes": 162,
+      "status": "passed"
+    }
+  ],
+  "generated_at": "2026-09-01T02:37:07.208100+00:00",
+  "inputs": [
+    "examples/en/tesla_question.md",
+    "examples/zh/sushi_question.md"
+  ],
+  "mode": "offline_preflight",
+  "schema_version": "hk.dataset-benchmark/v1",
+  "status": "passed",
+  "summary": {
+    "failed": 0,
+    "live_semantic_extraction": "not_run",
+    "passed": 2,
+    "total": 2,
+    "warnings": 2
+  }
+}

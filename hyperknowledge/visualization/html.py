@@ -1,0 +1,734 @@
+"""Generate a self-contained higher-order knowledge graph workbench."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+from typing import Any
+
+from hyperknowledge.bundle import read_bundle, validate_bundle
+
+
+def _safe_script_json(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":")).replace(
+        "</", "<\\/"
+    )
+
+
+def render_bundle_html(
+    bundle_path: str | Path,
+    output_path: str | Path,
+    *,
+    view: str = "contour",
+    quality: str = "standard",
+) -> dict[str, Any]:
+    if view not in {"graph", "hypergraph", "incidence", "contour", "compare"}:
+        raise ValueError(
+            "view must be contour, incidence, graph, hypergraph, or compare"
+        )
+    validation = validate_bundle(bundle_path, quality=quality)
+    if validation["status"] != "passed":
+        raise ValueError(
+            "Bundle validation failed: "
+            + "; ".join(
+                f"{item['code']} ({item['subject']})"
+                for item in validation.get("diagnostics", [])
+                if item.get("severity") == "error"
+            )
+        )
+    bundle = read_bundle(bundle_path)
+    member_counts: dict[str, int] = {}
+    for member in bundle["members"]:
+        assertion_id = str(member["assertion_id"])
+        member_counts[assertion_id] = member_counts.get(assertion_id, 0) + 1
+    has_native_pairwise = any(
+        assertion.get("topology") != "hyperedge"
+        and member_counts.get(str(assertion["id"]), 0) == 2
+        for assertion in bundle["assertions"]
+    )
+    representations = [
+        "incidence_matrix",
+        "incidence_bipartite",
+        "regularized_enclosure",
+    ]
+    if has_native_pairwise:
+        representations.append("native_pairwise_relations")
+    output = Path(output_path).resolve()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    payload = _safe_script_json(bundle)
+    pairwise_button = (
+        '<button class="representation-button" type="button" '
+        'data-representation="pairwise" aria-pressed="false">'
+        "Pairwise relations</button>"
+        if has_native_pairwise
+        else ""
+    )
+    initial_view = (
+        "graph"
+        if view == "graph" and has_native_pairwise
+        else "compare"
+        if view == "compare" and has_native_pairwise
+        else "hypergraph"
+    )
+    initial_hyper_mode = (
+        "incidence"
+        if view == "incidence"
+        else "matrix"
+        if view == "hypergraph"
+        else "contour"
+    )
+    html = (
+        _HTML.replace("__BUNDLE_DATA__", payload)
+        .replace("__INITIAL_VIEW__", initial_view)
+        .replace("__INITIAL_HYPER_MODE__", initial_hyper_mode)
+        .replace("__PAIRWISE_BUTTON__", pairwise_button)
+    )
+    candidate = output.with_suffix(output.suffix + ".candidate")
+    candidate.write_text(html, encoding="utf-8")
+    candidate.replace(output)
+    output_sha256 = hashlib.sha256(output.read_bytes()).hexdigest()
+    view_manifest = {
+        "schema_version": "hk.view/v29",
+        "public_name": "Hyper-Knowledge",
+        "interface_model": "unified_higher_order_knowledge_graph",
+        "bundle_id": bundle["manifest"].get("bundle_id"),
+        "view": view,
+        "default_representation": (
+            "incidence_matrix"
+            if view == "hypergraph"
+            else "incidence_bipartite"
+            if view == "incidence"
+            else "native_pairwise_relations"
+            if view == "graph" and has_native_pairwise
+            else "regularized_enclosure"
+        ),
+        "representation_order": representations,
+        "quality": quality,
+        "pairwise_view": "native_relations_only",
+        "pairwise_expansion_modes": [],
+        "pairwise_view_available": has_native_pairwise,
+        "hypergraph_projection": "regularized_enclosure_default",
+        "hypergraph_views": [
+            "incidence_matrix",
+            "incidence_bipartite",
+            "regularized_enclosure",
+        ],
+        "representations": representations,
+        "selection_policy": "stable_matrix_or_node_to_incident_hyperedge_summary_or_single_relation_expansion",
+        "reset_policy": "clear_focus_drag_overrides_and_fit_visible_content",
+        "languages": ["en", "zh-CN"],
+        "layout": "undirected_force_or_membership_boundary",
+        "contour_geometry": "circle_first_then_ellipse_membership_boundary",
+        "contour_spacing": "balanced_angular_gap_distribution",
+        "contour_separation": "shared_relation_spring_and_nonincident_repulsion",
+        "contour_dense_strategy": "dominant_shared_node_space_filling_orbital_enclosures",
+        "enclosure_shape_policy": "circle_when_feasible_else_oriented_ellipse",
+        "enclosure_space_policy": "aspect_aware_outer_frame_fill",
+        "enclosure_order_policy": "descending_member_count_clockwise_from_top",
+        "enclosure_hub_policy": "highest_membership_node_at_center",
+        "enclosure_shared_node_policy": "regular_boundary_intersection_before_local_adjustment",
+        "enclosure_corner_policy": "distance_limited_tangent_continuous_smoothing",
+        "enclosure_selection_policy": "fill_boundary_or_label_click_to_single_hyperedge_members",
+        "enclosure_drag_policy": "regular_shape_refit_and_member_redistribution",
+        "single_hyperedge_layout": "exact_regular_circle_or_ellipse",
+        "reset_icon": "counterclockwise_arrow",
+        "visual_grammar": "normalized_display_text_inside_degree_aware_circles_and_relation_framed_hyperedges",
+        "node_card_policy": "adaptive_filled_circle_with_internal_name",
+        "node_shape_policy": "text_fit_primary_bounded_hyperedge_degree_secondary",
+        "node_naming_policy": "atomic_entity_concept_or_value_event_phrases_as_predicates",
+        "node_label_overflow_policy": "wrap_then_ellipsis_with_full_tooltip",
+        "node_display_punctuation_policy": "strip_outer_title_marks_in_glyph_preserve_source_label",
+        "shared_node_indicator_policy": "dashed_outer_ring_for_multiple_native_hyperedges",
+        "hyperedge_card_policy": "relation_hue_matched_framed",
+        "secondary_label_policy": "hidden_for_nodes_and_hyperedges",
+        "chrome_text_policy": "hide_bundle_metadata_and_panel_explainer",
+        "enclosure_line_policy": "single_uniform_relation_color_fixed_thick_width",
+        "enclosure_width_control": "omitted_fixed_thick",
+        "enclosure_fill_policy": "low_opacity_relation_tint",
+        "enclosure_hover_policy": "isolate_member_nodes_and_dim_unrelated_scene",
+        "enclosure_hover_fill_policy": "light_relation_tint_on_fill_boundary_or_label_hover",
+        "dense_incidence_strategy": "independent_interactive_incidence_matrix",
+        "matrix_selection_policy": "stable_row_column_cell_highlight_without_view_switch",
+        "incidence_node_focus_strategy": "selected_node_and_incident_hyperedges_only",
+        "incidence_relation_focus_strategy": "single_hyperedge_complete_membership_expansion",
+        "two_hyperedge_strategy": "shared_boundary_dual_lobe",
+        "responsive_canvas": "aspect_aware_width_and_height_viewbox",
+        "overview_space_usage": "adaptive_horizontal_coordinate_expansion",
+        "fit_policy": "content_bounds_on_initial_focus_reset_and_resize",
+        "drawer_policy": "auto_collapse_when_idle",
+        "incidence_focus_layout": "semantic_type_ellipse_with_reserved_sectors",
+        "incidence_role_labels": "collision_aware_duplicate_role_disambiguation",
+        "label_policy": "node_names_inside_adaptive_circles_and_wrapped_relation_blocks",
+        "label_placement": "node_centered_and_relation_collision_avoidance",
+        "label_lod_policy": "two_or_three_line_circle_labels_with_full_tooltip",
+        "pairwise_edge_labels": "native_predicate_labels",
+        "interaction_policy": "draggable_nodes_with_live_edge_and_enclosure_reflow",
+        "layout_seed": 17,
+        "supported_topologies": [
+            "pairwise",
+            "hyperedge",
+        ],
+        "offline": True,
+        "output": output.name,
+        "output_sha256": output_sha256,
+        "validation": validation["summary"],
+        "visual_review": "pending",
+    }
+    manifest_path = output.parent / "view-manifest.json"
+    manifest_candidate = manifest_path.with_suffix(".json.candidate")
+    manifest_candidate.write_text(
+        json.dumps(view_manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    manifest_candidate.replace(manifest_path)
+    return {"html": str(output), "view_manifest": str(manifest_path), **view_manifest}
+
+
+_HTML = r"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Hyper-Knowledge Workbench</title>
+<style>
+:root{
+  color-scheme:light;
+  --page:#f6f6f5;--page-2:#ffffff;--surface:rgba(255,255,255,.92);--surface-strong:#fff;
+  --surface-soft:#f1f1f2;--ink:#121820;--ink-2:#313945;--muted:#858b96;
+  --border:rgba(23,30,41,.12);--border-strong:rgba(23,30,41,.22);--grid:rgba(35,47,64,.075);
+  --primary:#171c24;--primary-soft:rgba(23,28,36,.075);--entity:#2f67b9;--entity-soft:rgba(47,103,185,.12);
+  --node-card:rgba(255,255,255,.82);--node-card-text:#242b35;
+  --pair:#2f67b9;--project:#7255c7;--assertion:#efb92f;--assertion-soft:rgba(239,185,47,.17);
+  --success:#2d916c;--warning:#c98217;--danger:#df679e;--shadow:0 16px 42px rgba(26,35,49,.09);
+  --role-1:#7255c7;--role-2:#2f67b9;--role-3:#efb92f;--role-4:#df679e;
+  --role-5:#2d916c;--role-6:#8a63c9;--role-7:#c46a42;--role-8:#3d84a5;
+  --hyper-1:#efb92f;--hyper-2:#2f67b9;--hyper-3:#df679e;--hyper-4:#7255c7;--hyper-5:#2d916c;--hyper-6:#d87345;
+}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#07101f;--page-2:#0b1527;--surface:rgba(14,27,48,.78);--surface-strong:#101d33;
+  --surface-soft:rgba(19,34,58,.9);--ink:#edf4ff;--ink-2:#c5d2e5;--muted:#91a2bb;
+  --border:rgba(150,172,207,.16);--border-strong:rgba(158,180,214,.27);--grid:rgba(150,175,214,.075);
+  --primary:#9694ff;--primary-soft:rgba(150,148,255,.15);--entity:#6bb4ff;--entity-soft:rgba(107,180,255,.16);
+  --node-card:rgba(255,255,255,.88);--node-card-text:#202733;
+  --pair:#52d2e5;--project:#bca1ff;--assertion:#ffba5c;--assertion-soft:rgba(255,186,92,.16);
+  --success:#66d4a7;--warning:#ffc067;--danger:#ff8299;--shadow:0 24px 70px rgba(0,0,0,.31);
+  --role-1:#9694ff;--role-2:#52d2e5;--role-3:#ffba5c;--role-4:#ff8db4;
+  --role-5:#66d4a7;--role-6:#c79aff;--role-7:#ee9770;--role-8:#79b9ed;
+  --hyper-1:#ffc84d;--hyper-2:#70aaff;--hyper-3:#ff87ba;--hyper-4:#ae95ff;--hyper-5:#63caa0;--hyper-6:#f08d65;
+}
+*{box-sizing:border-box}
+html{min-width:320px;background:var(--page)}
+body{margin:0;min-height:100vh;color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:
+  radial-gradient(circle at 8% -4%,var(--primary-soft),transparent 31rem),
+  radial-gradient(circle at 96% 12%,var(--entity-soft),transparent 34rem),
+  linear-gradient(145deg,var(--page-2),var(--page));transition:background .25s ease,color .25s ease}
+button{font:inherit}
+button:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 46%,transparent);outline-offset:2px}
+.app-shell{min-height:100vh;padding:18px clamp(14px,2.2vw,32px) 28px}
+.topbar{display:flex;align-items:center;gap:18px;padding:14px 16px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{width:38px;height:38px;display:grid;place-items:center;flex:0 0 auto;border:1px solid color-mix(in srgb,var(--primary) 36%,var(--border));border-radius:12px;background:linear-gradient(145deg,var(--primary-soft),var(--entity-soft));color:var(--primary)}
+.brand-mark svg{width:25px;height:25px}.brand-copy{min-width:0}.brand-copy h1{margin:0;font-size:16px;line-height:1.2;font-weight:650;letter-spacing:-.015em}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.segmented{display:flex;padding:3px;border:1px solid var(--border);border-radius:12px;background:var(--surface-soft)}
+.representation-button,.language-button,.icon-button{border:0;color:var(--muted);background:transparent;cursor:pointer;transition:color .16s ease,background .16s ease,transform .16s ease}.representation-button,.language-button{padding:7px 11px;border-radius:9px}.representation-button:hover,.language-button:hover,.icon-button:hover{color:var(--ink);background:var(--primary-soft)}.representation-button[aria-pressed="true"],.language-button[aria-pressed="true"]{color:var(--surface-strong);background:var(--primary);box-shadow:0 3px 11px rgba(27,35,47,.14)}
+.icon-button{min-width:34px;height:34px;padding:0 9px;border:1px solid var(--border);border-radius:10px;display:inline-grid;place-items:center}.icon-button:active,.representation-button:active,.language-button:active{transform:translateY(1px)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;margin:14px 0}.stat{min-width:0;padding:12px 14px;border:1px solid var(--border);border-radius:15px;background:var(--surface);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}.stat-label{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.075em}.stat-dot{width:7px;height:7px;border-radius:50%;background:var(--primary)}.stat-value{margin-top:4px;font-size:22px;line-height:1.15;font-weight:650;letter-spacing:-.035em}.stat-note{margin-top:2px;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:12px;align-items:start;transition:grid-template-columns .2s ease}.layout.drawer-idle{grid-template-columns:minmax(0,1fr) 56px}.workspace{display:grid;gap:12px;min-width:0}.workspace.compare{grid-template-columns:repeat(2,minmax(450px,1fr))}
+.viz-panel,.drawer{border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden}.viz-panel{min-width:0}
+.panel-head{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--border)}.panel-title{min-width:0}.eyebrow{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}.panel-title h2{margin:1px 0 0;font-size:14px;line-height:1.25;font-weight:650}.semantic-badge{margin-left:3px;padding:4px 8px;border-radius:999px;color:var(--primary);background:var(--primary-soft);font-size:10px;white-space:nowrap}.panel-expansion-control{display:flex;align-items:center;padding:2px;border:1px solid var(--border);border-radius:9px;background:var(--surface-soft)}.panel-head.has-expansion .panel-expansion-control{margin-left:auto}.panel-head.has-expansion .panel-tools{margin-left:0}.expansion-button{border:0;border-radius:7px;padding:5px 8px;color:var(--muted);background:transparent;font-size:10px;cursor:pointer}.expansion-button:hover{color:var(--ink);background:var(--primary-soft)}.expansion-button[aria-pressed="true"]{color:var(--surface-strong);background:var(--primary)}.panel-tools{margin-left:auto;display:flex;gap:5px}.tool-button{width:30px;height:30px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--muted);cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease}.tool-button:hover{background:var(--primary-soft);color:var(--ink)}.tool-button:active{transform:scale(.96)}
+.canvas-wrap{position:relative;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--surface-strong) 86%,transparent),color-mix(in srgb,var(--surface-soft) 84%,transparent))}.network-svg{display:block;width:100%;height:clamp(650px,70vh,900px);min-height:650px;touch-action:none;cursor:grab;user-select:none}.network-svg.is-panning{cursor:grabbing}.plot-backdrop{fill:transparent;pointer-events:all}.grid-line{stroke:var(--grid);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:650;letter-spacing:.13em}.empty-state{fill:var(--muted);font-size:14px}
+.link{fill:none;cursor:pointer;transition:opacity .16s ease,stroke-width .16s ease,filter .16s ease}.link.pairwise{stroke:var(--pair);stroke-width:1.8;opacity:.68}.link.incidence{stroke:var(--hyper-color,var(--role-color));stroke-width:2;opacity:.74}.link:hover,.link.is-selected,.link.is-related{opacity:1;stroke-width:3;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--primary) 45%,transparent))}.mark{cursor:pointer;transition:opacity .16s ease,filter .16s ease}.mark:hover,.mark.is-selected{filter:drop-shadow(0 0 8px color-mix(in srgb,var(--primary) 48%,transparent))}.mark.is-related{opacity:1;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--primary) 30%,transparent))}.is-muted{opacity:.18!important}.is-hidden{opacity:0!important;pointer-events:none!important}.node-halo{fill:var(--entity);stroke:var(--surface-strong);stroke-width:2.4;filter:drop-shadow(0 3px 7px color-mix(in srgb,var(--entity) 30%,transparent))}.node-core{fill:var(--entity)}.node-inside-label{fill:#fff;font-size:10px;font-weight:700;letter-spacing:-.01em;pointer-events:none}.node-inside-label.dense{font-size:8.5px}.shared-ring{fill:none;stroke:var(--assertion);stroke-width:2.2;stroke-dasharray:3 3}.assertion-halo{fill:var(--surface-strong);stroke:color-mix(in srgb,var(--hyper-color,var(--assertion)) 55%,var(--border-strong));stroke-width:1.7}.assertion-core{fill:var(--hyper-color,var(--assertion))}.mark.is-selected .node-halo{stroke:var(--ink);stroke-width:3.2}.mark.is-selected .assertion-halo{stroke:var(--primary);stroke-width:3}.node-label,.assertion-label{fill:var(--ink);font-size:11px;font-weight:560;pointer-events:none}.type-label{fill:var(--muted);font-size:9px;letter-spacing:.035em;text-transform:uppercase;pointer-events:none}.role-label{fill:var(--ink-2);font-size:9px;font-weight:600;pointer-events:none}.label-block{pointer-events:none}.label-block-bg{fill:color-mix(in srgb,var(--surface-strong) 94%,transparent);stroke:color-mix(in srgb,var(--border-strong) 72%,transparent);stroke-width:1;filter:drop-shadow(0 3px 8px rgba(20,38,66,.12))}.assertion-mark .label-block-bg,.hyperedge-label .label-block-bg{fill:color-mix(in srgb,var(--hyper-color,var(--assertion)) 18%,var(--surface-strong));stroke:var(--hyper-color,var(--assertion));stroke-width:1.5;filter:drop-shadow(0 3px 8px color-mix(in srgb,var(--hyper-color,var(--assertion)) 16%,transparent))}.assertion-mark .node-label,.hyperedge-label .node-label{fill:color-mix(in srgb,var(--hyper-color,var(--assertion)) 24%,var(--ink));font-weight:700}.edge-role-pill{pointer-events:none;transition:opacity .14s ease}.edge-role-pill.role-lod{opacity:0}.edge-role-pill.role-lod.is-visible{opacity:1}.edge-role-pill rect{fill:color-mix(in srgb,var(--surface-strong) 97%,transparent);stroke:color-mix(in srgb,var(--hyper-color,var(--border-strong)) 58%,var(--border));stroke-width:1}.edge-role-pill text{fill:var(--ink-2);font-size:9px;font-weight:650}
+.pairwise-edge-label{cursor:pointer}.pairwise-edge-label .label-pill{fill:color-mix(in srgb,var(--surface-strong) 94%,var(--pair));stroke:var(--pair);stroke-width:1.35;filter:drop-shadow(0 4px 9px color-mix(in srgb,var(--pair) 18%,transparent))}.pairwise-edge-label text{fill:var(--ink-2);font-size:10px;font-weight:650;paint-order:stroke;stroke:var(--surface-strong);stroke-width:3px;pointer-events:none}.pairwise-edge-label .relation-dot{fill:var(--pair);stroke:var(--surface-strong);stroke-width:1.5}
+.incidence-matrix .network-svg{height:clamp(650px,76vh,920px)}.matrix-row-band{fill:var(--surface-soft);opacity:.54}.matrix-row-band.alt{opacity:.2}.matrix-guide{stroke:var(--border);stroke-width:1}.matrix-column-guide{stroke:var(--border);stroke-width:1;stroke-dasharray:2 5}.matrix-cell{fill:var(--hyper-color);stroke:var(--surface-strong);stroke-width:1.5;cursor:pointer;transition:r .14s ease,opacity .14s ease,filter .14s ease}.matrix-cell:hover,.matrix-cell.is-selected,.matrix-cell.is-related{r:7;opacity:1;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--hyper-color) 62%,transparent))}.matrix-empty-cell{fill:transparent;stroke:var(--border);stroke-width:.8}.matrix-node-text{fill:var(--ink);font-size:9.5px;font-weight:600}.matrix-column-text{fill:var(--ink-2);font-size:9px;font-weight:700}.matrix-key{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:5px 10px;width:100%;margin-top:8px}.matrix-key>.legend-title{grid-column:1/-1}.matrix-key-item{display:grid;grid-template-columns:8px 28px minmax(0,1fr);align-items:center;gap:6px;min-width:0;padding:4px 6px;border:1px solid var(--border);border-radius:8px;background:var(--surface-soft);color:var(--ink-2);font-size:9px;cursor:pointer}.matrix-key-item:hover{border-color:color-mix(in srgb,var(--hyper-color) 55%,var(--border));background:color-mix(in srgb,var(--hyper-color) 7%,var(--surface-soft))}.matrix-key-code{font-weight:750}.matrix-key-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.matrix-key-dot{width:8px;height:8px;border-radius:50%;background:var(--hyper-color)}
+.hyper-envelope-layer{transition:opacity .18s ease,stroke-width .18s ease}.hyper-envelope-fill{fill:color-mix(in srgb,var(--hyper-color) 5%,transparent);stroke:none;opacity:.42;pointer-events:visiblePainted;cursor:pointer}.hyper-envelope-fill.is-related{opacity:.5}.hyper-envelope-fill.is-selected{opacity:.62}.hyper-envelope-hit{fill:none;stroke:transparent;stroke-width:18;pointer-events:stroke;cursor:pointer}.hyper-envelope{fill:none;stroke:var(--hyper-color);stroke-width:2.4px;stroke-linejoin:round;stroke-linecap:round;cursor:pointer;opacity:.64;pointer-events:stroke;filter:none}.hyper-flow{fill:none;stroke:var(--hyper-color);stroke-width:3;stroke-linecap:round;opacity:.78;cursor:pointer;pointer-events:stroke}.hyper-envelope:hover,.hyper-envelope.is-selected{opacity:1;stroke-width:4.2px;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--hyper-color) 34%,transparent))}.hyper-envelope.is-related{opacity:.82;stroke-width:3.2px}.hyper-envelope.is-selected{stroke-dasharray:none;animation:none}.hyper-envelope-layer.is-hover-muted{opacity:.08}.hyperedge-label text{font-size:11px;pointer-events:none}.hyperedge-label{cursor:pointer;transition:opacity .16s ease}.hyperedge-label.is-hover-muted{opacity:.28}
+.orbital-layout .hyper-envelope-fill{opacity:.26}.orbital-layout .hyper-envelope-fill.is-related{opacity:.36}.orbital-layout .hyper-envelope-fill.is-selected{opacity:.5}.orbital-layout .hyper-envelope{opacity:.58}.orbital-layout .hyper-envelope.is-related{opacity:.78}.orbital-layout .hyperedge-label .label-block-bg{fill:color-mix(in srgb,var(--hyper-color) 20%,var(--surface-strong));stroke:var(--hyper-color);filter:drop-shadow(0 2px 6px color-mix(in srgb,var(--hyper-color) 13%,transparent))}.orbital-layout .hyperedge-label .node-label{font-size:9.5px}.orbital-layout .hyperedge-label .type-label{font-size:7.5px;letter-spacing:.06em}.orbital-hub-halo{fill:color-mix(in srgb,var(--assertion) 8%,transparent);stroke:color-mix(in srgb,var(--assertion) 48%,transparent);stroke-width:1.2;stroke-dasharray:2 5}.orbital-layout .dominant-hub-node .node-halo{stroke-width:3;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--entity) 40%,transparent))}
+.membership-summary .link.incidence{stroke-width:2.2;opacity:.58}.membership-summary .link.incidence:hover,.membership-summary .link.incidence.is-related{stroke-width:3.2;opacity:1}.membership-summary .assertion-mark .label-block-bg{fill:color-mix(in srgb,var(--hyper-color) 20%,var(--surface-strong));stroke:var(--hyper-color);filter:drop-shadow(0 3px 8px color-mix(in srgb,var(--hyper-color) 14%,transparent))}.membership-summary .summary-hub .node-halo{stroke-width:3;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--entity) 42%,transparent))}
+.canvas-hint{position:absolute;left:13px;bottom:12px;padding:5px 8px;border:1px solid var(--border);border-radius:8px;color:var(--muted);background:var(--surface);font-size:10px;pointer-events:none;backdrop-filter:blur(9px)}.tooltip{position:absolute;z-index:5;max-width:240px;padding:7px 9px;border:1px solid var(--border-strong);border-radius:9px;color:var(--ink);background:var(--surface-strong);box-shadow:0 10px 28px rgba(20,38,66,.18);font-size:11px;pointer-events:none;opacity:0;transform:translate(8px,8px);transition:opacity .1s ease}.tooltip.visible{opacity:1}
+.panel-foot{padding:10px 13px;border-top:1px solid var(--border)}.semantic-notice{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:11px}.semantic-notice.pairwise-explanation{margin-top:8px;padding:8px 9px;border:1px solid color-mix(in srgb,var(--pair) 22%,var(--border));border-radius:9px;background:color-mix(in srgb,var(--pair) 6%,transparent);color:var(--ink-2)}.semantic-notice.pairwise-explanation .notice-symbol{color:var(--pair);background:color-mix(in srgb,var(--pair) 12%,transparent)}.notice-symbol{flex:0 0 auto;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;color:var(--primary);background:var(--primary-soft);font-weight:700}.notice-strong{color:var(--ink-2);font-weight:600}.legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:9px;color:var(--muted);font-size:10px}.legend-title{color:var(--ink-2);font-weight:600}.legend-item{display:inline-flex;align-items:center;gap:5px}.legend-swatch{width:9px;height:9px;border-radius:3px;background:var(--role-color)}.legend-line,.legend-envelope-line{position:relative;width:19px;height:0;border-top:2px solid var(--pair)}.legend-node-swatch{width:10px;height:10px;border-radius:50%;background:var(--entity);box-shadow:0 0 0 3px var(--entity-soft)}.legend-hyperedge-swatch{width:18px;height:10px;border:1.2px solid var(--hyper-3);border-radius:4px;background:color-mix(in srgb,var(--hyper-3) 14%,var(--surface-strong))}.legend-envelope-line{border-top-color:var(--hyper-4);border-top-width:1.6px}
+.drawer{position:sticky;top:18px;min-height:520px;max-height:calc(100vh - 36px);overflow:auto;transition:min-height .2s ease,max-height .2s ease}.drawer-head{display:flex;align-items:center;gap:10px;padding:15px 16px;border-bottom:1px solid var(--border)}.drawer-icon{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;color:var(--primary);background:var(--primary-soft);font-size:16px}.drawer-head h2{margin:0;font-size:14px;font-weight:650}.drawer-head p{margin:1px 0 0;color:var(--muted);font-size:10px}.drawer-body{padding:15px}.drawer-empty{padding:22px 10px;color:var(--muted);text-align:center}.drawer-empty-visual{width:70px;height:70px;margin:0 auto 13px;border:1px dashed var(--border-strong);border-radius:22px;display:grid;place-items:center;color:var(--primary);font-size:25px;background:var(--primary-soft)}.drawer.is-empty{min-height:56px;max-height:56px;overflow:hidden}.drawer.is-empty .drawer-head{justify-content:center;padding:12px;border-bottom:0}.drawer.is-empty .drawer-head>div:last-child,.drawer.is-empty .drawer-body{display:none}
+.drawer-kicker{color:var(--muted);font-size:10px;letter-spacing:.09em;text-transform:uppercase}.drawer-title{margin:2px 0 8px;font-size:17px;line-height:1.3;font-weight:650;overflow-wrap:anywhere}.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.tag{padding:3px 7px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:10px}.tag.warning{color:var(--warning);background:color-mix(in srgb,var(--warning) 12%,transparent)}.term-explainer{display:grid;gap:5px;margin:0 0 13px;padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface-soft)}.term-row{display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px;color:var(--ink-2);font-size:10px}.term-label{color:var(--muted);font-weight:650}.evidence-alert{margin:12px 0;padding:10px 11px;border-left:3px solid var(--warning);border-radius:0 9px 9px 0;color:var(--ink-2);background:color-mix(in srgb,var(--warning) 8%,transparent);font-size:11px}.evidence-alert.good{border-left-color:var(--success);background:color-mix(in srgb,var(--success) 8%,transparent)}.source-record{display:grid;gap:5px;padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface-soft)}.source-record+.source-record{margin-top:7px}.source-record-id{color:var(--muted);font-size:9px;overflow-wrap:anywhere}.source-record-location{color:var(--ink-2);font-size:10px;font-weight:650;overflow-wrap:anywhere}.source-record-quote{margin:0;padding-left:9px;border-left:2px solid var(--primary);color:var(--ink);font-size:10px;line-height:1.55;overflow-wrap:anywhere}
+.detail-section{margin-top:16px}.detail-section h3{margin:0 0 7px;color:var(--muted);font-size:10px;letter-spacing:.09em;text-transform:uppercase}.detail-grid{display:grid;grid-template-columns:minmax(82px,.7fr) minmax(0,1.3fr);gap:6px 10px;margin:0}.detail-grid dt{color:var(--muted);font-size:11px}.detail-grid dd{margin:0;color:var(--ink-2);font-size:11px;overflow-wrap:anywhere}.member-list{display:grid;gap:6px}.member-row{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:7px;padding:7px 8px;border-radius:9px;background:var(--surface-soft);font-size:11px}.member-role-dot{width:8px;height:8px;border-radius:3px;background:var(--role-color)}.member-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.member-role{color:var(--muted);font-size:9px}.source-row{padding:7px 0;border-bottom:1px solid var(--border);font-size:10px;overflow-wrap:anywhere}.source-row:last-child{border-bottom:0}.raw-details{margin-top:14px;border-top:1px solid var(--border);padding-top:10px}.raw-details summary{color:var(--muted);font-size:10px;cursor:pointer}.raw-details pre{white-space:pre-wrap;word-break:break-word;color:var(--muted);font:10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
+.mark.draggable-mark{cursor:grab;touch-action:none}.mark.draggable-mark.is-dragging{cursor:grabbing;filter:drop-shadow(0 0 11px color-mix(in srgb,var(--primary) 62%,transparent))}.entity-mark.graph-lod-label{opacity:.9}.entity-mark.graph-lod-label:hover,.entity-mark.graph-lod-label:focus-visible,.entity-mark.graph-lod-label.is-selected,.entity-mark.graph-lod-label.is-related{opacity:1}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.node-label,.assertion-label{font-size:14px}.type-label{font-size:10px}.role-label{font-size:11px}
+.shared-ring{stroke:color-mix(in srgb,var(--assertion) 82%,var(--primary));stroke-width:1.8;stroke-dasharray:5 4;stroke-linecap:round;filter:drop-shadow(0 0 3px color-mix(in srgb,var(--assertion) 28%,transparent));pointer-events:none}.legend-shared-node-swatch{width:10px;height:10px;border-radius:50%;background:var(--entity);outline:1.6px dashed var(--assertion);outline-offset:3px}.entity-mark.is-hover-muted,.link.is-hover-muted{opacity:.1!important;filter:none!important}.hyper-envelope-fill{transition:fill .18s ease,opacity .18s ease}.hyper-envelope-fill.is-hover-focus{fill:color-mix(in srgb,var(--hyper-color) 13%,var(--surface-strong));opacity:.88}.hyper-envelope.is-hover-focus{opacity:1;stroke-width:3.2px}
+@media(max-width:1450px){.workspace.compare{grid-template-columns:1fr}.network-svg{height:600px}}
+@media(max-width:980px){.layout,.layout.drawer-idle{grid-template-columns:1fr}.drawer{position:relative;top:0;max-height:none;min-height:0}.drawer.is-empty{display:none}.bundle-line{max-width:55vw}}
+@media(max-width:720px){.app-shell{padding:10px}.topbar{align-items:flex-start;flex-wrap:wrap;border-radius:15px}.header-actions{width:100%;margin-left:0;justify-content:flex-start}.stats{grid-template-columns:repeat(2,minmax(130px,1fr))}.workspace.compare{grid-template-columns:1fr}.network-svg{height:520px}.semantic-badge{display:none}.bundle-line{max-width:76vw}.panel-head{align-items:flex-start}.panel-head.has-expansion{flex-wrap:wrap}.panel-head.has-expansion .panel-expansion-control{order:3;margin-left:0}.panel-tools{flex:0 0 auto}.language-control{margin-left:auto}}
+@media(max-width:420px){.stats{grid-template-columns:1fr 1fr}.stat{padding:10px}.stat-value{font-size:18px}.representation-button,.language-button{padding:6px 8px}.canvas-hint{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}.hyper-envelope.is-selected{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M6 8l10-4 10 4v11l-10 9-10-9z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16" cy="4" r="2.4" fill="currentColor"/><circle cx="6" cy="8" r="2.4" fill="currentColor"/><circle cx="26" cy="8" r="2.4" fill="currentColor"/><circle cx="6" cy="19" r="2.4" fill="currentColor"/><circle cx="26" cy="19" r="2.4" fill="currentColor"/><circle cx="16" cy="28" r="2.4" fill="currentColor"/><path d="M6 8l20 11M26 8L6 19M16 4v24" stroke="currentColor" stroke-width="1" opacity=".55"/></svg>
+      </div>
+      <div class="brand-copy"><h1 id="app-title">Hyper-Knowledge Workbench</h1></div>
+    </div>
+    <div class="header-actions">
+      <div class="segmented" id="representation-controls" role="group" aria-label="Higher-order knowledge graph representation">
+        <button class="representation-button" type="button" data-representation="matrix" aria-pressed="false">Incidence matrix</button>
+        <button class="representation-button" type="button" data-representation="incidence" aria-pressed="false">Incidence view</button>
+        <button class="representation-button" type="button" data-representation="contour" aria-pressed="false">Enclosure view</button>
+        __PAIRWISE_BUTTON__
+      </div>
+      <div class="segmented language-control" id="language-controls" role="group" aria-label="Language">
+        <button class="language-button" type="button" data-language="zh" aria-pressed="false">中文</button>
+        <button class="language-button" type="button" data-language="en" aria-pressed="true">EN</button>
+      </div>
+      <button class="icon-button" id="theme-toggle" type="button" aria-label="Switch color theme">◐</button>
+    </div>
+  </header>
+  <section class="stats" id="stats" aria-label="Bundle statistics"></section>
+  <main class="layout">
+    <section class="workspace" id="workspace" aria-live="polite"></section>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-head"><div class="drawer-icon" aria-hidden="true">⌁</div><div><h2 id="drawer-heading">Relation Details &amp; Sources</h2><p id="drawer-subtitle">Inspect structure, members and original sources</p></div></div>
+      <div class="drawer-body" id="drawer-body"></div>
+    </aside>
+  </main>
+</div>
+<script>
+"use strict";
+const DATA=__BUNDLE_DATA__;
+let currentView="__INITIAL_VIEW__";
+let selection=null;
+let focusAssertionIds=null;
+let currentLanguage="en";
+let hyperMode="__INITIAL_HYPER_MODE__";
+let panelSerial=0;
+let autoFitRequested=true;
+const dragPositionOverrides=new Map();
+const SVG_NS="http://www.w3.org/2000/svg";
+const BASE_VIEW_WIDTH=1000,BASE_VIEW_HEIGHT=650;
+let viewFrame={width:BASE_VIEW_WIDTH,height:BASE_VIEW_HEIGHT,cx:BASE_VIEW_WIDTH/2,cy:BASE_VIEW_HEIGHT/2,xStretch:1,yStretch:1,left:42,right:958,top:58,bottom:592};
+const byNode=new Map(DATA.nodes.map(node=>[String(node.id),node]));
+const byAssertion=new Map(DATA.assertions.map(assertion=>[String(assertion.id),assertion]));
+const byEvidence=new Map((DATA.evidence||[]).map(record=>[String(record.id),record]));
+const membersByAssertion=new Map();
+for(const member of DATA.members){const id=String(member.assertion_id);if(!membersByAssertion.has(id))membersByAssertion.set(id,[]);membersByAssertion.get(id).push(member)}
+for(const items of membersByAssertion.values())items.sort((a,b)=>(a.ordinal??0)-(b.ordinal??0));
+const roles=[...new Set(DATA.members.map(member=>String(member.role||"member")))].sort();
+const roleIndex=new Map(roles.map((role,index)=>[role,index%8+1]));
+const assertionPaletteIndex=new Map([...DATA.assertions].sort((a,b)=>String(a.id).localeCompare(String(b.id))).map((assertion,index)=>[String(assertion.id),index%6+1]));
+const I18N={
+  en:{
+    appTitle:"Hyper-Knowledge Workbench",representationControl:"Higher-order knowledge graph representation",projection:"Pairwise relations",matrixRepresentation:"Incidence matrix",incidenceRepresentation:"Higher-order view (incidence)",contourRepresentation:"Higher-order view (enclosure)",
+    language:"Language",switchTheme:"Switch color theme",bundleStatistics:"Bundle statistics",drawerTitle:"Relation Details & Sources",drawerSubtitle:"Inspect structure, members and original sources",
+    entities:"Nodes",normalizedNodes:"normalized nodes",assertions:"Relations",pairwise:"pairwise relations",hyperedge:"undirected hyperedges",incidences:"Incidences",memberRole:"member role",memberRolesCount:"member roles",evidenceCoverage:"Source coverage",assertionsLinked:"{evidence}/{total} relations linked to sources",
+    selectPrompt:"Select a node, relation, hyperedge, or incidence.",projectionPrompt:"Hyperedges stay intact. The pairwise view appears only when the source bundle contains native two-node relations.",rawRecord:"Raw record",bundleProvenance:"Bundle provenance",noSource:"No source inventory recorded.",
+    evidenceOne:"1 source record is linked to this relation.",evidenceMany:"{count} source records are linked to this relation.",noEvidence:"No relation-level source span is linked. Treat this as a candidate extraction, not a verified fact.",sourceRecords:"Source records",sourceLines:"lines {start}–{end}",sourceLine:"line {line}",sourceRecordUnavailable:"The referenced source record is unavailable in this bundle.",
+    entityRecord:"Node record",incidenceRecord:"Incidence record",associationAssertion:"Relation record",entity:"node",statusUnknown:"Unknown source status",nativeHyperedge:"Native undirected hyperedge",identifier:"Identifier",type:"Type",bundle:"Bundle",memberships:"Related relations",
+    assertionId:"Relation ID",topology:"Structure type",semantics:"Relation semantics",memberCount:"Linked nodes",projectionWarning:"This native hyperedge remains one n-ary relation and is never decomposed into pairwise facts.",orderedMembers:"Relation members",assertion:"Relation",role:"Semantic role",ordinal:"Ordinal",resolved:"Resolved",unresolved:"unresolved",yes:"yes",no:"no",
+    zoomOut:"Zoom out",zoomIn:"Zoom in",resetInitial:"Reset and fit all content",panHint:"Scroll to zoom · drag empty canvas to pan · drag nodes to rearrange · double-click to fit all",pairwiseAssertion:"Undirected pairwise relation",memberRoles:"Role annotations",noRoleMetadata:"No role metadata",
+    nativePairwiseBadge:"Source relations",sharedNode:"Shared node",sharedBy:"shared by {count} hyperedges",evidenceTrace:"source provenance",
+    undirectedLineMeaning:"Solid line — {source} — {target} · {relation}. This is a native undirected pairwise relation, not a hyperedge boundary.",
+    graphEyebrow:"NATIVE TWO-NODE RELATIONS",graphTitle:"Higher-order graph · pairwise relations",graphNoticeNative:"Native pairwise relations — only two-node relations present in the source bundle are shown. Edge labels state the relation semantics; hyperedges are never expanded or converted into pairwise facts.",
+    hyperEyebrow:"UNDIRECTED HIGHER-ORDER STRUCTURE",incidenceTitle:"Higher-order graph · incidence view",bipartiteView:"Relation-node view",incidenceNotice:"Incidence view — relations remain first-class nodes and every membership is shown with an arrowless line. No hyperedge is flattened.",membershipSummaryBadge:"Node–hyperedge memberships",membershipSummaryNotice:"Node membership summary — only the selected node and the native hyperedges containing it are shown. Other members stay hidden at this level; select a hyperedge to expand its complete membership.",incidenceMatrixBadge:"Incidence matrix",incidenceMatrixNotice:"Incidence matrix — rows are nodes and columns are native hyperedges. A colored cell is one role-aware membership. Selection highlights the row or column without switching representations; use the incidence view to expand structure.",matrixNodeHeader:"NODES",matrixRelationHeader:"NATIVE HYPEREDGES",matrixMembership:"membership",matrixRelationKey:"Hyperedge key",
+    contourTitle:"Higher-order graph · enclosure view",contourBadge:"Adaptive boundary",dualLobeBadge:"Shared boundary",contourNotice:"Adaptive boundary — soft-white unframed labels identify nodes; each native hyperedge label uses a frame matching its boundary hue. Boundaries use one fixed, clear thick stroke; click a fill, boundary, or title to show the complete member set.",contourDominantNotice:"Orbital enclosure — node names use soft-white unframed backgrounds, while each native hyperedge frame matches its circle or ellipse. Dense structures expand toward the available canvas edges, and dragging refits every incident regular enclosure.",contourDualLobeNotice:"Shared-boundary dual lobe — node names use soft-white unframed backgrounds and each native hyperedge frame matches its boundary hue. Shared members lie on the central seam; click a fill, boundary, or title to isolate its complete membership.",contourDenseLabelNotice:"Dense overviews retain compact name-only node labels; relation focus expands the selected structure for closer reading.",visualKey:"Visual key",hyperedgeEnclosure:"Hyperedge boundary",pairwiseLink:"Undirected pairwise relation",
+    entityLayer:"NODE LAYER",assertionLayer:"RELATION / HYPEREDGE LAYER",noGraph:"No native pairwise relations",noHypergraph:"No higher-order structure data",derivedProjection:"native pairwise relations only",normalizedAssociations:"normalized relations",unversionedBundle:"unversioned bundle",
+    explainerStructure:"Structure",explainerSource:"Source",topologyHyperedge:"Undirected hyperedge",topologyPairwise:"Undirected pairwise relation",topologyMultilayer:"Multilayer relation",topologyTemporal:"Temporal relation",topologyExplanationHyperedge:"One undirected relation links multiple nodes while preserving each node's semantic role.",topologyExplanationPairwise:"One undirected relation connects two nodes.",
+    statusModelPredicted:"Model-extracted candidate",statusObservedMetadata:"Observed metadata",statusDeterministicGeometry:"Deterministic geometry",statusEstimatedAssociation:"Estimated association",statusKnowledgeAsserted:"Knowledge-pack relation",statusLiteratureAsserted:"Literature-reported relation",statusHumanAsserted:"Human-reviewed relation",statusSyntheticDemo:"Synthetic demo relation",statusExplanationModel:"Generated by a model from the input and not yet human-confirmed; it is neither a verified fact nor a causal conclusion.",statusExplanationDefault:"This label records how the relation entered the bundle, not its truth or causal strength.",
+    nodeTypePerson:"Person",nodeTypeEvent:"Event",nodeTypeTrajectoryStage:"Trajectory stage",nodeTypePolicy:"Policy",nodeTypeTime:"Time",nodeTypeTimeInterval:"Time interval",nodeTypePlace:"Place",nodeTypeLiteraryWork:"Literary work",nodeTypeLiteraryGroup:"Literary group",nodeTypeCalligraphyWork:"Calligraphy work",nodeTypeCalligraphyGroup:"Calligraphy group",nodeTypeInstitution:"Institution",nodeTypeInfrastructure:"Infrastructure"
+  },
+  zh:{
+    appTitle:"高阶知识图谱工作台",representationControl:"高阶知识图谱表现形式",projection:"二元关系",matrixRepresentation:"关联矩阵",incidenceRepresentation:"高阶视图（关联）",contourRepresentation:"高阶视图（包络）",
+    language:"语言",switchTheme:"切换配色主题",bundleStatistics:"数据包统计",drawerTitle:"关系详情与来源",drawerSubtitle:"查看结构、成员与原始来源",
+    entities:"节点",normalizedNodes:"标准化节点",assertions:"关系",pairwise:"条无向二元关系",hyperedge:"条无向超边",incidences:"关联数",memberRole:"成员角色",memberRolesCount:"种角色",evidenceCoverage:"来源覆盖率",assertionsLinked:"{evidence}/{total} 条关系已关联来源",
+    selectPrompt:"请选择节点、无向二元关系、超边或关联关系。",projectionPrompt:"超边始终保持完整；只有源数据包确实含有原生二元关系时，才显示二元关系视图。",rawRecord:"原始记录",bundleProvenance:"数据溯源",noSource:"未记录源文件清单。",
+    evidenceOne:"该关系关联了 1 条来源记录。",evidenceMany:"该关系关联了 {count} 条来源记录。",noEvidence:"该关系尚未定位到关系级原文片段，只能视为候选抽取，不能视为已验证事实。",sourceRecords:"来源记录",sourceLines:"第 {start}–{end} 行",sourceLine:"第 {line} 行",sourceRecordUnavailable:"数据包中缺少这条来源记录。",
+    entityRecord:"节点记录",incidenceRecord:"关联记录",associationAssertion:"关系记录",entity:"节点",statusUnknown:"来源状态未知",nativeHyperedge:"原生无向超边",identifier:"节点 ID",type:"节点类型",bundle:"数据包",memberships:"相关关系",
+    assertionId:"关系 ID",topology:"结构类型",semantics:"关系语义",memberCount:"关联节点数",projectionWarning:"该原生超边始终保留为一条多元关系，绝不会被自动拆成二元事实。",orderedMembers:"关系成员",assertion:"关系",role:"语义角色",ordinal:"序号",resolved:"已解析",unresolved:"未解析",yes:"是",no:"否",
+    zoomOut:"缩小",zoomIn:"放大",resetInitial:"复位并适配全部内容",panHint:"滚轮缩放 · 拖动空白处平移 · 拖动节点重排 · 双击适配全部内容",pairwiseAssertion:"无向二元关系",memberRoles:"角色标注",noRoleMetadata:"无角色元数据",
+    nativePairwiseBadge:"源生关系",sharedNode:"共享节点",sharedBy:"同时属于 {count} 条超边",evidenceTrace:"来源溯源",
+    undirectedLineMeaning:"实线 — {source} — {target} · {relation}。这是独立的原生无向二元关系，不是超边边界。",
+    graphEyebrow:"原生二元关系",graphTitle:"高阶知识图谱 · 二元关系",graphNoticeNative:"原生二元关系 — 这里只显示源数据包中确实存在的二节点关系，边旁标签说明关系语义；超边不会被扩展或转换成二元事实。",
+    hyperEyebrow:"无向高阶结构",incidenceTitle:"高阶知识图谱 · 关联视图",bipartiteView:"关系节点视图",incidenceNotice:"关联视图 — 关系作为一等节点保留，每项成员关系均以无箭头连线表示，不会把超边压平成普通边。",membershipSummaryBadge:"节点—超边归属",membershipSummaryNotice:"节点归属摘要 — 这里只展示当前节点以及包含它的原生超边，暂不展开其他成员；点击某条超边即可查看它的全部成员关系。",incidenceMatrixBadge:"关联矩阵",incidenceMatrixNotice:"关联矩阵 — 行表示节点，列表示原生超边；有色单元格表示一项带语义角色的成员关系。选择后只高亮对应行或列，不会自动切换视图；需要展开结构时进入关联视图。",matrixNodeHeader:"节点",matrixRelationHeader:"原生超边",matrixMembership:"成员关系",matrixRelationKey:"超边索引",
+    contourTitle:"高阶知识图谱 · 包络视图",contourBadge:"自适应边界",dualLobeBadge:"共享边界",contourNotice:"自适应边界 — 节点名使用无描边的柔和白底；每条原生超边名称保留与自身包络线同色的边框。包络线固定使用清晰粗线，点击填充区、边界或标题即可查看完整成员。",contourDominantNotice:"轨道包络 — 节点名使用无描边柔和白底，每条原生超边名称的边框与自身圆或椭圆保持同色；拖动节点会重新拟合相关规则包络。",contourDualLobeNotice:"双叶共享边界 — 节点名使用无描边柔和白底，原生超边名称边框与包络线同色。共享成员位于中央共同边界，点击即可单独查看完整成员。",contourDenseLabelNotice:"稠密总览仅保留紧凑的节点名；聚焦超边后可展开阅读局部结构。",visualKey:"视觉图例",hyperedgeEnclosure:"超边边界",pairwiseLink:"无向二元关系",
+    entityLayer:"节点层",assertionLayer:"关系 / 超边层",noGraph:"暂无原生二元关系",noHypergraph:"暂无高阶结构数据",derivedProjection:"仅显示原生二元关系",normalizedAssociations:"标准化关系",unversionedBundle:"未版本化数据包",
+    explainerStructure:"结构类型",explainerSource:"来源状态",topologyHyperedge:"无向超边",topologyPairwise:"无向二元关系",topologyMultilayer:"多层关系",topologyTemporal:"时序关系",topologyExplanationHyperedge:"一条无向关系同时连接多个节点，并保留各节点的语义角色。",topologyExplanationPairwise:"一条无向关系连接两个节点。",
+    statusModelPredicted:"模型提取候选",statusObservedMetadata:"观测元数据",statusDeterministicGeometry:"确定性几何关系",statusEstimatedAssociation:"估计关联",statusKnowledgeAsserted:"知识包关系",statusLiteratureAsserted:"文献报告关系",statusHumanAsserted:"人工确认关系",statusSyntheticDemo:"合成示例关系",statusExplanationModel:"由模型从输入材料中生成，尚未经过人工确认；它不是事实判定，也不表示因果结论。",statusExplanationDefault:"该标签记录关系进入数据包的方式，不代表真实性等级或因果强度。",
+    nodeTypePerson:"人物",nodeTypeEvent:"事件",nodeTypeTrajectoryStage:"轨迹阶段",nodeTypePolicy:"政策",nodeTypeTime:"时间",nodeTypeTimeInterval:"时间区间",nodeTypePlace:"地点",nodeTypeLiteraryWork:"文学作品",nodeTypeLiteraryGroup:"文学群体",nodeTypeCalligraphyWork:"书法作品",nodeTypeCalligraphyGroup:"书法群体",nodeTypeInstitution:"机构",nodeTypeInfrastructure:"基础设施"
+  }
+};
+
+function svgEl(name,attrs={}){const element=document.createElementNS(SVG_NS,name);for(const [key,value] of Object.entries(attrs)){if(value!==undefined&&value!==null)element.setAttribute(key,String(value))}return element}
+function htmlEl(name,className,text){const element=document.createElement(name);if(className)element.className=className;if(text!==undefined)element.textContent=String(text);return element}
+function t(key,values={}){let value=(I18N[currentLanguage]?.[key]??I18N.en[key]??key);for(const [name,replacement] of Object.entries(values))value=value.split(`{${name}}`).join(String(replacement));return value}
+function roleStyle(role){return `--role-color:var(--role-${roleIndex.get(String(role||"member"))||1})`}
+function hyperedgeStyle(assertion){return `--hyper-color:var(--hyper-${assertionPaletteIndex.get(String(assertion.id))||hashNumber(assertion.id)%6+1})`}
+function short(value,max=32){const text=String(value??"");return text.length>max?`${text.slice(0,max-1)}…`:text}
+function hashNumber(value){let hash=2166136261;for(const char of String(value)){hash^=char.charCodeAt(0);hash=Math.imul(hash,16777619)}return hash>>>0}
+function addSvgText(parent,x,y,value,className,anchor="middle"){const text=svgEl("text",{x,y,class:className,"text-anchor":anchor});text.textContent=short(value);parent.append(text);return text}
+function visualUnits(value){let units=0;for(const char of String(value??""))units+=/[\u3400-\u9fff\uf900-\ufaff]/.test(char)?1.8:/[A-Z0-9_]/.test(char)?1.05:.72;return units}
+function wrapVisualText(value,maxUnits=18,maxLines=2){const text=String(value??"").trim();if(!text)return[];const tokens=/[\u3400-\u9fff\uf900-\ufaff]/.test(text)?[...text]:text.split(/(?<=[\s_\-/])|(?=[\s_\-/])/).filter(Boolean);const lines=[];let line="";for(const token of tokens){const candidate=line+token;if(line&&visualUnits(candidate)>maxUnits){lines.push(line.trim());line=token.trimStart()}else line=candidate;if(lines.length===maxLines)break}if(lines.length<maxLines&&line.trim())lines.push(line.trim());const consumed=lines.join("").replace(/\s/g,"").length,source=text.replace(/\s/g,"");if(consumed<source.length&&lines.length){let last=lines.length-1;while(lines[last]&&visualUnits(`${lines[last]}…`)>maxUnits)lines[last]=lines[last].slice(0,-1);lines[last]=`${lines[last]}…`}return lines.slice(0,maxLines)}
+function textWidth(value,fontSize=12){return visualUnits(value)*fontSize*.62}
+function labelBlockMetrics(primary,secondary,{maxUnits=18,maxLines=2}={}){const lines=wrapVisualText(primary,maxUnits,maxLines),secondaryLines=secondary?wrapVisualText(secondary,Math.max(maxUnits,22),2):[],width=Math.min(270,Math.max(54,...lines.map(line=>textWidth(line,14)+18),...secondaryLines.map(line=>textWidth(line,10)+18))),height=Math.max(28,lines.length*16+secondaryLines.length*12+8);return{lines,secondaryLines,width,height}}
+function addSvgLabelBlock(parent,x,y,primary,secondary,{anchor="middle",maxUnits=18,maxLines=2,style=""}={}){const nameOnly=parent.classList?.contains("entity-mark")||parent.classList?.contains("assertion-mark")||parent.classList?.contains("hyperedge-label"),visibleSecondary=nameOnly?"":secondary,metrics=labelBlockMetrics(primary,visibleSecondary,{maxUnits,maxLines}),{lines,secondaryLines,width,height}=metrics,left=anchor==="middle"?-width/2:anchor==="end"?-width:0,textX=anchor==="middle"?0:anchor==="end"?-8:8;const group=svgEl("g",{class:"label-block",transform:`translate(${x} ${y})`,style});group.append(svgEl("rect",{x:left,y:-5,width,height,rx:9,class:"label-block-bg"}));const primaryText=svgEl("text",{x:textX,y:10,class:"node-label","text-anchor":anchor});lines.forEach((line,index)=>{const span=svgEl("tspan",{x:textX,dy:index?16:0});span.textContent=line;primaryText.append(span)});group.append(primaryText);if(secondaryLines.length){const secondaryText=svgEl("text",{x:textX,y:10+lines.length*16,class:"type-label","text-anchor":anchor});secondaryLines.forEach((line,index)=>{const span=svgEl("tspan",{x:textX,dy:index?12:0});span.textContent=line;secondaryText.append(span)});group.append(secondaryText)}parent.append(group);return group}
+function nodeDisplayLabel(value){const source=String(value??"").trim(),pairs=[["《","》"],["〈","〉"],["“","”"],["‘","’"]];for(const [left,right] of pairs){if(source.startsWith(left)&&source.endsWith(right)&&source.length>left.length+right.length){const stripped=source.slice(left.length,-right.length).trim();if(stripped)return stripped}}return source}
+function nativeHyperedgeDegree(nodeId){const ids=new Set();for(const member of DATA.members){if(String(member.node_id)!==String(nodeId))continue;const assertion=byAssertion.get(String(member.assertion_id));if(assertion&&isHyperedge(assertion))ids.add(String(assertion.id))}return ids.size}
+function nodeCircleMetrics(value,{dense=false,emphasis=false,membershipCount=1}={}){const compact=dense&&!emphasis,displayValue=nodeDisplayLabel(value),fontSize=compact?8.5:emphasis?11:9.5,maxUnits=compact?6.2:emphasis?8:7.2,maxLines=compact?2:3,lines=wrapVisualText(displayValue,maxUnits,maxLines),lineHeight=fontSize+2,widest=Math.max(0,...lines.map(line=>textWidth(line,fontSize))),baseRadius=Math.max(compact?20:emphasis?29:23,Math.min(compact?27:emphasis?40:35,Math.max(widest/2+7,lines.length*lineHeight/2+8))),degreeBoost=Math.min(compact?4:emphasis?7:5,Math.max(0,membershipCount-1)*1.15),radius=baseRadius+degreeBoost;return{displayValue,fontSize,lines,lineHeight,radius,compact,degreeBoost}}
+function addEntityNodeGlyph(parent,value,{dense=false,membershipCount=1,emphasis=false,hub=false}={}){const metrics=nodeCircleMetrics(value,{dense,emphasis,membershipCount}),{fontSize,lines,lineHeight,radius,compact}=metrics,shared=membershipCount>1;parent.dataset.hyperedgeDegree=String(membershipCount);if(hub)parent.append(svgEl("circle",{r:radius+11,class:"orbital-hub-halo"}));if(shared)parent.append(svgEl("circle",{r:radius+7,class:"shared-ring"}));parent.append(svgEl("circle",{r:radius,class:"node-halo"}));const startY=-(lines.length-1)*lineHeight/2+fontSize*.34,text=svgEl("text",{x:0,y:startY,class:`node-inside-label${compact?" dense":""}`,"text-anchor":"middle"});lines.forEach((line,index)=>{const span=svgEl("tspan",{x:0,dy:index?lineHeight:0});span.textContent=line;text.append(span)});parent.append(text);return metrics}
+function addEdgeRolePill(parent,x,y,value,style=""){const label=short(value,28),width=Math.min(220,Math.max(78,textWidth(label,9)+18)),group=svgEl("g",{class:"edge-role-pill",transform:`translate(${x} ${y})`,style});group.append(svgEl("rect",{x:-width/2,y:-10,width,height:20,rx:10}));addSvgText(group,0,3,label,"","middle");parent.append(group);return group}
+function computeViewFrame(){const factor=selection&&selection.id?0.68:0.82,rawWidth=Math.max(BASE_VIEW_WIDTH,Math.min(1600,window.innerWidth*factor)),rawHeight=Math.max(BASE_VIEW_HEIGHT,Math.min(900,window.innerHeight*.7)),width=Math.round(rawWidth/50)*50,height=Math.round(rawHeight/25)*25,xStretch=(width-140)/(BASE_VIEW_WIDTH-140),yStretch=(height-116)/(BASE_VIEW_HEIGHT-116);return{width,height,cx:width/2,cy:height/2,xStretch,yStretch,left:42,right:width-42,top:58,bottom:height-58}}
+function widenPoint(point){return{x:viewFrame.cx+(point.x-BASE_VIEW_WIDTH/2)*viewFrame.xStretch,y:viewFrame.cy+(point.y-BASE_VIEW_HEIGHT/2)*viewFrame.yStretch}}
+function widenPositions(positions){for(const [id,point] of positions)positions.set(id,widenPoint(point));return positions}
+function positionNamespace(view,variant="default"){return`${view}:${viewFrame.width}:${variant}`}
+function applyPositionOverrides(positions,namespace){for(const [id,point] of positions){const saved=dragPositionOverrides.get(`${namespace}:${id}`);if(saved)positions.set(id,{x:saved.x,y:saved.y})}return positions}
+function clearPositionOverrides(prefix){for(const key of [...dragPositionOverrides.keys()])if(key.startsWith(prefix))dragPositionOverrides.delete(key)}
+function pointerInViewport(panel,event){const matrix=panel.viewport.getScreenCTM();if(!matrix)return null;const point=panel.svg.createSVGPoint();point.x=event.clientX;point.y=event.clientY;return point.matrixTransform(matrix.inverse())}
+function enableNodeDrag(mark,panel,id,positions,namespace,onGeometryChange){mark.classList.add("draggable-mark");let drag=null;mark.addEventListener("pointerdown",event=>{if(event.button!==0)return;event.stopPropagation();const point=pointerInViewport(panel,event),origin=positions.get(String(id));if(!point||!origin)return;drag={pointerId:event.pointerId,start:point,origin:{...origin},previous:{...origin},moved:false};mark.setPointerCapture(event.pointerId);mark.classList.add("is-dragging")});mark.addEventListener("pointermove",event=>{if(!drag||event.pointerId!==drag.pointerId)return;const point=pointerInViewport(panel,event);if(!point)return;const dx=point.x-drag.start.x,dy=point.y-drag.start.y;if(Math.hypot(dx,dy)>3)drag.moved=true;const next={x:Math.max(viewFrame.left,Math.min(viewFrame.right,drag.origin.x+dx)),y:Math.max(viewFrame.top,Math.min(viewFrame.bottom,drag.origin.y+dy))},previous={...drag.previous};positions.set(String(id),next);dragPositionOverrides.set(`${namespace}:${id}`,next);onGeometryChange(String(id),next,previous);drag.previous={...next}});const finish=event=>{if(!drag||event.pointerId!==drag.pointerId)return;if(mark.hasPointerCapture(event.pointerId))mark.releasePointerCapture(event.pointerId);if(drag.moved)mark.__suppressClick=true;drag=null;mark.classList.remove("is-dragging")};mark.addEventListener("pointerup",finish);mark.addEventListener("pointercancel",finish)}
+function assertionMembers(id){return membersByAssertion.get(String(id))||[]}
+function isHyperedge(assertion){return assertion.topology==="hyperedge"||assertionMembers(assertion.id).length>2}
+function localizedTopology(value){const key={hyperedge:"topologyHyperedge",pairwise:"topologyPairwise",multilayer:"topologyMultilayer",temporal:"topologyTemporal"}[String(value||"").toLowerCase()];return key?t(key):(value||t("statusUnknown"))}
+function topologyExplanation(value){return String(value||"").toLowerCase()==="hyperedge"?t("topologyExplanationHyperedge"):t("topologyExplanationPairwise")}
+function localizedStatus(value){const key={model_predicted:"statusModelPredicted",observed_metadata:"statusObservedMetadata",deterministic_geometry:"statusDeterministicGeometry",estimated_association:"statusEstimatedAssociation",knowledge_asserted:"statusKnowledgeAsserted",literature_asserted:"statusLiteratureAsserted",human_asserted:"statusHumanAsserted",synthetic_demo:"statusSyntheticDemo"}[String(value||"").toLowerCase()];return key?t(key):(value||t("statusUnknown"))}
+function localizedNodeType(value){const normalized=String(value||"").trim().toLowerCase().replaceAll("-","_").replaceAll(" ","_"),key={person:"nodeTypePerson",event:"nodeTypeEvent",trajectory_stage:"nodeTypeTrajectoryStage",policy:"nodeTypePolicy",time:"nodeTypeTime",time_interval:"nodeTypeTimeInterval",place:"nodeTypePlace",literary_work:"nodeTypeLiteraryWork",literary_group:"nodeTypeLiteraryGroup",calligraphy_work:"nodeTypeCalligraphyWork",calligraphy_group:"nodeTypeCalligraphyGroup",institution:"nodeTypeInstitution",infrastructure:"nodeTypeInfrastructure"}[normalized];return key?t(key):(value||t("entity"))}
+function statusExplanation(value){return String(value||"").toLowerCase()==="model_predicted"?t("statusExplanationModel"):t("statusExplanationDefault")}
+function createDefs(){}
+function addGrid(svg){const grid=svgEl("g",{"aria-hidden":"true"});for(let x=0;x<=viewFrame.width;x+=50)grid.append(svgEl("line",{x1:x,y1:0,x2:x,y2:viewFrame.height,class:"grid-line"}));for(let y=0;y<=viewFrame.height;y+=50)grid.append(svgEl("line",{x1:0,y1:y,x2:viewFrame.width,y2:y,class:"grid-line"}));svg.append(grid)}
+function activeAssertions(){if(!focusAssertionIds)return DATA.assertions;return DATA.assertions.filter(assertion=>focusAssertionIds.has(String(assertion.id)))}
+function activeMembers(){if(!focusAssertionIds)return DATA.members;return DATA.members.filter(member=>focusAssertionIds.has(String(member.assertion_id)))}
+function activeNodes(){if(!focusAssertionIds)return DATA.nodes;const ids=new Set(activeMembers().map(member=>String(member.node_id)));return DATA.nodes.filter(node=>ids.has(String(node.id)))}
+function focusRelation(id){focusAssertionIds=new Set([String(id)])}
+function focusSharedNode(id){const incident=DATA.members.filter(member=>String(member.node_id)===String(id)).map(member=>String(member.assertion_id));const hyperedges=incident.filter(assertionId=>{const assertion=byAssertion.get(assertionId);return assertion&&isHyperedge(assertion)});focusAssertionIds=new Set(hyperedges.length?hyperedges:incident)}
+
+function updateStaticCopy(){
+  document.documentElement.lang=currentLanguage==="zh"?"zh-CN":"en";
+  document.title=t("appTitle");document.getElementById("app-title").textContent=t("appTitle");
+  document.getElementById("representation-controls").setAttribute("aria-label",t("representationControl"));
+  document.getElementById("language-controls").setAttribute("aria-label",t("language"));
+  document.getElementById("stats").setAttribute("aria-label",t("bundleStatistics"));
+  const pairwiseButton=document.querySelector('[data-representation="pairwise"]');if(pairwiseButton)pairwiseButton.textContent=t("projection");document.querySelector('[data-representation="matrix"]').textContent=t("matrixRepresentation");document.querySelector('[data-representation="incidence"]').textContent=t("incidenceRepresentation");document.querySelector('[data-representation="contour"]').textContent=t("contourRepresentation");
+  document.getElementById("theme-toggle").setAttribute("aria-label",t("switchTheme"));document.getElementById("drawer-heading").textContent=t("drawerTitle");document.getElementById("drawer-subtitle").textContent=t("drawerSubtitle");
+  document.querySelectorAll(".language-button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.language===currentLanguage)));
+}
+
+function populateStats(){
+  const hyperedges=DATA.assertions.filter(isHyperedge).length;
+  const pairwise=DATA.assertions.length-hyperedges;
+  const evidenceCount=Number(DATA.manifest.counts?.assertions_with_evidence??DATA.assertions.filter(item=>(item.evidence_refs||[]).length).length);
+  const coverage=DATA.assertions.length?Math.round(evidenceCount/DATA.assertions.length*100):0;
+  const values=[
+    [t("entities"),DATA.nodes.length,t("normalizedNodes"),"var(--entity)"],
+    [t("assertions"),DATA.assertions.length,`${pairwise} ${t("pairwise")} · ${hyperedges} ${t("hyperedge")}`,"var(--assertion)"],
+    [t("incidences"),DATA.members.length,`${roles.length} ${roles.length===1?t("memberRole"):t("memberRolesCount")}`,"var(--pair)"],
+    [t("evidenceCoverage"),`${coverage}%`,t("assertionsLinked",{evidence:evidenceCount,total:DATA.assertions.length}),coverage?"var(--success)":"var(--warning)"],
+  ];
+  const container=document.getElementById("stats");container.replaceChildren();
+  for(const [label,value,note,color] of values){const card=htmlEl("article","stat");const heading=htmlEl("div","stat-label");const dot=htmlEl("span","stat-dot");dot.style.background=color;heading.append(dot,document.createTextNode(label));card.append(heading,htmlEl("div","stat-value",value),htmlEl("div","stat-note",note));container.append(card)}
+}
+
+function initialDrawer(){
+  const drawer=document.getElementById("drawer"),layout=document.querySelector(".layout");drawer.classList.add("is-empty");layout.classList.add("drawer-idle");const body=document.getElementById("drawer-body");body.replaceChildren();
+  const empty=htmlEl("div","drawer-empty");empty.append(htmlEl("div","drawer-empty-visual","⌘"),htmlEl("div","",t("selectPrompt")),htmlEl("p","",t("projectionPrompt")));body.append(empty)
+}
+function addDetailGrid(parent,rows){const dl=htmlEl("dl","detail-grid");for(const [label,value] of rows){dl.append(htmlEl("dt","",label),htmlEl("dd","",value??"—"))}parent.append(dl)}
+function addRaw(parent,value){const details=htmlEl("details","raw-details");details.append(htmlEl("summary","",t("rawRecord")));const pre=htmlEl("pre");pre.textContent=JSON.stringify(value,null,2);details.append(pre);parent.append(details)}
+function addSources(parent){const sources=DATA.manifest.sources||[];const section=htmlEl("section","detail-section");section.append(htmlEl("h3","",t("bundleProvenance")));if(sources.length){for(const source of sources){const row=htmlEl("div","source-row");row.textContent=`${source.path||"source"}${source.sha256?` · sha256 ${short(source.sha256,18)}`:""}`;section.append(row)}}else section.append(htmlEl("div","source-row",t("noSource")));parent.append(section)}
+function addEvidence(parent,assertion){const refs=assertion.evidence_refs||[];const alert=htmlEl("div",`evidence-alert${refs.length?" good":""}`);alert.textContent=refs.length?(refs.length===1?t("evidenceOne"):t("evidenceMany",{count:refs.length})):t("noEvidence");parent.append(alert);if(!refs.length)return;const section=htmlEl("section","detail-section");section.append(htmlEl("h3","",`${t("sourceRecords")} · ${refs.length}`));for(const ref of refs){const record=byEvidence.get(String(ref)),card=htmlEl("div","source-record");card.append(htmlEl("div","source-record-id",String(ref)));if(record){const start=record.line_start,end=record.line_end,where=start==null?String(record.source||"—"):start===end?`${record.source||"—"} · ${t("sourceLine",{line:start})}`:`${record.source||"—"} · ${t("sourceLines",{start,end})}`;card.append(htmlEl("div","source-record-location",where));if(record.quote)card.append(htmlEl("blockquote","source-record-quote",record.quote))}else card.append(htmlEl("div","source-record-location",t("sourceRecordUnavailable")));section.append(card)}parent.append(section)}
+function memberDisplay(member){return byNode.get(String(member.node_id))?.label||member.node_id}
+function addTermExplainer(parent,assertion){const box=htmlEl("div","term-explainer");const rows=[[t("explainerStructure"),topologyExplanation(assertion.topology)],[t("explainerSource"),statusExplanation(assertion.epistemic_status)]];for(const [label,value] of rows){const row=htmlEl("div","term-row");row.append(htmlEl("span","term-label",label),htmlEl("span","",value));box.append(row)}parent.append(box)}
+function showDrawer(kind,payload){
+  const drawer=document.getElementById("drawer"),layout=document.querySelector(".layout");drawer.classList.remove("is-empty");layout.classList.remove("drawer-idle");const body=document.getElementById("drawer-body");body.replaceChildren();
+  const assertion=kind==="assertion"?payload:kind==="member"?byAssertion.get(String(payload.assertion_id)):null;
+  const node=kind==="node"?payload:null;
+  body.append(htmlEl("div","drawer-kicker",kind==="node"?t("entityRecord"):kind==="member"?t("incidenceRecord"):t("associationAssertion")));
+  body.append(htmlEl("div","drawer-title",node?.label||assertion?.predicate||payload.role||"Selection"));
+  const tags=htmlEl("div","tag-row");
+  if(node)tags.append(htmlEl("span","tag",localizedNodeType(node.type)));
+  if(assertion){const topologyTag=htmlEl("span","tag",localizedTopology(assertion.topology));topologyTag.title=topologyExplanation(assertion.topology);const statusTag=htmlEl("span","tag",localizedStatus(assertion.epistemic_status));statusTag.title=statusExplanation(assertion.epistemic_status);tags.append(topologyTag,statusTag);if(isHyperedge(assertion))tags.append(htmlEl("span","tag warning",t("nativeHyperedge")))}
+  if(kind==="member")tags.append(htmlEl("span","tag",payload.role||t("memberRole")))
+  body.append(tags);
+  if(assertion)addTermExplainer(body,assertion);
+  if(node){addDetailGrid(body,[[t("identifier"),node.id],[t("type"),localizedNodeType(node.type)],[t("bundle"),DATA.manifest.bundle_id]]);const related=DATA.members.filter(member=>String(member.node_id)===String(node.id));const section=htmlEl("section","detail-section");section.append(htmlEl("h3","",`${t("memberships")} · ${related.length}`));const list=htmlEl("div","member-list");for(const member of related){const row=htmlEl("div","member-row");const dot=htmlEl("span","member-role-dot");dot.style.cssText=roleStyle(member.role);row.append(dot,htmlEl("span","member-name",byAssertion.get(String(member.assertion_id))?.predicate||member.assertion_id),htmlEl("span","member-role",member.role));list.append(row)}section.append(list);body.append(section);addSources(body);addRaw(body,node)}
+  if(assertion){const members=assertionMembers(assertion.id);const details=[[t("assertionId"),assertion.id],[t("topology"),localizedTopology(assertion.topology)],[t("semantics"),assertion.semantics],[t("memberCount"),members.length]];addDetailGrid(body,details);addEvidence(body,assertion);if(isHyperedge(assertion)){const notice=htmlEl("div","evidence-alert");notice.textContent=t("projectionWarning");body.append(notice)}const section=htmlEl("section","detail-section");section.append(htmlEl("h3","",t("orderedMembers")));const list=htmlEl("div","member-list");for(const member of members){const row=htmlEl("div","member-row");const dot=htmlEl("span","member-role-dot");dot.style.cssText=roleStyle(member.role);row.append(dot,htmlEl("span","member-name",memberDisplay(member)),htmlEl("span","member-role",`${member.role}${member.resolved===false?` · ${t("unresolved")}`:""}`));list.append(row)}section.append(list);body.append(section);addSources(body);addRaw(body,assertion)}
+  if(kind==="member"){const details=[[t("assertion"),payload.assertion_id],[t("entity"),memberDisplay(payload)],[t("role"),payload.role],[t("ordinal"),payload.ordinal],[t("resolved"),payload.resolved===false?t("no"):t("yes")]];addDetailGrid(body,details);if(assertion)addEvidence(body,assertion);addSources(body);addRaw(body,payload)}
+}
+
+function tooltipHandlers(mark,container,text){const tip=container.querySelector(".tooltip");mark.addEventListener("pointerenter",event=>{tip.textContent=text;tip.classList.add("visible");positionTooltip(event,container,tip)});mark.addEventListener("pointermove",event=>positionTooltip(event,container,tip));mark.addEventListener("pointerleave",()=>tip.classList.remove("visible"))}
+function positionTooltip(event,container,tip){const bounds=container.getBoundingClientRect();let x=event.clientX-bounds.left+10;let y=event.clientY-bounds.top+10;if(x+tip.offsetWidth>bounds.width-8)x=Math.max(8,x-tip.offsetWidth-20);if(y+tip.offsetHeight>bounds.height-8)y=Math.max(8,y-tip.offsetHeight-20);tip.style.left=`${x}px`;tip.style.top=`${y}px`}
+function activateMark(mark,kind,payload){mark.setAttribute("tabindex","0");mark.setAttribute("role","button");mark.addEventListener("click",event=>{event.stopPropagation();if(mark.__suppressClick){mark.__suppressClick=false;return}const normalizedKind=kind==="node"?"node":"assertion";const id=String(kind==="node"?payload.id:kind==="assertion"?payload.id:payload.assertion_id);selection={kind:normalizedKind,id,drawerKind:kind,payload};showDrawer(kind,payload);if(currentView==="hypergraph"&&hyperMode==="matrix"){focusAssertionIds=null;applySelection();return}if(currentView==="hypergraph"&&hyperMode==="contour")clearPositionOverrides("contour:");if(normalizedKind==="assertion")focusRelation(id);else focusSharedNode(id);autoFitRequested=true;render()});mark.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();mark.dispatchEvent(new MouseEvent("click",{bubbles:true}))}})}
+function clearSelection(){selection=null;focusAssertionIds=null;dragPositionOverrides.clear();autoFitRequested=true;initialDrawer();render()}
+function applySelection(){
+  const all=document.querySelectorAll(".mark,.link,.hyper-envelope-layer");for(const element of all)element.classList.remove("is-selected","is-related","is-muted","is-hidden");if(!selection)return;
+  const selectedNodes=new Set(),selectedAssertions=new Set();
+  const stableMatrix=currentView==="hypergraph"&&hyperMode==="matrix";
+  if(selection.kind==="node"){
+    selectedNodes.add(selection.id);
+    for(const member of DATA.members)if(String(member.node_id)===selection.id)selectedAssertions.add(String(member.assertion_id));
+    if(!stableMatrix)for(const assertionId of selectedAssertions)for(const member of assertionMembers(assertionId))selectedNodes.add(String(member.node_id));
+  }
+  else{selectedAssertions.add(selection.id);for(const member of assertionMembers(selection.id))selectedNodes.add(String(member.node_id))}
+  for(const element of all){const node=element.dataset.node;const nodeSecondary=element.dataset.nodeSecondary;const assertion=element.dataset.assertion;const direct=(selection.kind==="node"&&(node===selection.id||nodeSecondary===selection.id))||(selection.kind!=="node"&&assertion===selection.id);const related=(node&&selectedNodes.has(node))||(nodeSecondary&&selectedNodes.has(nodeSecondary))||(assertion&&selectedAssertions.has(assertion));if(direct)element.classList.add("is-selected");else if(related)element.classList.add("is-related");else if(selection.kind==="assertion"&&!stableMatrix)element.classList.add("is-hidden");else element.classList.add("is-muted")}
+}
+
+function createPanel({eyebrow,title,badge,notice,testId}){
+  const panel=htmlEl("article","viz-panel");panel.dataset.testid=testId;
+  const head=htmlEl("header","panel-head");const titleBox=htmlEl("div","panel-title");titleBox.append(htmlEl("div","eyebrow",eyebrow),htmlEl("h2","",title));head.append(titleBox);if(badge)head.append(htmlEl("span","semantic-badge",badge));
+  const tools=htmlEl("div","panel-tools");for(const [action,label,symbol] of [["zoom-out",t("zoomOut"),"−"],["zoom-in",t("zoomIn"),"+"],["reset",t("resetInitial"),"↺"]]){const button=htmlEl("button","tool-button",symbol);button.type="button";button.dataset.action=action;button.title=label;button.setAttribute("aria-label",label);tools.append(button)}head.append(tools);panel.append(head);
+  const canvas=htmlEl("div","canvas-wrap");const svg=svgEl("svg",{class:"network-svg",viewBox:`0 0 ${viewFrame.width} ${viewFrame.height}`,role:"img","aria-label":title,preserveAspectRatio:"xMidYMid meet",style:`height:${viewFrame.height}px`});const desc=svgEl("desc");desc.textContent=notice;svg.append(desc);const id=++panelSerial;createDefs(svg,id);addGrid(svg);svg.append(svgEl("rect",{x:0,y:0,width:viewFrame.width,height:viewFrame.height,class:"plot-backdrop"}));const viewport=svgEl("g",{class:"viewport"});svg.append(viewport);const tooltip=htmlEl("div","tooltip");tooltip.setAttribute("role","tooltip");canvas.append(svg,tooltip,htmlEl("div","canvas-hint",t("panHint")));panel.append(canvas);
+  const foot=htmlEl("footer","panel-foot");const legend=htmlEl("div","legend");foot.append(legend);panel.append(foot);
+  setupPanZoom(panel,svg,viewport);return{panel,canvas,svg,viewport,foot,legend,id}
+}
+function setupPanZoom(panel,svg,viewport){let state={x:0,y:0,scale:1};let drag=null;const apply=()=>viewport.setAttribute("transform",`translate(${state.x} ${state.y}) scale(${state.scale})`);const zoom=(factor,anchor={x:viewFrame.cx,y:viewFrame.cy})=>{const next=Math.max(.35,Math.min(4,state.scale*factor));state.x=anchor.x-(anchor.x-state.x)*(next/state.scale);state.y=anchor.y-(anchor.y-state.y)*(next/state.scale);state.scale=next;apply()};const fitContent=()=>{let bounds;try{bounds=viewport.getBBox()}catch{return}if(!bounds||bounds.width<1||bounds.height<1){state={x:0,y:0,scale:1};apply();return}const padding=42,scale=Math.max(.35,Math.min(1.3,(viewFrame.width-padding*2)/bounds.width,(viewFrame.height-padding*2)/bounds.height));state={scale,x:(viewFrame.width-bounds.width*scale)/2-bounds.x*scale,y:(viewFrame.height-bounds.height*scale)/2-bounds.y*scale};apply()};panel.__fitToContent=fitContent;panel.querySelector('[data-action="zoom-in"]').addEventListener("click",()=>zoom(1.22));panel.querySelector('[data-action="zoom-out"]').addEventListener("click",()=>zoom(1/1.22));panel.querySelector('[data-action="reset"]').addEventListener("click",clearSelection);svg.addEventListener("wheel",event=>{event.preventDefault();const rect=svg.getBoundingClientRect();zoom(event.deltaY<0?1.12:1/1.12,{x:(event.clientX-rect.left)/rect.width*viewFrame.width,y:(event.clientY-rect.top)/rect.height*viewFrame.height})},{passive:false});svg.addEventListener("pointerdown",event=>{if(event.target.closest?.(".mark,.link,.hyper-envelope-layer"))return;drag={x:event.clientX,y:event.clientY,startX:state.x,startY:state.y};svg.setPointerCapture(event.pointerId);svg.classList.add("is-panning")});svg.addEventListener("pointermove",event=>{if(!drag)return;const rect=svg.getBoundingClientRect();state.x=drag.startX+(event.clientX-drag.x)/rect.width*viewFrame.width;state.y=drag.startY+(event.clientY-drag.y)/rect.height*viewFrame.height;apply()});const end=()=>{drag=null;svg.classList.remove("is-panning")};svg.addEventListener("pointerup",end);svg.addEventListener("pointercancel",end);svg.addEventListener("dblclick",fitContent)}
+function addGraphLegend(legend){const item=htmlEl("span","legend-item");item.append(htmlEl("i","legend-line"),document.createTextNode(t("pairwiseAssertion")));legend.append(item)}
+function addRoleLegend(legend,mode="roles",roleValues=roles){legend.append(htmlEl("span","legend-title",mode==="contour"?t("visualKey"):t("memberRoles")));if(mode==="contour"){const node=htmlEl("span","legend-item");node.append(htmlEl("i","legend-node-swatch"),document.createTextNode(t("entity")));legend.append(node);const relation=htmlEl("span","legend-item");relation.append(htmlEl("i","legend-hyperedge-swatch"),document.createTextNode(t("nativeHyperedge")));legend.append(relation);const boundary=htmlEl("span","legend-item");boundary.append(htmlEl("i","legend-envelope-line"),document.createTextNode(t("hyperedgeEnclosure")));legend.append(boundary);const shared=htmlEl("span","legend-item");shared.append(htmlEl("i","legend-shared-node-swatch"),document.createTextNode(t("sharedNode")));legend.append(shared);if(DATA.assertions.some(assertion=>!isHyperedge(assertion))){const pair=htmlEl("span","legend-item");pair.append(htmlEl("i","legend-line"),document.createTextNode(t("pairwiseLink")));legend.append(pair)}return}for(const role of roleValues){const item=htmlEl("span","legend-item");const swatch=htmlEl("i","legend-swatch");swatch.style.cssText=roleStyle(role);item.append(swatch,document.createTextNode(role));legend.append(item)}if(!roleValues.length)legend.append(htmlEl("span","legend-item",t("noRoleMetadata")))}
+
+function graphLinks(assertions=DATA.assertions){
+  const links=[];
+  for(const assertion of assertions){
+    const members=assertionMembers(assertion.id).filter(member=>byNode.has(String(member.node_id)));
+    if(!isHyperedge(assertion)&&members.length>=2){
+      const source=members.find(member=>member.role==="source")||members[0],target=members.find(member=>member.role==="target")||members[1];
+      links.push({source:String(source.node_id),target:String(target.node_id),assertion,roles:[source.role,target.role]});
+    }
+  }
+  return links
+}
+function relationSemanticLabel(assertion){if(String(assertion.semantics||"").toLowerCase()==="audit_navigation")return t("evidenceTrace");return String(assertion.predicate||t("pairwiseAssertion")).replaceAll("_"," ")}
+function pairwiseLineDescription(link){const source=byNode.get(String(link.source))?.label||link.source,target=byNode.get(String(link.target))?.label||link.target,relation=relationSemanticLabel(link.assertion);return t("undirectedLineMeaning",{source,target,relation})}
+function addPairwiseExplanation(panel,links){for(const link of links.slice(0,4)){const row=htmlEl("div","semantic-notice pairwise-explanation");row.dataset.testid="pairwise-line-explanation";row.append(htmlEl("span","notice-symbol","—"),htmlEl("span","",pairwiseLineDescription(link)));panel.foot.querySelector(".legend").before(row)}}
+function pairwiseEdgeLabelPoint(link,source,target){const dx=target.x-source.x,dy=target.y-source.y,length=Math.max(Math.hypot(dx,dy),1),offset=18+hashNumber(link.assertion.id)%9;return{x:(source.x+target.x)/2-dy/length*offset,y:(source.y+target.y)/2+dx/length*offset}}
+function addPairwiseEdgeLabel(parent,panel,link,source,target){const point=pairwiseEdgeLabelPoint(link,source,target),labelText=`${relationSemanticLabel(link.assertion)} —`,width=Math.min(210,Math.max(82,short(labelText,24).length*6.5+28)),group=svgEl("g",{class:"mark pairwise-edge-label",transform:`translate(${point.x} ${point.y})`,"data-assertion":link.assertion.id,"aria-label":pairwiseLineDescription(link)});group.__link=link;group.append(svgEl("rect",{x:-width/2,y:-12,width,height:24,rx:12,class:"label-pill"}),svgEl("circle",{cx:-width/2+12,cy:0,r:4,class:"relation-dot"}));addSvgText(group,5,3,short(labelText,24),"","middle");activateMark(group,"assertion",link.assertion);tooltipHandlers(group,panel.canvas,pairwiseLineDescription(link));parent.append(group);return group}
+function forcePositions(nodes,links){const positions=new Map();const count=Math.max(nodes.length,1);const radius=Math.min(235,125+count*9);nodes.forEach((node,index)=>{const phase=(hashNumber(node.id)%1000)/1000*.42;const angle=Math.PI*2*index/count-Math.PI/2+phase;positions.set(String(node.id),{x:500+Math.cos(angle)*radius,y:325+Math.sin(angle)*radius})});if(nodes.length>140)return positions;for(let step=0;step<170;step++){const temperature=1-step/170;const delta=new Map(nodes.map(node=>[String(node.id),{x:0,y:0}]));for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=positions.get(String(nodes[i].id)),b=positions.get(String(nodes[j].id));let dx=a.x-b.x,dy=a.y-b.y;const distance2=Math.max(dx*dx+dy*dy,80);const force=2400/distance2;const distance=Math.sqrt(distance2);dx=dx/distance*force;dy=dy/distance*force;delta.get(String(nodes[i].id)).x+=dx;delta.get(String(nodes[i].id)).y+=dy;delta.get(String(nodes[j].id)).x-=dx;delta.get(String(nodes[j].id)).y-=dy}for(const link of links){const a=positions.get(link.source),b=positions.get(link.target);if(!a||!b)continue;const dx=b.x-a.x,dy=b.y-a.y;const distance=Math.max(Math.sqrt(dx*dx+dy*dy),1),force=(distance-125)*.006;delta.get(link.source).x+=dx*force;delta.get(link.source).y+=dy*force;delta.get(link.target).x-=dx*force;delta.get(link.target).y-=dy*force}for(const node of nodes){const id=String(node.id),point=positions.get(id),move=delta.get(id);move.x+=(500-point.x)*.008;move.y+=(325-point.y)*.008;point.x=Math.max(70,Math.min(930,point.x+Math.max(-9,Math.min(9,move.x))*temperature));point.y=Math.max(65,Math.min(585,point.y+Math.max(-9,Math.min(9,move.y))*temperature))}}return positions}
+const baseForcePositions=forcePositions;
+forcePositions=function(nodes,links){const positions=baseForcePositions(nodes,links),points=[...positions.values()];if(points.length>=2&&points.length<=140){const minX=Math.min(...points.map(point=>point.x)),maxX=Math.max(...points.map(point=>point.x)),minY=Math.min(...points.map(point=>point.y)),maxY=Math.max(...points.map(point=>point.y)),scale=Math.min(2.25,Math.max(1,Math.min(540/Math.max(maxX-minX,1),390/Math.max(maxY-minY,1)))),centerX=(minX+maxX)/2,centerY=(minY+maxY)/2;for(const point of points){point.x=500+(point.x-centerX)*scale;point.y=325+(point.y-centerY)*scale}}return widenPositions(positions)};
+function curvedPath(source,target,seed){const dx=target.x-source.x,dy=target.y-source.y;const length=Math.max(Math.sqrt(dx*dx+dy*dy),1);const bend=((hashNumber(seed)%5)-2)*5;const mx=(source.x+target.x)/2-dy/length*bend,my=(source.y+target.y)/2+dx/length*bend;return `M ${source.x} ${source.y} Q ${mx} ${my} ${target.x} ${target.y}`}
+function graphPanel(){
+  const panel=createPanel({eyebrow:t("graphEyebrow"),title:t("graphTitle"),badge:t("nativePairwiseBadge"),testId:"native-pairwise",notice:t("graphNoticeNative")});addGraphLegend(panel.legend);
+  const assertions=activeAssertions().filter(assertion=>!isHyperedge(assertion)),links=graphLinks(assertions),nodeIds=new Set(links.flatMap(link=>[link.source,link.target])),nodes=activeNodes().filter(node=>nodeIds.has(String(node.id))),denseGraphOverview=!focusAssertionIds&&nodes.length>24,graphNamespace=positionNamespace("graph","native-pairwise"),positions=applyPositionOverrides(forcePositions(nodes,links),graphNamespace),edgeLayer=svgEl("g",{class:"edge-layer"}),nodeLayer=svgEl("g",{class:"node-layer"}),labelLayer=svgEl("g",{class:"pairwise-label-layer"});panel.viewport.append(edgeLayer,nodeLayer,labelLayer);
+  const updateGraphGeometry=()=>{for(const path of edgeLayer.children){const link=path.__link;if(!link)continue;const source=positions.get(link.source),target=positions.get(link.target);if(!source||!target)continue;path.setAttribute("d",curvedPath(source,target,`${link.assertion.id}:${link.source}:${link.target}`))}for(const group of labelLayer.children){const link=group.__link;if(!link)continue;const source=positions.get(link.source),target=positions.get(link.target);if(!source||!target)continue;const point=pairwiseEdgeLabelPoint(link,source,target);group.setAttribute("transform",`translate(${point.x} ${point.y})`)}for(const group of nodeLayer.children){const point=positions.get(String(group.dataset.positionId));if(point)group.setAttribute("transform",`translate(${point.x} ${point.y})`)}};
+  for(const link of links){const source=positions.get(link.source),target=positions.get(link.target);if(!source||!target)continue;const d=curvedPath(source,target,`${link.assertion.id}:${link.source}:${link.target}`),path=svgEl("path",{d,class:"link pairwise","data-node":link.source,"data-node-secondary":link.target,"data-assertion":link.assertion.id,"aria-label":`${link.assertion.predicate}: ${link.source} — ${link.target}`});path.__link=link;activateMark(path,"assertion",link.assertion);tooltipHandlers(path,panel.canvas,`${link.assertion.predicate} · ${t("pairwiseAssertion")}`);edgeLayer.append(path);if(links.length<=16)addPairwiseEdgeLabel(labelLayer,panel,link,source,target)}
+  for(const node of nodes){const point=positions.get(String(node.id));if(!point)continue;const lodClass=denseGraphOverview?" graph-lod-label":"",nodeType=localizedNodeType(node.type),membershipCount=nativeHyperedgeDegree(node.id),group=svgEl("g",{class:`mark entity-mark${lodClass}`,transform:`translate(${point.x} ${point.y})`,"data-node":node.id,"data-position-id":node.id,"aria-label":`${node.label}, ${nodeType}`});addEntityNodeGlyph(group,node.label,{dense:denseGraphOverview,membershipCount});activateMark(group,"node",node);tooltipHandlers(group,panel.canvas,`${node.label} · ${nodeType}`);nodeLayer.append(group);enableNodeDrag(group,panel,node.id,positions,graphNamespace,updateGraphGeometry)}
+  addPairwiseExplanation(panel,links);if(!nodes.length)addSvgText(panel.viewport,viewFrame.cx,viewFrame.cy,t("noGraph"),"empty-state");return panel.panel
+}
+
+function lanePositions(items,x){const map=new Map(),count=items.length;if(!count)return map;const top=70,bottom=580;items.forEach((item,index)=>map.set(String(item.id),{x,y:count===1?BASE_VIEW_HEIGHT/2:top+index*(bottom-top)/(count-1)}));return widenPositions(map)}
+function assertionTypeText(assertion){if(!isHyperedge(assertion))return t("pairwiseAssertion");const members=assertionMembers(assertion.id);return currentLanguage==="zh"?`${members.length} 元无向超边`:`${members.length}-ary undirected hyperedge`}
+function focusedIncidencePositions(nodes,assertion){
+  const positions=new Map(),memberByNode=new Map(assertionMembers(assertion.id).map(member=>[String(member.node_id),member])),specific=[{types:new Set(["person"]),anchor:-Math.PI/2,span:1.08},{types:new Set(["time","time_interval"]),anchor:Math.PI,span:.92},{types:new Set(["place"]),anchor:0,span:.92}],placed=new Set(),order=(left,right)=>(memberByNode.get(String(left.id))?.ordinal??0)-(memberByNode.get(String(right.id))?.ordinal??0)||String(left.id).localeCompare(String(right.id));
+  const placeSector=(items,anchor,baseSpan)=>{const span=Math.min(1.82,Math.max(baseSpan,(items.length-1)*.34));items.sort(order).forEach((node,index)=>{const offset=items.length===1?0:(index/(items.length-1)-.5)*span,angle=anchor+offset;positions.set(String(node.id),{x:500+Math.cos(angle)*350,y:325+Math.sin(angle)*238});placed.add(String(node.id))})};
+  for(const bucket of specific)placeSector(nodes.filter(node=>bucket.types.has(String(node.type||"").toLowerCase())),bucket.anchor,bucket.span);
+  placeSector(nodes.filter(node=>!placed.has(String(node.id))),Math.PI/2,1.42);return widenPositions(positions)
+}
+function incidenceLayout(nodes,assertions){if(focusAssertionIds&&assertions.length===1)return{entityPositions:focusedIncidencePositions(nodes,assertions[0]),assertionPositions:new Map([[String(assertions[0].id),{x:viewFrame.cx,y:viewFrame.cy}]]),dense:false,focused:true};if(nodes.length<=14)return{entityPositions:lanePositions(nodes,290),assertionPositions:lanePositions(assertions,750),dense:false,focused:false};const columns=Math.min(4,Math.max(2,Math.ceil(nodes.length/10))),rows=Math.ceil(nodes.length/columns),entityPositions=new Map(),left=105,right=625;nodes.forEach((node,index)=>{const column=Math.floor(index/rows),row=index%rows,x=columns===1?290:left+column*(right-left)/(columns-1),y=rows===1?325:66+row*(514/Math.max(rows-1,1));entityPositions.set(String(node.id),{x,y})});return{entityPositions:widenPositions(entityPositions),assertionPositions:lanePositions(assertions,845),dense:true,focused:false}}
+function incidenceMemberKey(member){return`${member.assertion_id}:${member.node_id}:${member.ordinal??0}`}
+function incidenceRoleText(member,members){const duplicates=members.filter(candidate=>String(candidate.assertion_id)===String(member.assertion_id)&&String(candidate.role||"")===String(member.role||""));return duplicates.length>1?`${member.role} · ${memberDisplay(member)}`:member.role}
+function incidenceRolePlacements(members,entityPositions,assertionPositions,focused=false){
+  const placements=new Map(),occupied=[],points=[...entityPositions.values(),...assertionPositions.values()],ordered=[...members].sort((left,right)=>String(left.assertion_id).localeCompare(String(right.assertion_id))||(left.ordinal??0)-(right.ordinal??0));
+  for(const member of ordered){const nodePoint=entityPositions.get(String(member.node_id)),relationPoint=assertionPositions.get(String(member.assertion_id));if(!nodePoint||!relationPoint)continue;const label=incidenceRoleText(member,members),width=Math.min(220,Math.max(78,textWidth(short(label,28),9)+18)),dx=nodePoint.x-relationPoint.x,dy=nodePoint.y-relationPoint.y,length=Math.max(Math.hypot(dx,dy),1),normal={x:-dy/length,y:dx/length},fractions=focused?[.54,.44,.66]:[.48,.6,.36],offsets=[0,26,-26,52,-52,78,-78];let best=null,bestPenalty=Infinity;
+    for(const fraction of fractions)for(const offset of offsets){const point={x:relationPoint.x+dx*fraction+normal.x*offset,y:relationPoint.y+dy*fraction+normal.y*offset},box={left:point.x-width/2,right:point.x+width/2,top:point.y-12,bottom:point.y+12},overlap=occupied.reduce((count,item)=>count+(boxesOverlap(box,item,7)?1:0),0),nodeOverlap=points.reduce((count,item)=>count+(boxCircleOverlap(box,item,38)?1:0),0),outside=box.left<18||box.right>viewFrame.width-18||box.top<18||box.bottom>viewFrame.height-18?1:0,penalty=overlap*100+nodeOverlap*35+outside*80+Math.abs(offset)*.05+Math.abs(fraction-.5)*4;if(penalty<bestPenalty){bestPenalty=penalty;best={x:point.x,y:point.y,label,box}}if(!penalty)break}
+    placements.set(incidenceMemberKey(member),best);if(best)occupied.push(best.box)
+  }
+  return placements
+}
+function incidenceNodeDescriptor(node,assertions){const assertionIds=new Set(assertions.map(assertion=>String(assertion.id))),items=DATA.members.filter(member=>String(member.node_id)===String(node.id)&&assertionIds.has(String(member.assertion_id))),labels=[];for(const member of items)if(!labels.includes(member.role))labels.push(member.role);return labels.join(" / ")||node.type||t("entity")}
+function relationNodeIncidencePanel(nodes,assertions,members){
+  const panel=createPanel({eyebrow:t("hyperEyebrow"),title:t("incidenceTitle"),badge:t("bipartiteView"),testId:"hypergraph-incidence",notice:t("incidenceNotice")});panel.foot.remove();
+  const layout=incidenceLayout(nodes,assertions),entityNamespace=positionNamespace("incidence","nodes"),assertionNamespace=positionNamespace("incidence","relations"),entityPositions=applyPositionOverrides(layout.entityPositions,entityNamespace),assertionPositions=applyPositionOverrides(layout.assertionPositions,assertionNamespace);
+  if(!layout.focused){addSvgText(panel.viewport,widenPoint({x:290,y:32}).x,32,t("entityLayer"),"axis-label");addSvgText(panel.viewport,widenPoint({x:750,y:32}).x,32,t("assertionLayer"),"axis-label")}
+  const linkLayer=svgEl("g",{class:"incidence-layer"}),entityLayer=svgEl("g",{class:"entity-layer"}),assertionLayer=svgEl("g",{class:"assertion-layer"}),roleLayer=svgEl("g",{class:"incidence-role-layer"});panel.viewport.append(linkLayer,entityLayer,assertionLayer,roleLayer);
+  const roleRows=[],updateIncidenceGeometry=()=>{for(const path of linkLayer.children){const member=path.__member;if(!member)continue;const nodePoint=entityPositions.get(String(member.node_id)),relationPoint=assertionPositions.get(String(member.assertion_id));if(nodePoint&&relationPoint)path.setAttribute("d",curvedPath(nodePoint,relationPoint,`${member.assertion_id}:${member.node_id}`))}const rolePlacements=incidenceRolePlacements(members,entityPositions,assertionPositions,layout.focused);for(const row of roleRows){const placement=rolePlacements.get(incidenceMemberKey(row.member));if(placement)row.pill.setAttribute("transform",`translate(${placement.x} ${placement.y})`)}for(const group of entityLayer.children){const point=entityPositions.get(String(group.dataset.positionId));if(point)group.setAttribute("transform",`translate(${point.x} ${point.y})`)}for(const group of assertionLayer.children){const point=assertionPositions.get(String(group.dataset.positionId));if(point)group.setAttribute("transform",`translate(${point.x} ${point.y})`)}};
+  const initialRolePlacements=incidenceRolePlacements(members,entityPositions,assertionPositions,layout.focused);
+  for(const member of members){
+    const nodePoint=entityPositions.get(String(member.node_id)),relationPoint=assertionPositions.get(String(member.assertion_id));if(!nodePoint||!relationPoint)continue;
+    const assertion=byAssertion.get(String(member.assertion_id));
+    const style=isHyperedge(assertion)?hyperedgeStyle(assertion):roleStyle(member.role),d=curvedPath(nodePoint,relationPoint,`${member.assertion_id}:${member.node_id}`),path=svgEl("path",{d,class:"link incidence",style,"data-node":member.node_id,"data-assertion":member.assertion_id,"aria-label":`${memberDisplay(member)} · ${member.role} · ${assertion?.predicate||member.assertion_id}`});path.__member=member;path.__assertion=assertion;
+    activateMark(path,"member",member);tooltipHandlers(path,panel.canvas,`${memberDisplay(member)} · ${t("role")}: ${member.role}`);linkLayer.append(path);
+    if(members.length<=18){const placement=initialRolePlacements.get(incidenceMemberKey(member));if(placement){const pill=addEdgeRolePill(roleLayer,placement.x,placement.y,placement.label,style);roleRows.push({member,pill})}}
+  }
+  for(const node of nodes){const point=entityPositions.get(String(node.id)),nodeType=localizedNodeType(node.type),membershipCount=nativeHyperedgeDegree(node.id),group=svgEl("g",{class:`mark entity-mark${layout.dense?" dense-contour-label":""}`,transform:`translate(${point.x} ${point.y})`,"data-node":node.id,"data-position-id":node.id,"aria-label":`${node.label}, ${nodeType}`});addEntityNodeGlyph(group,node.label,{dense:layout.dense,membershipCount});activateMark(group,"node",node);tooltipHandlers(group,panel.canvas,`${node.label} · ${nodeType} · ${incidenceNodeDescriptor(node,assertions)}`);entityLayer.append(group);enableNodeDrag(group,panel,node.id,entityPositions,entityNamespace,updateIncidenceGeometry)}
+  for(const assertion of assertions){const point=assertionPositions.get(String(assertion.id)),style=isHyperedge(assertion)?hyperedgeStyle(assertion):"",group=svgEl("g",{class:"mark assertion-mark",transform:`translate(${point.x} ${point.y})`,style,"data-assertion":assertion.id,"data-position-id":assertion.id,"aria-label":`${assertion.predicate}, ${assertion.topology}`});group.append(svgEl("circle",{r:isHyperedge(assertion)?17:14,class:"assertion-halo"}),svgEl("path",{d:isHyperedge(assertion)?"M 0 -10 L 10 0 L 0 10 L -10 0 Z":"M -8 -8 L 8 -8 L 8 8 L -8 8 Z",class:"assertion-core"}));addSvgLabelBlock(group,layout.focused?0:24,layout.focused?-42:-20,assertion.predicate,assertionTypeText(assertion),{anchor:layout.focused?"middle":"start",maxUnits:22,maxLines:2,style});activateMark(group,"assertion",assertion);tooltipHandlers(group,panel.canvas,`${assertion.predicate} · ${isHyperedge(assertion)?t("nativeHyperedge"):t("pairwiseAssertion")}`);assertionLayer.append(group);enableNodeDrag(group,panel,assertion.id,assertionPositions,assertionNamespace,updateIncidenceGeometry)}
+  if(!nodes.length&&!assertions.length)addSvgText(panel.viewport,viewFrame.cx,viewFrame.cy,t("noHypergraph"),"empty-state");return panel.panel
+}
+
+function highestMembershipNode(nodes,assertions){const assertionIds=new Set(assertions.filter(isHyperedge).map(assertion=>String(assertion.id)));let winner=null,winnerCount=0;for(const node of nodes){const count=DATA.members.filter(member=>String(member.node_id)===String(node.id)&&assertionIds.has(String(member.assertion_id))).length;if(count>winnerCount||(count===winnerCount&&winner&&String(node.id).localeCompare(String(winner.id))<0)){winner=node;winnerCount=count}}return winner?{node:winner,count:winnerCount}:null}
+function membershipSummaryPositions(assertions){const ordered=[...assertions].sort((left,right)=>String(left.predicate).localeCompare(String(right.predicate),currentLanguage==="zh"?"zh-CN":"en")),positions=new Map(),count=ordered.length;if(count<=6){const radius=Math.max(205,Math.min(285,viewFrame.height*.32));ordered.forEach((assertion,index)=>{const angle=-Math.PI/2+Math.PI*2*index/count;positions.set(String(assertion.id),{x:viewFrame.cx+Math.cos(angle)*radius,y:viewFrame.cy+Math.sin(angle)*radius})});return positions}const leftCount=Math.ceil(count/2),rightCount=count-leftCount,top=90,bottom=viewFrame.height-90,leftX=Math.max(315,viewFrame.width*.28),rightX=Math.min(viewFrame.width-315,viewFrame.width*.72);ordered.forEach((assertion,index)=>{const left=index<leftCount,columnIndex=left?index:index-leftCount,columnCount=left?leftCount:rightCount,y=columnCount===1?viewFrame.cy:top+columnIndex*(bottom-top)/(columnCount-1),x=left?leftX:rightX;positions.set(String(assertion.id),{x,y})});return positions}
+function nodeMembershipSummaryPanel(node,assertions){
+  const incident=assertions.filter(assertion=>isHyperedge(assertion)&&assertionMembers(assertion.id).some(member=>String(member.node_id)===String(node.id))),panel=createPanel({eyebrow:t("hyperEyebrow"),title:t("incidenceTitle"),badge:t("membershipSummaryBadge"),testId:"node-hyperedge-memberships",notice:t("membershipSummaryNotice")});panel.panel.classList.add("membership-summary");panel.foot.remove();
+  const hub={x:viewFrame.cx,y:viewFrame.cy},assertionPositions=membershipSummaryPositions(incident),linkLayer=svgEl("g",{class:"incidence-layer"}),entityLayer=svgEl("g",{class:"entity-layer"}),assertionLayer=svgEl("g",{class:"assertion-layer"});panel.viewport.append(linkLayer,entityLayer,assertionLayer);
+  for(const assertion of incident){const target=assertionPositions.get(String(assertion.id)),member=assertionMembers(assertion.id).find(item=>String(item.node_id)===String(node.id)),style=hyperedgeStyle(assertion),path=svgEl("path",{d:curvedPath(hub,target,`${assertion.id}:${node.id}:summary`),class:"link incidence",style,"data-node":node.id,"data-assertion":assertion.id,"aria-label":`${node.label} · ${member?.role||t("memberRole")} · ${assertion.predicate}`});activateMark(path,"member",member||{assertion_id:assertion.id,node_id:node.id,role:t("memberRole")});tooltipHandlers(path,panel.canvas,`${node.label} · ${member?.role||t("memberRole")} · ${assertion.predicate}`);linkLayer.append(path);
+    const right=target.x>=viewFrame.cx,labelX=right?25:-25,anchor=right?"start":"end",group=svgEl("g",{class:"mark assertion-mark",transform:`translate(${target.x} ${target.y})`,style,"data-assertion":assertion.id,"aria-label":`${assertion.predicate}, ${assertionTypeText(assertion)}`});group.append(svgEl("circle",{r:17,class:"assertion-halo"}),svgEl("path",{d:"M 0 -10 L 10 0 L 0 10 L -10 0 Z",class:"assertion-core"}));addSvgLabelBlock(group,labelX,-20,assertion.predicate,assertionTypeText(assertion),{anchor,maxUnits:20,maxLines:2,style});activateMark(group,"assertion",assertion);tooltipHandlers(group,panel.canvas,`${assertion.predicate} · ${t("nativeHyperedge")}`);assertionLayer.append(group)}
+  const nodeType=localizedNodeType(node.type),hubGroup=svgEl("g",{class:"mark entity-mark summary-hub",transform:`translate(${hub.x} ${hub.y})`,"data-node":node.id,"data-position-id":node.id,"aria-label":`${node.label}, ${nodeType}`});addEntityNodeGlyph(hubGroup,node.label,{membershipCount:incident.length,emphasis:true});activateMark(hubGroup,"node",node);tooltipHandlers(hubGroup,panel.canvas,`${node.label} · ${nodeType} · ${t("sharedBy",{count:incident.length})}`);entityLayer.append(hubGroup);return panel.panel
+}
+
+function incidenceMatrixPanel(nodes,assertions,members){
+  const panel=createPanel({eyebrow:t("hyperEyebrow"),title:t("matrixRepresentation"),badge:t("incidenceMatrixBadge"),testId:"hypergraph-matrix",notice:t("incidenceMatrixNotice")});panel.panel.classList.add("incidence-matrix");
+  const orderedNodes=[...nodes].sort((left,right)=>localizedNodeType(left.type).localeCompare(localizedNodeType(right.type),currentLanguage==="zh"?"zh-CN":"en")||String(left.label).localeCompare(String(right.label),currentLanguage==="zh"?"zh-CN":"en")),orderedAssertions=[...assertions].sort((left,right)=>String(left.predicate).localeCompare(String(right.predicate),currentLanguage==="zh"?"zh-CN":"en")),memberMap=new Map(members.map(member=>[`${member.assertion_id}|${member.node_id}`,member])),matrixStart=Math.max(300,viewFrame.width*.23),matrixEnd=viewFrame.width-46,top=112,bottom=viewFrame.height-50,rowGap=(bottom-top)/Math.max(orderedNodes.length,1),columnGap=(matrixEnd-matrixStart)/Math.max(orderedAssertions.length,1),bandLayer=svgEl("g",{class:"matrix-band-layer"}),guideLayer=svgEl("g",{class:"matrix-guide-layer"}),cellLayer=svgEl("g",{class:"matrix-cell-layer"}),labelLayer=svgEl("g",{class:"matrix-label-layer"});panel.viewport.append(bandLayer,guideLayer,cellLayer,labelLayer);
+  addSvgText(labelLayer,32,55,t("matrixNodeHeader"),"axis-label","start");addSvgText(labelLayer,(matrixStart+matrixEnd)/2,55,t("matrixRelationHeader"),"axis-label");guideLayer.append(svgEl("line",{x1:matrixStart-12,y1:70,x2:matrixStart-12,y2:bottom+7,class:"matrix-guide"}));
+  orderedAssertions.forEach((assertion,column)=>{const x=matrixStart+(column+.5)*columnGap,code=`H${String(column+1).padStart(2,"0")}`,style=hyperedgeStyle(assertion),header=svgEl("g",{class:"mark matrix-column-header",style,"data-assertion":assertion.id,"aria-label":`${code} · ${assertion.predicate}`});header.append(svgEl("circle",{cx:x,cy:82,r:6,class:"assertion-core"}));addSvgText(header,x,101,code,"matrix-column-text");activateMark(header,"assertion",assertion);tooltipHandlers(header,panel.canvas,`${code} · ${assertion.predicate} · ${assertionTypeText(assertion)}`);labelLayer.append(header);guideLayer.append(svgEl("line",{x1:x,y1:108,x2:x,y2:bottom+7,class:"matrix-column-guide"}))});
+  orderedNodes.forEach((node,row)=>{const y=top+(row+.5)*rowGap,nodeType=localizedNodeType(node.type),label=`${nodeDisplayLabel(node.label)} · ${nodeType}`,rowGroup=svgEl("g",{class:"mark matrix-row-label","data-node":node.id,"aria-label":`${node.label}, ${nodeType}`});bandLayer.append(svgEl("rect",{x:24,y:y-rowGap/2,width:matrixEnd-16,height:rowGap,class:`matrix-row-band${row%2?" alt":""}`,rx:Math.min(4,rowGap/3)}));addSvgText(rowGroup,matrixStart-20,y+3,short(label,38),"matrix-node-text","end");activateMark(rowGroup,"node",node);tooltipHandlers(rowGroup,panel.canvas,`${node.label} · ${nodeType} · ${incidenceNodeDescriptor(node,assertions)}`);labelLayer.append(rowGroup);
+    orderedAssertions.forEach((assertion,column)=>{const x=matrixStart+(column+.5)*columnGap,member=memberMap.get(`${assertion.id}|${node.id}`),style=hyperedgeStyle(assertion);if(!member){cellLayer.append(svgEl("circle",{cx:x,cy:y,r:1.8,class:"matrix-empty-cell"}));return}const cell=svgEl("circle",{cx:x,cy:y,r:5.2,class:"mark matrix-cell",style,"data-node":node.id,"data-assertion":assertion.id,"aria-label":`${node.label} · ${member.role} · ${assertion.predicate}`});activateMark(cell,"member",member);tooltipHandlers(cell,panel.canvas,`${node.label} · ${t("role")}: ${member.role} · ${assertion.predicate}`);cellLayer.append(cell)})
+  });
+  const key=htmlEl("div","matrix-key");key.append(htmlEl("span","legend-title",t("matrixRelationKey")));for(const [index,assertion] of orderedAssertions.entries()){const item=htmlEl("button","matrix-key-item");item.type="button";item.style.cssText=hyperedgeStyle(assertion);item.dataset.assertion=assertion.id;item.title=`${assertion.predicate} · ${assertionTypeText(assertion)}`;item.append(htmlEl("i","matrix-key-dot"),htmlEl("span","matrix-key-code",`H${String(index+1).padStart(2,"0")}`),htmlEl("span","matrix-key-label",assertion.predicate));activateMark(item,"assertion",assertion);key.append(item)}panel.legend.append(key);
+  if(!nodes.length&&!assertions.length)addSvgText(panel.viewport,viewFrame.cx,viewFrame.cy,t("noHypergraph"),"empty-state");return panel.panel
+}
+
+function incidenceHypergraphPanel(){const nodes=activeNodes(),assertions=activeAssertions(),members=activeMembers();if(focusAssertionIds&&assertions.length===1)return relationNodeIncidencePanel(nodes,assertions,members);if(selection?.kind==="node"){const selected=byNode.get(String(selection.id));if(selected&&assertions.length>1)return nodeMembershipSummaryPanel(selected,assertions)}if(!focusAssertionIds&&assertions.length>4){const dominant=highestMembershipNode(DATA.nodes,assertions);if(dominant?.count>1)return nodeMembershipSummaryPanel(dominant.node,assertions)}return relationNodeIncidencePanel(nodes,assertions,members)}
+
+function sharedMemberCount(left,right){const ids=new Set(assertionMembers(left.id).map(member=>String(member.node_id)));return assertionMembers(right.id).filter(member=>ids.has(String(member.node_id))).length}
+function contourRelationCenters(hyperedges){
+  const centers=new Map();if(!hyperedges.length)return centers;if(hyperedges.length===1){centers.set(String(hyperedges[0].id),{x:500,y:325});return widenPositions(centers)}
+  const shared=new Map(),degree=new Map(hyperedges.map(assertion=>[String(assertion.id),0]));
+  for(let left=0;left<hyperedges.length;left++)for(let right=left+1;right<hyperedges.length;right++){const count=sharedMemberCount(hyperedges[left],hyperedges[right]),key=`${hyperedges[left].id}|${hyperedges[right].id}`;shared.set(key,count);if(count){degree.set(String(hyperedges[left].id),(degree.get(String(hyperedges[left].id))||0)+count);degree.set(String(hyperedges[right].id),(degree.get(String(hyperedges[right].id))||0)+count)}}
+  const relationShared=(left,right)=>shared.get(`${left.id}|${right.id}`)??shared.get(`${right.id}|${left.id}`)??0,root=[...hyperedges].sort((left,right)=>(degree.get(String(right.id))||0)-(degree.get(String(left.id))||0)||String(left.id).localeCompare(String(right.id)))[0],neighbors=hyperedges.filter(assertion=>assertion!==root&&relationShared(root,assertion)>0).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  centers.set(String(root.id),{x:500,y:325});
+  const neighborRadius=neighbors.length<=2?300:Math.max(245,285-neighbors.length*6);
+  neighbors.forEach((assertion,index)=>{const angle=neighbors.length===1?0:neighbors.length===2?(index?0:Math.PI):-Math.PI/2+Math.PI*2*index/neighbors.length;centers.set(String(assertion.id),{x:500+Math.cos(angle)*neighborRadius,y:325+Math.sin(angle)*Math.min(205,neighborRadius*.72)})});
+  const remaining=hyperedges.filter(assertion=>!centers.has(String(assertion.id))).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  remaining.forEach((assertion,index)=>{const angle=-Math.PI/2+Math.PI*2*(index+.5)/Math.max(remaining.length,1);centers.set(String(assertion.id),{x:500+Math.cos(angle)*285,y:325+Math.sin(angle)*205})});
+  for(let iteration=0;iteration<90;iteration++){
+    const forces=new Map(hyperedges.map(assertion=>[String(assertion.id),{x:0,y:0}]));
+    for(let left=0;left<hyperedges.length;left++)for(let right=left+1;right<hyperedges.length;right++){
+      const a=hyperedges[left],b=hyperedges[right],aPoint=centers.get(String(a.id)),bPoint=centers.get(String(b.id)),dx=bPoint.x-aPoint.x,dy=bPoint.y-aPoint.y,distance=Math.max(Math.hypot(dx,dy),1),linked=relationShared(a,b)>0,desired=linked?300:365,correction=linked?(desired-distance)*.045:distance<desired?(desired-distance)*.075:0;if(!correction)continue;const ux=dx/distance,uy=dy/distance,aForce=forces.get(String(a.id)),bForce=forces.get(String(b.id));aForce.x-=ux*correction;aForce.y-=uy*correction;bForce.x+=ux*correction;bForce.y+=uy*correction
+    }
+    for(const assertion of hyperedges){const point=centers.get(String(assertion.id)),force=forces.get(String(assertion.id)),magnitude=Math.max(1,Math.hypot(force.x,force.y)),scale=Math.min(1,12/magnitude);point.x+=force.x*scale;point.y+=force.y*scale}
+    const average=[...centers.values()].reduce((sum,point)=>({x:sum.x+point.x/centers.size,y:sum.y+point.y/centers.size}),{x:0,y:0}),shiftX=500-average.x,shiftY=325-average.y;
+    for(const point of centers.values()){point.x=Math.max(175,Math.min(825,point.x+shiftX));point.y=Math.max(145,Math.min(505,point.y+shiftY))}
+  }
+  return widenPositions(centers)
+}
+function dominantSharedNodeId(nodes,hyperedges){let winner=null,winnerCount=0;for(const node of nodes){const count=hyperedges.filter(assertion=>assertionMembers(assertion.id).some(member=>String(member.node_id)===String(node.id))).length;if(count>winnerCount||(count===winnerCount&&winner&&String(node.id).localeCompare(String(winner.id))<0)){winner=node;winnerCount=count}}return winnerCount>=3&&winnerCount/hyperedges.length>=.6?String(winner.id):null}
+function orbitalEnclosureGeometry(hyperedges,dominantNodeId){
+  const order=[...hyperedges].sort((left,right)=>assertionMembers(right.id).length-assertionMembers(left.id).length||String(left.id).localeCompare(String(right.id))),centers=new Map(),labelCenters=new Map(),specs=new Map(),hub={x:viewFrame.cx,y:viewFrame.cy},outerRadiusX=Math.max(285,viewFrame.width/2-82),outerRadiusY=Math.max(235,viewFrame.height/2-76),circleFeasible=order.length<=2;
+  order.forEach((assertion,index)=>{const angle=-Math.PI/2+Math.PI*2*index/order.length,axis={x:Math.cos(angle),y:Math.sin(angle)},tangent={x:-axis.y,y:axis.x},cos=Math.abs(axis.x),sin=Math.abs(axis.y),outerDistance=Math.min(cos>.001?outerRadiusX/cos:Infinity,sin>.001?outerRadiusY/sin:Infinity),semiMajor=Math.max(185,outerDistance/2),memberCount=assertionMembers(assertion.id).length,sectorWidth=semiMajor*Math.sin(Math.PI/Math.max(order.length,3)*.88)*1.18+Math.min(34,memberCount*3.2),semiMinor=circleFeasible?semiMajor:Math.max(58,Math.min(semiMajor*.72,sectorWidth)),center={x:hub.x+axis.x*semiMajor,y:hub.y+axis.y*semiMajor},outer={x:hub.x+axis.x*semiMajor*2,y:hub.y+axis.y*semiMajor*2},label={...center};centers.set(String(assertion.id),center);labelCenters.set(String(assertion.id),label);specs.set(String(assertion.id),{hub,axis,tangent,semiMajor,semiMinor,center,outer,label,index,shape:Math.abs(semiMajor-semiMinor)<1?"circle":"ellipse"})});return{centers,labelCenters,specs,order}
+}
+function twoHyperedgeIntersectionLayout(nodes,hyperedges,memberships){
+  if(hyperedges.length!==2)return null;const shared=nodes.filter(node=>(memberships.get(String(node.id))||[]).length===2).sort((a,b)=>String(a.id).localeCompare(String(b.id)));if(!shared.length)return null;
+  const positions=new Map(),cx=viewFrame.cx,cy=viewFrame.cy,rx=Math.min(390,viewFrame.width*.27),ry=shared.length===1?210:220,centers=new Map([[String(hyperedges[0].id),{x:cx-rx*.5,y:cy}],[String(hyperedges[1].id),{x:cx+rx*.5,y:cy}]]);
+  shared.forEach((node,index)=>{const y=shared.length===1?cy:cy-ry+index*(ry*2)/(shared.length-1);positions.set(String(node.id),{x:cx,y})});
+  hyperedges.forEach((assertion,relationIndex)=>{const side=relationIndex===0?-1:1,exclusive=nodes.filter(node=>{const incident=memberships.get(String(node.id))||[];return incident.length===1&&incident[0]===assertion}).sort((a,b)=>String(a.id).localeCompare(String(b.id)));exclusive.forEach((node,index)=>{const angle=-Math.PI/2+Math.PI*(index+1)/(exclusive.length+1),x=cx+side*Math.cos(angle)*rx,y=cy+Math.sin(angle)*ry;positions.set(String(node.id),{x,y})})});
+  const orphaned=nodes.filter(node=>!positions.has(String(node.id)));orphaned.forEach((node,index)=>positions.set(String(node.id),{x:cx+(index%2?1:-1)*(rx+70),y:cy+(index-Math.floor(orphaned.length/2))*46}));return{positions,centers,hyperedges,memberships,dominantNodeId:null,layoutMode:"shared_boundary_dual_lobe"}
+}
+function orbitalBoundaryPoint(spec,theta){return{x:spec.center.x+spec.axis.x*spec.semiMajor*Math.cos(theta)+spec.tangent.x*spec.semiMinor*Math.sin(theta),y:spec.center.y+spec.axis.y*spec.semiMajor*Math.cos(theta)+spec.tangent.y*spec.semiMinor*Math.sin(theta)}}
+function orbitalMemberPositions(exclusive,spec){
+  const result=new Map(),count=exclusive.length;if(!count||!spec)return result;if(!spec.memberAngles)spec.memberAngles=new Map();exclusive.forEach((node,index)=>{const theta=-Math.PI+Math.PI*2*(index+1)/(count+1);spec.memberAngles.set(String(node.id),normalizeAngle(theta));result.set(String(node.id),orbitalBoundaryPoint(spec,theta))});return result
+}
+function orbitalNormalizedRadius(point,spec){const dx=point.x-spec.center.x,dy=point.y-spec.center.y,major=(dx*spec.axis.x+dy*spec.axis.y)/Math.max(spec.semiMajor,1),minor=(dx*spec.tangent.x+dy*spec.tangent.y)/Math.max(spec.semiMinor,1);return Math.hypot(major,minor)}
+function orbitalAngleForPoint(point,spec){const dx=point.x-spec.center.x,dy=point.y-spec.center.y;return normalizeAngle(Math.atan2((dx*spec.tangent.x+dy*spec.tangent.y)/Math.max(spec.semiMinor,1),(dx*spec.axis.x+dy*spec.axis.y)/Math.max(spec.semiMajor,1)))}
+function orbitalSharedPositions(specs,count){
+  if(!specs.length||count<=0)return[];const base=[...specs].sort((left,right)=>right.semiMajor*right.semiMinor-left.semiMajor*left.semiMinor)[0],samples=1440,candidates=[];
+  for(let index=0;index<samples;index++){const theta=Math.PI*2*index/samples,point=orbitalBoundaryPoint(base,theta),hubDistance=Math.hypot(point.x-base.hub.x,point.y-base.hub.y);if(hubDistance<90)continue;const error=specs.reduce((sum,spec)=>sum+Math.abs(orbitalNormalizedRadius(point,spec)-1),0);candidates.push({theta,point,error:error+18/Math.max(hubDistance,1)})}
+  candidates.sort((left,right)=>left.error-right.error||left.theta-right.theta);const selected=[],minimumGap=Math.max(.13,.34/Math.max(count,1));for(const candidate of candidates){if(selected.every(item=>Math.min(Math.abs(item.theta-candidate.theta),Math.PI*2-Math.abs(item.theta-candidate.theta))>=minimumGap)){selected.push(candidate);if(selected.length===count)break}}return selected.map(item=>item.point)
+}
+function singleRegularEnclosureLayout(nodes,hyperedges,memberships){const assertion=hyperedges[0],center={x:viewFrame.cx,y:viewFrame.cy},semiMajor=Math.max(190,Math.min(viewFrame.width*.34,(viewFrame.height-150)*.46)),semiMinor=semiMajor,axis={x:1,y:0},tangent={x:0,y:1},spec={hub:null,axis,tangent,semiMajor,semiMinor,center,outer:{x:center.x+semiMajor,y:center.y},label:{...center},memberAngles:new Map(),freeCenter:true,shape:"circle"},positions=new Map(),ordered=assertionMembers(assertion.id).map(member=>nodes.find(node=>String(node.id)===String(member.node_id))).filter(Boolean);ordered.forEach((node,index)=>{const theta=-Math.PI/2+Math.PI*2*index/Math.max(ordered.length,1);spec.memberAngles.set(String(node.id),normalizeAngle(theta));positions.set(String(node.id),orbitalBoundaryPoint(spec,theta))});return{positions,centers:new Map([[String(assertion.id),center]]),labelCenters:new Map([[String(assertion.id),center]]),enclosureSpecs:new Map([[String(assertion.id),spec]]),hyperedges,memberships,dominantNodeId:null,layoutMode:"single_regular_enclosure"}}
+function refitAnchoredEnclosure(spec,hub,point,theta){const ratio=Math.max(.2,Math.min(1,spec.semiMinor/Math.max(spec.semiMajor,1))),radial=1+Math.cos(theta),lateral=ratio*Math.sin(theta),coefficient=Math.hypot(radial,lateral),dx=point.x-hub.x,dy=point.y-hub.y,distance=Math.hypot(dx,dy);if(coefficient<.08||distance<8)return false;const semiMajor=Math.max(28,Math.min(Math.max(viewFrame.width,viewFrame.height)*.72,distance/coefficient)),rotation=Math.atan2(dy,dx)-Math.atan2(lateral,radial),axis={x:Math.cos(rotation),y:Math.sin(rotation)},tangent={x:-axis.y,y:axis.x},semiMinor=semiMajor*ratio,center={x:hub.x+axis.x*semiMajor,y:hub.y+axis.y*semiMajor};Object.assign(spec,{hub:{...hub},axis,tangent,semiMajor,semiMinor,center,outer:{x:hub.x+axis.x*semiMajor*2,y:hub.y+axis.y*semiMajor*2},label:{...center},shape:Math.abs(semiMajor-semiMinor)<1?"circle":"ellipse"});return true}
+function refitCenteredEnclosure(spec,point,theta){const ratio=Math.max(.2,Math.min(1,spec.semiMinor/Math.max(spec.semiMajor,1))),radial=Math.cos(theta),lateral=ratio*Math.sin(theta),coefficient=Math.max(.08,Math.hypot(radial,lateral)),dx=point.x-spec.center.x,dy=point.y-spec.center.y,distance=Math.hypot(dx,dy);if(distance<8)return false;const semiMajor=Math.max(28,Math.min(Math.max(viewFrame.width,viewFrame.height)*.72,distance/coefficient)),rotation=Math.atan2(dy,dx)-Math.atan2(lateral,radial),axis={x:Math.cos(rotation),y:Math.sin(rotation)},tangent={x:-axis.y,y:axis.x},semiMinor=semiMajor*ratio;Object.assign(spec,{axis,tangent,semiMajor,semiMinor,outer:{x:spec.center.x+axis.x*semiMajor,y:spec.center.y+axis.y*semiMajor},label:{...spec.center},shape:Math.abs(semiMajor-semiMinor)<1?"circle":"ellipse"});return true}
+function regularEnclosureBoundaryPath(spec){const first=orbitalBoundaryPoint(spec,0),opposite=orbitalBoundaryPoint(spec,Math.PI),rotation=Math.atan2(spec.axis.y,spec.axis.x)*180/Math.PI;return`M ${first.x} ${first.y} A ${spec.semiMajor} ${spec.semiMinor} ${rotation} 1 1 ${opposite.x} ${opposite.y} A ${spec.semiMajor} ${spec.semiMinor} ${rotation} 1 1 ${first.x} ${first.y} Z`}
+function contourMembershipLayout(nodes,assertions){
+  const hyperedges=assertions.filter(isHyperedge).sort((a,b)=>String(a.id).localeCompare(String(b.id))),memberships=new Map(nodes.map(node=>[String(node.id),hyperedges.filter(assertion=>assertionMembers(assertion.id).some(member=>String(member.node_id)===String(node.id)))]));if(hyperedges.length===1)return singleRegularEnclosureLayout(nodes,hyperedges,memberships);const dualLobe=twoHyperedgeIntersectionLayout(nodes,hyperedges,memberships);if(dualLobe)return dualLobe;const positions=new Map(),dominantNodeId=dominantSharedNodeId(nodes,hyperedges),orbitalGeometry=dominantNodeId?orbitalEnclosureGeometry(hyperedges,dominantNodeId):null,centers=orbitalGeometry?.centers||contourRelationCenters(hyperedges),labelCenters=orbitalGeometry?.labelCenters||centers,enclosureSpecs=orbitalGeometry?.specs||new Map();
+  const sharedGroups=new Map();
+  for(const node of nodes){const incident=memberships.get(String(node.id))||[];if(incident.length<2)continue;const signature=incident.map(assertion=>String(assertion.id)).sort().join("|");if(!sharedGroups.has(signature))sharedGroups.set(signature,[]);sharedGroups.get(signature).push(node)}
+  for(const [signature,group] of sharedGroups){
+    const points=signature.split("|").map(id=>centers.get(id)).filter(Boolean),center=points.reduce((acc,point)=>({x:acc.x+point.x/points.length,y:acc.y+point.y/points.length}),{x:0,y:0});
+    group.sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+    const nonHub=group.filter(node=>String(node.id)!==dominantNodeId),orbitalSpecs=dominantNodeId?signature.split("|").map(id=>enclosureSpecs.get(id)).filter(Boolean):[],orbitalShared=orbitalSpecs.length>=2?orbitalSharedPositions(orbitalSpecs,nonHub.length):[];let nonHubIndex=0;group.forEach((node,index)=>{if(String(node.id)===dominantNodeId){positions.set(String(node.id),{x:viewFrame.cx,y:viewFrame.cy});return}const orbitalPoint=orbitalShared[nonHubIndex++];if(orbitalPoint){positions.set(String(node.id),orbitalPoint);for(const spec of orbitalSpecs){if(!spec.memberAngles)spec.memberAngles=new Map();spec.memberAngles.set(String(node.id),orbitalAngleForPoint(orbitalPoint,spec))}return}if(points.length===2){const dx=points[1].x-points[0].x,dy=points[1].y-points[0].y,length=Math.max(Math.hypot(dx,dy),1),offset=(index-(group.length-1)/2)*96;positions.set(String(node.id),{x:center.x-dy/length*offset,y:center.y+dx/length*offset})}else{const angle=Math.PI*2*index/Math.max(group.length,1)-Math.PI/2,radius=group.length>1?48:0;positions.set(String(node.id),{x:center.x+Math.cos(angle)*radius,y:center.y+Math.sin(angle)*radius})}})
+  }
+  for(const assertion of hyperedges){
+    const center=centers.get(String(assertion.id)),members=assertionMembers(assertion.id),exclusive=nodes.filter(node=>(memberships.get(String(node.id))||[]).length===1&&(memberships.get(String(node.id))||[])[0]===assertion).sort((a,b)=>String(a.id).localeCompare(String(b.id))),sharedPoints=members.map(member=>({node:byNode.get(String(member.node_id)),point:positions.get(String(member.node_id))})).filter(item=>item.node&&item.point);
+    if(!exclusive.length)continue;
+    if(dominantNodeId){const spec=enclosureSpecs.get(String(assertion.id));for(const [id,point] of orbitalMemberPositions(exclusive,spec))positions.set(id,point);continue}
+    const outward=hyperedges.length===1?-Math.PI/2:Math.atan2(center.y-viewFrame.cy,center.x-viewFrame.cx),fixedAngles=sharedPoints.map(item=>Math.atan2(item.point.y-center.y,item.point.x-center.x)),sharedRadii=sharedPoints.map(item=>Math.hypot(item.point.x-center.x,item.point.y-center.y)),nearest=[...centers.entries()].filter(([id])=>id!==String(assertion.id)).map(([,other])=>Math.hypot(other.x-center.x,other.y-center.y)).sort((a,b)=>a-b)[0],baseRadius=hyperedges.length===1?Math.min(210,166+members.length*7):Math.min(190,140+members.length*8),sharedRadius=sharedRadii.length?sharedRadii.reduce((sum,value)=>sum+value,0)/sharedRadii.length:null,separatedRadius=!sharedRadii.length&&nearest?Math.min(baseRadius,nearest*.43):baseRadius,radius=Math.max(118,Math.min(210,sharedRadius??separatedRadius)),angles=balancedBoundaryAngles(fixedAngles,exclusive.length,outward);
+    exclusive.forEach((node,index)=>{const angle=angles[index];positions.set(String(node.id),{x:center.x+Math.cos(angle)*radius,y:center.y+Math.sin(angle)*radius})})
+  }
+  const orphaned=nodes.filter(node=>!positions.has(String(node.id)));orphaned.forEach((node,index)=>{const angle=Math.PI*2*index/Math.max(orphaned.length,1);positions.set(String(node.id),{x:viewFrame.cx+Math.cos(angle)*300*viewFrame.xStretch,y:viewFrame.cy+Math.sin(angle)*235})});
+  return{positions,centers,labelCenters,enclosureSpecs,hyperedges,memberships,dominantNodeId,layoutMode:dominantNodeId?"circle_first_orbital_enclosures":"adaptive_membership_boundary"}
+}
+function normalizeAngle(angle){const tau=Math.PI*2;return((angle%tau)+tau)%tau}
+function balancedBoundaryAngles(fixedAngles,count,phase=-Math.PI/2){
+  if(count<=0)return[];
+  const tau=Math.PI*2,anchors=[...fixedAngles].map(normalizeAngle).sort((a,b)=>a-b).filter((angle,index,list)=>index===0||Math.abs(angle-list[index-1])>.001);
+  if(!anchors.length)return Array.from({length:count},(_,index)=>phase+tau*index/count);
+  const gaps=anchors.map((start,index)=>({index,start,size:(index===anchors.length-1?anchors[0]+tau:anchors[index+1])-start,slots:0}));
+  for(let placed=0;placed<count;placed++){
+    let best=gaps[0];
+    for(const gap of gaps){const score=gap.size/(gap.slots+1),bestScore=best.size/(best.slots+1);if(score>bestScore+1e-9||(Math.abs(score-bestScore)<=1e-9&&gap.index<best.index))best=gap}
+    best.slots+=1
+  }
+  const result=[];
+  for(const gap of gaps)for(let slot=1;slot<=gap.slots;slot++)result.push(normalizeAngle(gap.start+gap.size*slot/(gap.slots+1)));
+  return result.sort((a,b)=>a-b)
+}
+function twoPointBoundaryPath(a,b,width=46){const dx=b.x-a.x,dy=b.y-a.y,length=Math.max(Math.hypot(dx,dy),1),nx=-dy/length*width,ny=dx/length*width;return `M ${a.x} ${a.y} C ${a.x+nx} ${a.y+ny}, ${b.x+nx} ${b.y+ny}, ${b.x} ${b.y} C ${b.x-nx} ${b.y-ny}, ${a.x-nx} ${a.y-ny}, ${a.x} ${a.y} Z`}
+function membershipBoundaryPath(points,center){
+  const unique=[...new Map(points.map(point=>[`${point.x.toFixed(3)}:${point.y.toFixed(3)}`,point])).values()];if(!unique.length)return"";if(unique.length===1){const point=unique[0],radius=62;return`M ${point.x} ${point.y} A ${radius} ${radius} 0 1 1 ${point.x-radius*2} ${point.y} A ${radius} ${radius} 0 1 1 ${point.x} ${point.y} Z`}if(unique.length===2)return twoPointBoundaryPath(unique[0],unique[1]);
+  const tau=Math.PI*2,ordered=unique.map(point=>({point,angle:normalizeAngle(Math.atan2(point.y-center.y,point.x-center.x)),radius:Math.max(1,Math.hypot(point.x-center.x,point.y-center.y))})).sort((a,b)=>a.angle-b.angle),radii=ordered.map(item=>item.radius),meanRadius=radii.reduce((sum,value)=>sum+value,0)/radii.length,radialCv=Math.sqrt(radii.reduce((sum,value)=>sum+(value-meanRadius)**2,0)/radii.length)/Math.max(meanRadius,1),gaps=ordered.map((item,index)=>((index===ordered.length-1?ordered[0].angle+tau:ordered[index+1].angle)-item.angle)),meanGap=tau/ordered.length,gapCv=Math.sqrt(gaps.reduce((sum,value)=>sum+(value-meanGap)**2,0)/gaps.length)/meanGap,roundness=Math.max(.48,Math.min(1,1-radialCv*1.55-gapCv*.28)),tension=.72;
+  let path=`M ${ordered[0].point.x} ${ordered[0].point.y}`;
+  for(let index=0;index<ordered.length;index++){
+    const previous=ordered[(index-1+ordered.length)%ordered.length].point,current=ordered[index],next=ordered[(index+1)%ordered.length],after=ordered[(index+2)%ordered.length].point,p1=current.point,p2=next.point,delta=gaps[index],chord=Math.max(1,Math.hypot(p2.x-p1.x,p2.y-p1.y)),arcFactor=4/3*Math.tan(Math.min(delta,Math.PI*1.72)/4),handle1=Math.min(chord*.64,arcFactor*current.radius),handle2=Math.min(chord*.64,arcFactor*next.radius),circleC1={x:p1.x-Math.sin(current.angle)*handle1,y:p1.y+Math.cos(current.angle)*handle1},circleC2={x:p2.x+Math.sin(next.angle)*handle2,y:p2.y-Math.cos(next.angle)*handle2},catmullC1={x:p1.x+(p2.x-previous.x)/6*tension,y:p1.y+(p2.y-previous.y)/6*tension},catmullC2={x:p2.x-(after.x-p1.x)/6*tension,y:p2.y-(after.y-p1.y)/6*tension},c1={x:catmullC1.x*(1-roundness)+circleC1.x*roundness,y:catmullC1.y*(1-roundness)+circleC1.y*roundness},c2={x:catmullC2.x*(1-roundness)+circleC2.x*roundness,y:catmullC2.y*(1-roundness)+circleC2.y*roundness};
+    path+=` C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${p2.x} ${p2.y}`
+  }
+  return`${path} Z`
+}
+function smoothOrderedBoundaryPath(points){const ordered=[...new Map(points.map(point=>[`${point.x.toFixed(2)}:${point.y.toFixed(2)}`,point])).values()];if(ordered.length<3)return ordered.length===2?twoPointBoundaryPath(ordered[0],ordered[1]):membershipBoundaryPath(ordered,ordered[0]||{x:viewFrame.cx,y:viewFrame.cy});const tangents=ordered.map((current,index)=>{const previous=ordered[(index-1+ordered.length)%ordered.length],next=ordered[(index+1)%ordered.length],dx=next.x-previous.x,dy=next.y-previous.y,directionLength=Math.max(Math.hypot(dx,dy),1),incoming=Math.hypot(current.x-previous.x,current.y-previous.y),outgoing=Math.hypot(next.x-current.x,next.y-current.y),handle=Math.min(46,Math.min(incoming,outgoing)*.34);return{x:dx/directionLength*handle,y:dy/directionLength*handle}});let path=`M ${ordered[0].x} ${ordered[0].y}`;for(let index=0;index<ordered.length;index++){const current=ordered[index],nextIndex=(index+1)%ordered.length,next=ordered[nextIndex],currentTangent=tangents[index],nextTangent=tangents[nextIndex],c1={x:current.x+currentTangent.x,y:current.y+currentTangent.y},c2={x:next.x-nextTangent.x,y:next.y-nextTangent.y};path+=` C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${next.x} ${next.y}`}return`${path} Z`}
+function orbitalMembershipBoundaryPath(points,spec,hubPoint){const dx=spec.outer.x-hubPoint.x,dy=spec.outer.y-hubPoint.y,distance=Math.max(Math.hypot(dx,dy),spec.semiMajor*1.1),axis={x:dx/distance,y:dy/distance},tangent={x:-axis.y,y:axis.x},semiMajor=distance/2,semiMinor=Math.max(44,spec.semiMinor*semiMajor/spec.semiMajor),center={x:(hubPoint.x+spec.outer.x)/2,y:(hubPoint.y+spec.outer.y)/2},live={...spec,hub:hubPoint,axis,tangent,semiMajor,semiMinor,center},angleOf=point=>normalizeAngle(Math.atan2(((point.x-center.x)*tangent.x+(point.y-center.y)*tangent.y)/semiMinor,((point.x-center.x)*axis.x+(point.y-center.y)*axis.y)/semiMajor)),actual=[...new Map(points.map(point=>[`${point.x.toFixed(3)}:${point.y.toFixed(3)}`,point])).values()].map(point=>({point,angle:angleOf(point)})),angleGap=(left,right)=>Math.min(Math.abs(left-right),Math.PI*2-Math.abs(left-right)),rows=[...actual],sampleCount=64;for(const item of actual)item.clearance=.09+Math.min(.42,Math.abs(orbitalNormalizedRadius(item.point,live)-1)*.45);for(let index=0;index<sampleCount;index++){const theta=Math.PI*2*index/sampleCount;if(actual.some(item=>angleGap(item.angle,theta)<item.clearance))continue;rows.push({point:orbitalBoundaryPoint(live,theta),angle:theta})}rows.sort((left,right)=>left.angle-right.angle);return smoothOrderedBoundaryPath(rows.map(item=>item.point))}
+function centroid(points,fallback={x:viewFrame.cx,y:viewFrame.cy}){if(!points.length)return{...fallback};return points.reduce((acc,point)=>({x:acc.x+point.x/points.length,y:acc.y+point.y/points.length}),{x:0,y:0})}
+function boxesOverlap(left,right,padding=4){return left.left<right.right+padding&&left.right+padding>right.left&&left.top<right.bottom+padding&&left.bottom+padding>right.top}
+function boxCircleOverlap(box,point,radius=22){const x=Math.max(box.left,Math.min(point.x,box.right)),y=Math.max(box.top,Math.min(point.y,box.bottom));return Math.hypot(point.x-x,point.y-y)<radius}
+function interactiveContourHypergraphPanel(){
+  const nodes=activeNodes(),assertions=activeAssertions(),denseOverview=!focusAssertionIds&&nodes.length>28,layout=contourMembershipLayout(nodes,assertions),strategyNotice=layout.dominantNodeId?t("contourDominantNotice"):layout.layoutMode==="shared_boundary_dual_lobe"?t("contourDualLobeNotice"):t("contourNotice"),badge=layout.dominantNodeId?"":layout.layoutMode==="shared_boundary_dual_lobe"?t("dualLobeBadge"):t("contourBadge"),notice=`${strategyNotice} ${denseOverview?t("contourDenseLabelNotice"):""}`.trim(),panel=createPanel({eyebrow:t("hyperEyebrow"),title:t("contourTitle"),badge,testId:"hypergraph-contour",notice});if(denseOverview)panel.panel.classList.add("dense-contour");if(layout.dominantNodeId)panel.panel.classList.add("orbital-layout");addRoleLegend(panel.legend,"contour");
+  const contourNamespace=positionNamespace("contour","nodes"),positions=applyPositionOverrides(layout.positions,contourNamespace),hyperedges=layout.hyperedges,layoutLinks=graphLinks(assertions);
+  const fillLayer=svgEl("g",{class:"contour-fill-layer"}),lineLayer=svgEl("g",{class:"contour-line-layer"}),edgeLayer=svgEl("g",{class:"edge-layer"}),nodeLayer=svgEl("g",{class:"node-layer"}),labelLayer=svgEl("g",{class:"hyperedge-label-layer"});panel.viewport.append(fillLayer,lineLayer,edgeLayer,nodeLayer,labelLayer);
+  const contourRows=[],nodeRows=[],nativeRows=[];
+
+  for(const assertion of hyperedges){
+    const style=hyperedgeStyle(assertion),shared={d:"",style,"data-assertion":assertion.id},ariaLabel=`${assertion.predicate} · ${t("nativeHyperedge")}`,fill=svgEl("path",{...shared,class:"hyper-envelope-layer hyper-envelope-fill","aria-label":ariaLabel}),hit=svgEl("path",{...shared,class:"hyper-envelope-layer hyper-envelope-hit","aria-label":ariaLabel}),path=svgEl("path",{...shared,class:"hyper-envelope-layer hyper-envelope","aria-label":ariaLabel});for(const target of [fill,hit,path]){activateMark(target,"assertion",assertion);tooltipHandlers(target,panel.canvas,`${assertion.predicate} · ${assertionTypeText(assertion)}`)}fillLayer.append(fill);lineLayer.append(hit,path);
+    const label=svgEl("g",{class:"mark hyperedge-label",style,"data-assertion":assertion.id,"aria-label":`${assertion.predicate} · ${assertionTypeText(assertion)}`});addSvgLabelBlock(label,0,0,assertion.predicate,assertionTypeText(assertion),{anchor:"middle",maxUnits:layout.dominantNodeId?18:22,maxLines:2,style});activateMark(label,"assertion",assertion);tooltipHandlers(label,panel.canvas,`${assertion.predicate} · ${assertionTypeText(assertion)}`);labelLayer.append(label);
+    const row={assertion,style,fill,hit,path,label};
+    contourRows.push(row)
+  }
+
+  const setContourHover=id=>{const assertionId=id===null||id===undefined?null:String(id),memberIds=new Set(assertionId?assertionMembers(assertionId).map(member=>String(member.node_id)):[]);for(const element of panel.viewport.querySelectorAll(".entity-mark,.hyper-envelope-layer,.hyperedge-label,.link")){const entity=element.classList.contains("entity-mark"),currentRelation=Boolean(assertionId)&&!entity&&String(element.dataset.assertion)===assertionId,unrelated=Boolean(assertionId)&&(entity?!memberIds.has(String(element.dataset.node)):!currentRelation);element.classList.toggle("is-hover-focus",currentRelation);element.classList.toggle("is-hover-muted",unrelated)}};panel.canvas.addEventListener("pointerover",event=>{const target=event.target.closest?.(".hyper-envelope-layer,.hyperedge-label");if(target)setContourHover(target.dataset.assertion)});panel.canvas.addEventListener("pointerout",event=>{const from=event.target.closest?.(".hyper-envelope-layer,.hyperedge-label"),to=event.relatedTarget?.closest?.(".hyper-envelope-layer,.hyperedge-label");if(from&&!to)setContourHover(null)});
+
+  const nativeLinks=layoutLinks;
+  for(const link of nativeLinks){const path=svgEl("path",{d:"",class:"link pairwise","data-node":link.source,"data-node-secondary":link.target,"data-assertion":link.assertion.id,"aria-label":pairwiseLineDescription(link)});activateMark(path,"assertion",link.assertion);tooltipHandlers(path,panel.canvas,pairwiseLineDescription(link));edgeLayer.append(path);nativeRows.push({link,path})}
+
+  const updateContourGeometry=()=>{
+    const centers=new Map();
+    for(const row of contourRows){const points=assertionMembers(row.assertion.id).map(member=>positions.get(String(member.node_id))).filter(Boolean),geometryCenter=centroid(points,layout.centers.get(String(row.assertion.id))||{x:viewFrame.cx,y:viewFrame.cy}),anchor=layout.centers.get(String(row.assertion.id))||geometryCenter,spec=layout.enclosureSpecs?.get(String(row.assertion.id)),hubPoint=layout.dominantNodeId?positions.get(String(layout.dominantNodeId)):null,anchored=layout.dominantNodeId||layout.layoutMode==="shared_boundary_dual_lobe",labelCenter=spec?spec.label:anchored?{x:geometryCenter.x*.24+anchor.x*.76,y:geometryCenter.y*.24+anchor.y*.76}:geometryCenter,d=spec&&layout.layoutMode==="single_regular_enclosure"?regularEnclosureBoundaryPath(spec):spec&&hubPoint?orbitalMembershipBoundaryPath(points,spec,hubPoint):membershipBoundaryPath(points,geometryCenter);centers.set(String(row.assertion.id),labelCenter);for(const element of [row.fill,row.hit,row.path])element.setAttribute("d",d);row.label.setAttribute("transform",`translate(${labelCenter.x} ${labelCenter.y})`)}
+    for(const row of nativeRows){const source=positions.get(row.link.source),target=positions.get(row.link.target);if(source&&target)row.path.setAttribute("d",curvedPath(source,target,`${row.link.assertion.id}:${row.link.source}:${row.link.target}`))}
+    for(const row of nodeRows){const point=positions.get(String(row.node.id));if(point)row.group.setAttribute("transform",`translate(${point.x} ${point.y})`)}
+  };
+
+  const reflowContourGeometry=(draggedId,next,previous)=>{
+    const specs=layout.enclosureSpecs;if(!specs?.size){updateContourGeometry();return}
+    if(draggedId===layout.dominantNodeId){const dx=next.x-previous.x,dy=next.y-previous.y;for(const spec of specs.values()){for(const key of ["hub","center","outer","label"]){if(spec[key])spec[key]={x:spec[key].x+dx,y:spec[key].y+dy}}}for(const [nodeId,point] of positions){if(nodeId===draggedId)continue;positions.set(nodeId,{x:point.x+dx,y:point.y+dy})}updateContourGeometry();return}
+    const incident=layout.memberships.get(String(draggedId))||[];
+    for(const assertion of incident){const spec=specs.get(String(assertion.id)),theta=spec?.memberAngles?.get(String(draggedId));if(!spec||theta===undefined)continue;if(spec.freeCenter)refitCenteredEnclosure(spec,next,theta);else{const hub=positions.get(String(layout.dominantNodeId));if(hub)refitAnchoredEnclosure(spec,hub,next,theta)}}
+    const sharedGroups=new Map();for(const node of nodes){const id=String(node.id),memberships=layout.memberships.get(id)||[];if(id===layout.dominantNodeId||id===draggedId||memberships.length<2)continue;const signature=memberships.map(assertion=>String(assertion.id)).sort().join("|");if(!sharedGroups.has(signature))sharedGroups.set(signature,[]);sharedGroups.get(signature).push(node)}
+    for(const [signature,group] of sharedGroups){const groupSpecs=signature.split("|").map(id=>specs.get(id)).filter(Boolean);if(groupSpecs.length<2)continue;const sharedPositions=orbitalSharedPositions(groupSpecs,group.length);group.forEach((node,index)=>{const point=sharedPositions[index];if(!point)return;positions.set(String(node.id),point);for(const spec of groupSpecs){if(!spec.memberAngles)spec.memberAngles=new Map();spec.memberAngles.set(String(node.id),orbitalAngleForPoint(point,spec))}})}
+    for(const assertion of hyperedges){const spec=specs.get(String(assertion.id));if(!spec?.memberAngles)continue;for(const member of assertionMembers(assertion.id)){const id=String(member.node_id),theta=spec.memberAngles.get(id),memberships=layout.memberships.get(id)||[];if(theta===undefined||id===draggedId||id===layout.dominantNodeId||memberships.length>1)continue;positions.set(id,orbitalBoundaryPoint(spec,theta))}}
+    updateContourGeometry()
+  };
+
+  for(const node of nodes){const point=positions.get(String(node.id));if(!point)continue;const memberships=layout.memberships.get(String(node.id))||[],sharedCount=memberships.length,totalHyperedgeDegree=nativeHyperedgeDegree(node.id),denseClass=denseOverview&&sharedCount===1?" dense-contour-label":"",hubClass=String(node.id)===layout.dominantNodeId?" dominant-hub-node":"",nodeType=localizedNodeType(node.type),group=svgEl("g",{class:`mark entity-mark${denseClass}${hubClass}`,transform:`translate(${point.x} ${point.y})`,"data-node":node.id,"data-position-id":node.id,"aria-label":`${node.label}, ${nodeType}`}),secondary=totalHyperedgeDegree>1?`${nodeType} · ${t("sharedBy",{count:totalHyperedgeDegree})}`:nodeType;addEntityNodeGlyph(group,node.label,{dense:denseOverview&&sharedCount===1,membershipCount:totalHyperedgeDegree,emphasis:Boolean(hubClass),hub:Boolean(hubClass)});activateMark(group,"node",node);tooltipHandlers(group,panel.canvas,`${node.label} · ${secondary}`);nodeLayer.append(group);nodeRows.push({node,group});enableNodeDrag(group,panel,node.id,positions,contourNamespace,reflowContourGeometry)}
+  updateContourGeometry();addPairwiseExplanation(panel,nativeLinks);if(!nodes.length&&!assertions.length)addSvgText(panel.viewport,viewFrame.cx,viewFrame.cy,t("noHypergraph"),"empty-state");return panel.panel
+}
+
+function hypergraphPanel(){return hyperMode==="contour"?interactiveContourHypergraphPanel():hyperMode==="matrix"?incidenceMatrixPanel(DATA.nodes,DATA.assertions,DATA.members):incidenceHypergraphPanel()}
+function currentRepresentation(){return currentView==="graph"?"pairwise":currentView==="compare"?"compare":hyperMode}
+
+function render(){
+  viewFrame=computeViewFrame();
+  document.querySelectorAll(".representation-button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.representation===currentRepresentation())));
+  const workspace=document.getElementById("workspace");workspace.replaceChildren();workspace.className=`workspace ${currentView}`;
+  if(currentView==="graph")workspace.append(graphPanel());else if(currentView==="hypergraph")workspace.append(hypergraphPanel());else workspace.append(graphPanel(),hypergraphPanel());applySelection();if(autoFitRequested){requestAnimationFrame(()=>{for(const panel of workspace.children)panel.__fitToContent?.();autoFitRequested=false})}
+}
+function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem("hyperknowledge-theme",theme)}catch{}document.getElementById("theme-toggle").textContent=theme==="dark"?"☀":"◐"}
+function initTheme(){let stored=null;try{stored=localStorage.getItem("hyperknowledge-theme")||localStorage.getItem("hk-theme")}catch{}setTheme(stored||((window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"))}
+function updateBundleLine(){const line=document.getElementById("bundle-line");if(line)line.textContent=`${DATA.manifest.bundle_id||t("unversionedBundle")} · ${DATA.manifest.template||DATA.manifest.topology_type||t("normalizedAssociations")}`}
+function setLanguage(language,{rerender=true}={}){currentLanguage=language==="zh"?"zh":"en";try{localStorage.setItem("hyperknowledge-language",currentLanguage)}catch{}updateStaticCopy();updateBundleLine();populateStats();if(selection?.payload)showDrawer(selection.drawerKind,selection.payload);else initialDrawer();if(rerender){autoFitRequested=true;render()}}
+function initLanguage(){let stored=null;try{stored=localStorage.getItem("hyperknowledge-language")||localStorage.getItem("hk-language")}catch{}const manifestLanguage=String(DATA.manifest.language||"").toLowerCase().startsWith("zh")?"zh":"en";setLanguage(stored||manifestLanguage,{rerender:false})}
+document.querySelectorAll(".representation-button").forEach(button=>button.addEventListener("click",()=>{const representation=button.dataset.representation;if(representation==="pairwise")currentView="graph";else if(representation==="compare")currentView="compare";else{currentView="hypergraph";hyperMode=representation;if(representation==="matrix")focusAssertionIds=null;else if(selection?.kind==="node")focusSharedNode(selection.id);else if(selection?.kind==="assertion")focusRelation(selection.id)}autoFitRequested=true;render()}));
+document.querySelectorAll(".language-button").forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.language)));
+document.getElementById("theme-toggle").addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+let resizeTimer=null;window.addEventListener("resize",()=>{window.clearTimeout(resizeTimer);resizeTimer=window.setTimeout(()=>{const next=computeViewFrame();if(next.width!==viewFrame.width||next.height!==viewFrame.height){autoFitRequested=true;render()}},140)});
+initTheme();initLanguage();render();
+</script>
+</body>
+</html>"""

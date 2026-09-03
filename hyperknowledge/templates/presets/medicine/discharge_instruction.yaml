@@ -1,0 +1,60 @@
+language: [zh, en]
+
+name: discharge_instruction
+type: model
+tags: [medicine, hospital, discharge, patient-care]
+
+description:
+  zh: '出院指导模板 - 从出院小结中提取患者出院后需知的医疗指导信息'
+  en: 'Discharge Instruction Template - Extract post-discharge medical guidance information from discharge summaries'
+
+output:
+  description:
+    zh: '患者出院后医疗指导'
+    en: 'Post-discharge medical guidance for patients'
+  fields:
+    - name: medications
+      type: list
+      description:
+        zh: '用药列表及用法'
+        en: 'Medication list and usage instructions'
+      required: true
+    - name: follow_up
+      type: str
+      description:
+        zh: '随访安排'
+        en: 'Follow-up arrangement'
+      required: true
+    - name: restrictions
+      type: list
+      description:
+        zh: '注意事项'
+        en: 'Things to note'
+      required: false
+    - name: warning_signs
+      type: list
+      description:
+        zh: '警告信号（需立即就医的情况）'
+        en: 'Warning signs (situations requiring immediate medical attention)'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的医疗文档分析师，负责从出院小结中准确提取患者出院后需知的医疗指导信息。'
+    en: 'You are a professional medical document analyst responsible for accurately extracting post-discharge medical guidance information from discharge summaries.'
+  rules:
+    zh:
+      - '用药列表应包含药物名称、剂量和用法'
+      - '随访安排应明确标注时间节点'
+      - '注意事项应包括饮食、运动等生活指导'
+      - '警告信号应列举需立即就医的紧急情况'
+    en:
+      - 'Medication list should include drug name, dosage, and usage'
+      - 'Follow-up arrangement should clearly indicate time milestones'
+      - 'Things to note should include lifestyle guidance such as diet and exercise'
+      - 'Warning signs should list emergency situations requiring immediate medical attention'
+
+identifiers: {}
+
+display:
+  label: '出院指导'

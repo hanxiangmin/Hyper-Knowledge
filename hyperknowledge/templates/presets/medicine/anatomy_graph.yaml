@@ -1,0 +1,94 @@
+language: [zh, en]
+
+name: anatomy_graph
+type: graph
+tags: [medicine, anatomy, structure, body]
+
+description:
+  zh: '解剖结构图模板 - 从解剖学教材中提取人体结构的层级关系'
+  en: 'Anatomy Structure Graph Template - Extract hierarchical relationships of human body structures from anatomy textbooks'
+
+output:
+  description:
+    zh: '人体结构的层级包含关系'
+    en: 'Hierarchical containment relationships of human body structures'
+  entities:
+    description:
+      zh: '解剖结构实体'
+      en: 'Anatomical structure entities'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '解剖结构名称'
+          en: 'Anatomical structure name'
+        required: true
+      - name: level
+        type: str
+        description:
+          zh: '结构层级：系统/器官/组织/细胞/亚细胞结构等'
+          en: 'Structure level: system/organ/tissue/cell/subcellular_structure, etc.'
+        required: true
+      - name: location
+        type: str
+        description:
+          zh: '空间位置。例如：胸腔/腹腔/颅内/四肢/体表等'
+          en: 'Spatial location. Examples: thoracic_cavity/abdominal_cavity/cranial/extremities/body_surface, etc.'
+        required: false
+  relations:
+    description:
+      zh: '解剖结构之间的包含和位置关系'
+      en: 'Containment and location relationships between anatomical structures'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '父级结构'
+          en: 'Parent structure'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '子级结构'
+          en: 'Child structure'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：包含/位于/连接/供应/支配等'
+          en: 'Relation type: contains/located_in/connects_to/supplies/innervates, etc.'
+        required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的解剖学专家，负责从解剖学教材中准确提取人体结构的层级关系。'
+    en: 'You are a professional anatomy expert responsible for accurately extracting hierarchical relationships of human body structures from anatomy textbooks.'
+  rules_for_entities:
+    zh:
+      - '提取具有明确解剖学定义的实体'
+      - '结构层级应与解剖学标准一致'
+      - '位置信息应准确描述'
+    en:
+      - 'Extract entities with clear anatomical definitions'
+      - 'Structure levels should be consistent with anatomical standards'
+      - 'Location information should be accurately described'
+  rules_for_relations:
+    zh:
+      - '优先提取解剖学教材中明确描述的结构关系'
+      - '层级关系应遵循解剖学分类体系'
+      - '仅提取文本中明确表达的结构关系'
+    en:
+      - 'Prioritize explicitly described structural relationships from anatomy textbooks'
+      - 'Hierarchical relationships should follow anatomical classification system'
+      - 'Only extract structural relationships explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

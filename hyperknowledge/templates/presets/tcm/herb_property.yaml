@@ -1,0 +1,74 @@
+language: [zh, en]
+
+name: herb_property
+type: model
+tags: [tcm, herb, traditional-chinese-medicine]
+
+description:
+  zh: '药材属性模型模板 - 从中药学教材中提取药材的基本属性信息'
+  en: 'Herb Property Model Template - Extract basic property information of medicinal herbs from traditional Chinese medicine textbooks'
+
+output:
+  description:
+    zh: '药材的基本属性'
+    en: 'Basic properties of medicinal herbs'
+  fields:
+    - name: name
+      type: str
+      description:
+        zh: '药材名称'
+        en: 'Herb name'
+      required: true
+    - name: nature
+      type: str
+      description:
+        zh: '四气：寒/热/温/凉/平'
+        en: 'Four natures: cold/hot/warm/cool/neutral'
+      required: true
+    - name: flavor
+      type: str
+      description:
+        zh: '五味：酸/苦/甘/辛/咸'
+        en: 'Five flavors: sour/bitter/sweet/pungent/salty'
+      required: true
+    - name: meridian_entry
+      type: str
+      description:
+        zh: '归经'
+        en: 'Meridian entry'
+      required: true
+    - name: efficacy
+      type: str
+      description:
+        zh: '主要功效'
+        en: 'Main efficacy'
+      required: true
+    - name: toxicity
+      type: str
+      description:
+        zh: '毒性（无毒/小毒/有毒）'
+        en: 'Toxicity (non-toxic/slightly toxic/toxic)'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的中医药学家，负责从中药学教材中准确提取药材的基本属性信息。'
+    en: 'You are a professional traditional Chinese medicine scholar responsible for accurately extracting basic property information of medicinal herbs from TCM textbooks.'
+  rules:
+    zh:
+      - '药材名称应使用规范的中药学名称'
+      - '四气五味应按照中医药理论准确分类'
+      - '归经应标注药物作用的经络'
+      - '功效应概括主要治疗作用'
+      - '毒性信息应准确标注'
+    en:
+      - 'Herb names should use standard TCM nomenclature'
+      - 'Four natures and five flavors should be accurately classified according to TCM theory'
+      - 'Meridian entry should indicate the meridians the drug acts on'
+      - 'Efficacy should summarize the main therapeutic effects'
+      - 'Toxicity information should be accurately labeled'
+
+identifiers: {}
+
+display:
+  label: '{name}'

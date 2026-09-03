@@ -1,0 +1,9 @@
+{
+  "schema_version": "hyperknowledge.skill-release/v1",
+  "name": "hyper-knowledge",
+  "version": "0.8.0",
+  "engine": "hyper-knowledge>=0.8.0,<0.9.0",
+  "default_network_policy": "offline",
+  "entrypoint": "runtime/hk",
+  "windows_entrypoint": "runtime/hk.cmd"
+}

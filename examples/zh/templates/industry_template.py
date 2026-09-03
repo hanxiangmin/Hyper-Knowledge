@@ -1,0 +1,73 @@
+"""
+工业领域模板示例
+
+Usage:
+    python examples/templates/industry_template.py
+"""
+
+from pathlib import Path
+
+import dotenv
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+
+from hyperknowledge import Template
+
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+
+dotenv.load_dotenv()
+
+# ==================== 测试用例（取消注释选择要测试的用例） ====================
+
+# // test for 设备拓扑图
+test_data_file = "equipment_technical_manual.md"
+template_name = "industry/equipment_topology"
+
+# // test for 操作流程
+# test_data_file = "operation_maintenance_manual.md"
+# template_name = "industry/operation_flow"
+
+# // test for 安全控制
+# test_data_file = "safety_management_handbook.md"
+# template_name = "industry/safety_control"
+
+# // test for 应急响应时间线
+# test_data_file = "safety_management_handbook.md"
+# template_name = "industry/emergency_response"
+
+# // test for 故障案例
+# test_data_file = "failure_analysis_report.md"
+# template_name = "industry/failure_case"
+
+# ==================== 主函数 ====================
+
+def main():
+    test_data_dir = project_root / "tests" / "test_data" / "zh" / "industry"
+    input_file = test_data_dir / test_data_file
+    
+    with open(input_file, "r", encoding="utf-8") as f:
+        text = f.read()
+    
+    print("=" * 80)
+    print(f"🧪 测试模板: {template_name}")
+    print(f"📂 测试数据: {input_file}")
+    print("=" * 80)
+
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    embedder = OpenAIEmbeddings(model="text-embedding-3-small")
+
+    extractor = Template.create(
+        template_name,
+        language="zh",
+        llm_client=llm,
+        embedder=embedder,
+    )
+
+    print("\n📥 正在提取知识摘要...")
+    extractor.feed_text(text)
+    print("✅ 提取完成！\n")
+
+    extractor.show()
+
+
+if __name__ == "__main__":
+    main()

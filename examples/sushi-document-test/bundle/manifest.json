@@ -1,0 +1,30 @@
+{
+  "schema_version": "hk.bundle/v1",
+  "bundle_id": "bundle_sushi_biography_hypergraph_v1",
+  "source_ka": null,
+  "source_data_sha256": "65869e3042b4a3b7a83695f1a053f8a2d99a09d031167770d4636e433442c0ed",
+  "template": "general/hypergraph+codex/biography-events-v1",
+  "language": "zh",
+  "topology_type": "hypergraph",
+  "sources": [
+    {
+      "path": "source/sushi.md",
+      "sha256": "65869e3042b4a3b7a83695f1a053f8a2d99a09d031167770d4636e433442c0ed",
+      "size_bytes": 7053
+    }
+  ],
+  "counts": {
+    "nodes": 38,
+    "assertions": 10,
+    "members": 49,
+    "unresolved_members": 0,
+    "assertions_with_evidence": 10
+  },
+  "limitations": [
+    "The source is a user-provided secondary biography; its historical claims were not independently fact-checked.",
+    "Semantic structuring was produced by Codex and is labeled model_predicted; no external extraction provider was used.",
+    "Ten representative higher-order themes were selected for renderer testing and are not an exhaustive extraction of the document.",
+    "The late-life trajectory is modeled as three evidence-linked event hyperedges over atomic person, time, and place nodes; trajectory_index metadata records chronology and does not create directed edges or composite stage nodes.",
+    "This bundle contains no native pairwise relation, so the renderer omits the pairwise view and creates no projection auxiliary nodes."
+  ]
+}

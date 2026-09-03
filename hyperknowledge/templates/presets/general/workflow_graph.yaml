@@ -1,0 +1,122 @@
+language: [zh, en]
+
+name: workflow_graph
+type: graph
+tags: [general, workflow, process, agent, skill]
+
+description:
+  zh: '工作流程图模板 - 从Skill定义文件、Agent工作流文档、SOP操作手册中提取流程步骤及其执行顺序、依赖关系和条件分支'
+  en: 'Workflow Graph Template - Extract workflow steps, execution order, dependencies, and conditional branches from Skill definitions, Agent workflow documents, and SOP manuals'
+
+output:
+  description:
+    zh: '工作流程的步骤节点及其执行关系'
+    en: 'Workflow steps and their execution relationships'
+  entities:
+    description:
+      zh: '工作流程中的步骤节点'
+      en: 'Step nodes in the workflow'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '步骤名称，使用清晰的动作性描述'
+          en: 'Step name with clear action-oriented description'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '步骤类型：调用技能/普通步骤/条件判断/分支节点/输入节点/输出节点/循环节点等'
+          en: 'Step type: skill_call/process_step/condition/branch_node/input_node/output_node/loop_node, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '步骤的简要功能描述'
+          en: 'Brief description of step functionality'
+        required: false
+      - name: input
+        type: str
+        description:
+          zh: '步骤的输入要求'
+          en: 'Input requirements for the step'
+        required: false
+      - name: output
+        type: str
+        description:
+          zh: '步骤的输出结果'
+          en: 'Output result of the step'
+        required: false
+  relations:
+    description:
+      zh: '步骤之间的执行顺序、依赖关系和条件分支'
+      en: 'Execution order, dependencies, and conditional branches between steps'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源步骤名称'
+          en: 'Source step name'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标步骤名称'
+          en: 'Target step name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型，用简洁词语概括两个步骤之间的连接方式。例如：下一步/条件为真/条件为假/输入/输出/依赖/触发等'
+          en: 'Relation type, concisely describing the connection between two steps. Examples: next/if_true/if_false/input_to/output_from/depends_on/triggers, etc.'
+        required: true
+      - name: condition
+        type: str
+        description:
+          zh: '条件表达式（如分支条件）'
+          en: 'Condition expression (e.g., branch condition)'
+        required: false
+      - name: description
+        type: str
+        description:
+          zh: '关系说明，如分支条件或触发原因'
+          en: 'Relation description such as branch condition or trigger reason'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位工作流分析师，擅长从Skill定义文档、Agent工作流说明和SOP操作手册中提取流程结构。'
+    en: 'You are a workflow analyst skilled at extracting process structures from Skill definitions, Agent workflow documentation, and SOP manuals.'
+  rules_for_entities:
+    zh:
+      - '提取每个具有独立功能的步骤作为节点'
+      - '同一步骤在文档中保持命名一致'
+      - '仅提取文档中明确描述的步骤'
+      - 'input/output应简洁描述数据流向'
+    en:
+      - 'Extract each functionally independent step as a node'
+      - 'Maintain consistent naming for the same step throughout the document'
+      - 'Only extract steps explicitly described in the document'
+      - 'input/output should concisely describe data flow'
+  rules_for_relations:
+    zh:
+      - '仅在文档明确表达两个步骤之间存在关系时创建关系'
+      - '优先使用文档中明确出现的关系词'
+      - '不要创建隐含的因果关系'
+      - '并行执行可用相应关系类型表示'
+    en:
+      - 'Create relations only when the document explicitly expresses a relationship between two steps'
+      - 'Prefer relation words that explicitly appear in the document'
+      - 'Do not create implicit causal relationships'
+      - 'Parallel execution can be represented using appropriate relation type'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

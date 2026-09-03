@@ -1,0 +1,102 @@
+language: [zh, en]
+
+name: concept_graph
+type: graph
+tags: [general, concept, knowledge, taxonomy]
+
+description:
+  zh: '概念关系图模板 - 从教科书、百科全书、学术论文中提取概念层级关系和语义关联'
+  en: 'Concept Graph Template - Extract concept hierarchy and semantic associations from textbooks, encyclopedias, and academic papers'
+
+output:
+  description:
+    zh: '概念之间的层级关系和语义关联网络'
+    en: 'Concept hierarchy and semantic association network'
+  entities:
+    description:
+      zh: '文档中的核心概念'
+      en: 'Core concepts in the document'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '概念名称'
+          en: 'Concept name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '概念类型：实体/抽象概念/过程/关系等'
+          en: 'Concept type: entity/abstract/process/relation, etc.'
+        required: true
+      - name: definition
+        type: str
+        description:
+          zh: '概念的简要定义'
+          en: 'Brief concept definition'
+        required: false
+  relations:
+    description:
+      zh: '概念之间的层级关系和语义关联'
+      en: 'Hierarchy and semantic associations between concepts'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源概念名称'
+          en: 'Source concept name'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标概念名称'
+          en: 'Target concept name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型，用简洁词语概括两个概念之间的连接方式。例如：属于/包含/导致/相关/对立/示例/扩展等'
+          en: 'Relation type, concisely describing the connection between two concepts. Examples: is_a/part_of/causes/related_to/opposite/example_of/extends, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '关系说明'
+          en: 'Relation description'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位知识图谱专家，擅长从教科书、百科全书和学术论文中提取概念之间的层级关系和语义关联。'
+    en: 'You are a knowledge graph expert skilled at extracting concept hierarchy and semantic associations from textbooks, encyclopedias, and academic papers.'
+  rules_for_entities:
+    zh:
+      - '提取文档中定义的核心概念'
+      - '概念名称应使用规范术语'
+      - '同一概念在全文中保持命名一致'
+      - '仅提取文本中明确表达的概念'
+    en:
+      - 'Extract core concepts defined in the document'
+      - 'Concept names should use standard terminology'
+      - 'Maintain consistent naming for the same concept throughout the text'
+      - 'Only extract concepts explicitly expressed in the text'
+  rules_for_relations:
+    zh:
+      - 'type用简洁词语概括关系性质'
+      - '优先提取文档中明确定义的关系'
+      - '不要创建隐含的常识性关联，仅提取文档中明确说明的关系'
+    en:
+      - 'Type should concisely describe the nature of the relationship'
+      - 'Prioritize explicitly defined relationships in the document'
+      - 'Do not create implicit common-sense associations, only extract explicitly stated relationships'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

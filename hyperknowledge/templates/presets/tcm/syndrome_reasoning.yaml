@@ -1,0 +1,133 @@
+language: [zh, en]
+
+name: syndrome_reasoning
+type: hypergraph
+tags: [tcm, syndrome, diagnosis, reasoning]
+
+description:
+  zh: '证候推理图模板 - 从医案和临床经验中提取完整的辨证论治推理链条，建模 {症状群} → {证候} → {治法} → {方剂} 的多元关系。'
+  en: 'Syndrome Reasoning Graph Template - Extract complete TCM reasoning chains from medical cases, modeling {symptom cluster} → {syndrome} → {treatment} → {formula} multi-entity relations.'
+
+output:
+  description:
+    zh: '完整的辨证论治推理链条，包含症状、证候、治法和方剂节点，以及它们之间的推理关系。'
+    en: 'Complete TCM reasoning chain with symptom, syndrome, treatment, and formula nodes, along with their reasoning relationships.'
+  entities:
+    description:
+      zh: '医案中可识别的中医要素节点，包括症状、证候、治法、方剂等基本语义单元。'
+      en: 'TCM elements identifiable in medical cases, including symptoms, syndromes, treatments, formulas, and other basic semantic units.'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '要素名称，使用文本中最明确、最稳定的称呼。'
+          en: 'Element name, using the most explicit and stable designation in the text.'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '要素类型：症状/证候/治法/方剂/病因/病位/病性等'
+          en: 'Element type: symptom/syndrome/treatment/formula/etiology/location/nature, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '对该要素的简要说明或补充描述。'
+          en: 'Brief description or supplementary information about the element.'
+        required: false
+  relations:
+    description:
+      zh: '辨证论治推理超边，将症状、证候、治法、方剂等不同语义角色的实体分组组织。'
+      en: 'Syndrome differentiation reasoning hyperedges, organizing entities of different semantic roles such as symptoms, syndromes, treatments, and formulas.'
+    fields:
+      - name: reasoning_chain_name
+        type: str
+        description:
+          zh: '该推理链的名称或标题，用于唯一标识这条多元推理关系。'
+          en: 'Name or title of this reasoning chain, used to uniquely identify this multi-entity relation.'
+        required: true
+      - name: reasoning_type
+        type: str
+        description:
+          zh: '推理类型：辨证论治/随证加减/方证对应/病机分析等'
+          en: 'Reasoning type: syndrome_differentiation/treatment_adjustment/formula_syndrome_correspondence/pathogenesis_analysis, etc.'
+        required: true
+      - name: symptoms
+        type: list
+        description:
+          zh: '参与该推理的症状实体名称列表，如发热、汗出、恶风、脉浮等。'
+          en: 'List of symptom entity names participating in this reasoning, such as fever, sweating, aversion to wind, floating pulse, etc.'
+        required: true
+      - name: syndrome
+        type: list
+        description:
+          zh: '推导出的证候类型列表，如太阳中风、太阳伤寒、少阳病等。'
+          en: 'List of derived syndrome types, such as Taiyang wind-strike, Taiyang cold-damage, Shaoyang disease, etc.'
+        required: true
+      - name: principle
+        type: list
+        description:
+          zh: '针对该证候的治疗原则列表，如解肌发表、调和营卫、和解少阳等。'
+          en: 'List of treatment principles, such as releasing the muscles, harmonizing the Ying, reconciling Shaoyang, etc.'
+        required: true
+      - name: formula
+        type: list
+        description:
+          zh: '推荐的方剂名称列表，如桂枝汤、麻黄汤、小柴胡汤等。'
+          en: 'List of recommended formula names, such as Guizhi Tang, Mahuang Tang, Xiao Chaihu Tang, etc.'
+        required: false
+      - name: description
+        type: str
+        description:
+          zh: '对该推理链的补充说明，如推理过程、病机分析等。'
+          en: 'Supplementary description of this reasoning chain, such as reasoning process or pathogenesis analysis.'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的中医临床专家，负责从医案和临床经验中准确提取辨证论治的推理关系。'
+    en: 'You are a professional TCM clinical expert responsible for accurately extracting syndrome differentiation reasoning relationships from medical cases and clinical experience.'
+  rules_for_entities:
+    zh:
+      - '提取可识别的症状表现作为实体节点，如发热、汗出、恶风、脉浮等'
+      - '提取证候类型作为实体节点，如太阳中风、太阳伤寒、少阳病等'
+      - '提取治法原则作为实体节点，如解肌发表、调和营卫、和解少阳等'
+      - '提取方剂名称作为实体节点，如桂枝汤、麻黄汤、小柴胡汤等'
+      - '同一要素在全文中保持命名一致'
+      - '不要提取纯泛称或无独立指代意义的词语'
+    en:
+      - 'Extract identifiable symptom manifestations as entity nodes, such as fever, sweating, aversion to wind, floating pulse, etc.'
+      - 'Extract syndrome types as entity nodes, such as Taiyang wind-strike, Taiyang cold-damage, Shaoyang disease, etc.'
+      - 'Extract treatment principles as entity nodes, such as releasing the muscles, harmonizing the Ying, reconciling Shaoyang, etc.'
+      - 'Extract formula names as entity nodes, such as Guizhi Tang, Mahuang Tang, Xiao Chaihu Tang, etc.'
+      - 'Maintain consistent naming for the same element throughout the text'
+      - 'Do not extract generic terms or phrases without independent referential meaning'
+  rules_for_relations:
+    zh:
+      - '每个完整的辨证论治推理链条作为一个超边'
+      - '将症状填入 symptoms 列表'
+      - '将证候填入 syndrome 列表'
+      - '将治法填入 principle 列表'
+      - '将方剂填入 formula 列表（可选）'
+      - '避免重复超边；若相同实体多次以相同方式参与同一推理，应合并为一条记录'
+      - '完整的推理链条：症状群（symptoms）→ 证候（syndrome）→ 治法（principle）→ 方剂（formula）'
+    en:
+      - 'Extract each complete syndrome differentiation reasoning chain as a hyperedge'
+      - 'Fill symptoms into the symptoms list'
+      - 'Fill syndrome into the syndrome list'
+      - 'Fill treatment principles into the principle list'
+      - 'Fill formula into the formula list (optional)'
+      - 'Avoid duplicate hyperedges; if the same entities repeatedly participate in the same reasoning in the same way, merge them into one record'
+      - 'Complete reasoning chain: symptom cluster (symptoms) → syndrome → treatment (principle) → formula'
+
+identifiers:
+  entity_id: name
+  relation_id: '{reasoning_chain_name}|{reasoning_type}'
+  relation_members: [symptoms, syndrome, principle, formula]
+
+options:
+  extraction_mode: two_stage
+
+display:
+  entity_label: '{name} ({type})'
+  relation_label: '{reasoning_chain_name}'

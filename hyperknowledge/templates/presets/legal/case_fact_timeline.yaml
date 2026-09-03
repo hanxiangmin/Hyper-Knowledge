@@ -1,0 +1,109 @@
+language: [zh, en]
+
+name: case_fact_timeline
+type: temporal_graph
+tags: [legal, case, fact, timeline]
+
+description:
+  zh: '案件事实时间线模板 - 从判决书和证据材料中提取案件事实的时间线'
+  en: 'Case Fact Timeline Template - Extract case fact timelines from judgments and evidence materials'
+
+output:
+  description:
+    zh: '案件事实的时间顺序和证据链'
+    en: 'Temporal sequence of case facts and evidence chain'
+  entities:
+    description:
+      zh: '案件事实和证据'
+      en: 'Case facts and evidence'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '事实描述或证据编号'
+          en: 'Fact description or evidence number'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '实体类型：事实/证据/证人/物证/书证/鉴定意见/勘验笔录等'
+          en: 'Entity type: fact/evidence/witness/physical_evidence/documentary_evidence/expert_opinion/inspection_record, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '详细描述'
+          en: 'Detailed description'
+        required: false
+  relations:
+    description:
+      zh: '事实之间的时间顺序和证据支持关系'
+      en: 'Temporal sequence and evidence support relationships between facts'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '前置事实'
+          en: 'Prior fact'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '后续事实'
+          en: 'Subsequent fact'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：先于/证明/争议/确认/否认/采信/排除等'
+          en: 'Relation type: precedes/proves/disputed/confirmed/denied/admitted/excluded, etc.'
+        required: true
+      - name: time
+        type: str
+        description:
+          zh: '事实发生日期。例如：2024-01-15/2024年1月/案发当日等'
+          en: 'Fact occurrence date. Examples: 2024-01-15/January_2024/day_of_incident, etc.'
+        required: false
+      - name: disputed
+        type: str
+        description:
+          zh: '是否争议：是/否'
+          en: 'Whether disputed: yes/no'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的诉讼分析师，负责从判决书和证据材料中准确提取案件事实并构建时间线。'
+    en: 'You are a professional litigation analyst responsible for accurately extracting case facts and constructing timelines from judgments and evidence materials.'
+  rules_for_entities:
+    zh:
+      - '提取关键的案件事实作为实体'
+      - '证据实体应包含证据编号和来源'
+      - '实体描述应精炼准确'
+    en:
+      - 'Extract key case facts as entities'
+      - 'Evidence entities should include evidence number and source'
+      - 'Entity descriptions should be concise and accurate'
+  rules_for_relations:
+    zh:
+      - 'type为"先于"表示时间先后顺序'
+      - 'type为"证明"表示证据支持'
+      - 'type为"争议"表示对某一事实存在争议'
+      - '仅提取文本中明确陈述的事实关系'
+    en:
+      - 'type preceded_by indicates temporal sequence'
+      - 'type proves indicates evidence support'
+      - 'type disputes indicates dispute over a fact'
+      - 'Only extract explicitly stated fact relationships from the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+  time_field: time
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

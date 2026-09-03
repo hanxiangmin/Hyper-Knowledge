@@ -1,0 +1,98 @@
+language: [zh, en]
+
+name: equipment_topology
+type: graph
+tags: [industry, equipment, topology, system]
+
+description:
+  zh: '设备拓扑图模板 - 从设备手册中提取设备之间的物理连接和层级关系'
+  en: 'Equipment Topology Graph Template - Extract physical connections and hierarchical relationships between equipment from equipment manuals'
+
+output:
+  description:
+    zh: '设备之间的物理连接和层级关系'
+    en: 'Physical connections and hierarchical relationships between equipment'
+  entities:
+    description:
+      zh: '设备实体'
+      en: 'Equipment entities'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '设备名称'
+          en: 'Equipment name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '设备类型。例如：主机/从机/传感器/执行器/控制器/网络设备/电源设备等'
+          en: 'Equipment type. Examples: master/slave/sensor/actuator/controller/network_device/power_device, etc.'
+        required: true
+      - name: location
+        type: str
+        description:
+          zh: '安装位置。例如：机柜A/控制室/现场/室外/楼顶等'
+          en: 'Installation location. Examples: cabinet_A/control_room/site/outdoor/rooftop, etc.'
+        required: false
+      - name: specifications
+        type: str
+        description:
+          zh: '规格参数'
+          en: 'Specifications'
+        required: false
+  relations:
+    description:
+      zh: '设备之间的连接和层级关系'
+      en: 'Connection and hierarchical relationships between equipment'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源设备'
+          en: 'Source equipment'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标设备'
+          en: 'Target equipment'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：连接/位于/包含/控制/供电/通信等'
+          en: 'Relation type: connected_to/located_in/contains/controls/powers/communicates_with, etc.'
+        required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的设备工程师，负责从设备手册中准确提取设备拓扑关系。'
+    en: 'You are a professional equipment engineer responsible for accurately extracting equipment topology relationships from equipment manuals.'
+  rules_for_entities:
+    zh:
+      - '提取设备名称作为实体'
+      - '设备类型应准确分类'
+      - '安装位置应标注具体的物理位置'
+    en:
+      - 'Extract equipment names as entities'
+      - 'Equipment types should be accurately classified'
+      - 'Installation locations should indicate specific physical locations'
+  rules_for_relations:
+    zh:
+      - '优先提取设备手册中明确描述的设备关系'
+      - '仅提取文本中明确表达的设备关系'
+    en:
+      - 'Prioritize explicitly described equipment relationships from equipment manuals'
+      - 'Only extract equipment relationships explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

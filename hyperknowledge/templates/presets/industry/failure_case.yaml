@@ -1,0 +1,102 @@
+language: [zh, en]
+
+name: failure_case
+type: graph
+tags: [industry, failure, maintenance, troubleshooting]
+
+description:
+  zh: '故障案例图模板 - 从故障分析报告中提取故障现象、原因和措施的因果关系'
+  en: 'Failure Case Graph Template - Extract failure phenomenon-cause-measure causal relationships from failure analysis reports'
+
+output:
+  description:
+    zh: '故障现象到原因到措施的因果链'
+    en: 'Failure phenomenon to cause to measure causal chain'
+  entities:
+    description:
+      zh: '故障要素'
+      en: 'Failure elements'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '要素名称'
+          en: 'Element name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '要素类型：故障现象/根本原因/直接原因/修复措施/预防措施等'
+          en: 'Element type: symptom/root_cause/direct_cause/repair_measure/preventive_measure, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '说明'
+          en: 'Description'
+        required: false
+  relations:
+    description:
+      zh: '故障要素之间的因果关系'
+      en: 'Causal relationships between failure elements'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '前置要素'
+          en: 'Prior element'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '后续要素'
+          en: 'Subsequent element'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：由...导致/由...修复/由...预防/表现为/引起等'
+          en: 'Relation type: caused_by/resolved_by/prevented_by/manifests_as/leads_to, etc.'
+        required: true
+      - name: lesson
+        type: str
+        description:
+          zh: '经验教训'
+          en: 'Lessons learned'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的设备工程师，负责从故障分析报告中准确提取故障因果关系。'
+    en: 'You are a professional equipment engineer responsible for accurately extracting failure causal relationships from failure analysis reports.'
+  rules_for_entities:
+    zh:
+      - '提取故障现象作为实体'
+      - '提取根本原因作为实体'
+      - '提取纠正措施作为实体'
+    en:
+      - 'Extract failure phenomena as entities'
+      - 'Extract root causes as entities'
+      - 'Extract corrective measures as entities'
+  rules_for_relations:
+    zh:
+      - 'type为"原因"表示由某原因引起'
+      - 'type为"解决"表示通过某措施解决'
+      - 'type为"预防"表示通过某措施预防'
+      - 'lesson字段应总结经验教训'
+    en:
+      - 'type caused_by indicates caused by a reason'
+      - 'type resolved_by indicates resolved by a measure'
+      - 'type prevented_by indicates prevented by a measure'
+      - 'Lesson field should summarize lessons learned'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

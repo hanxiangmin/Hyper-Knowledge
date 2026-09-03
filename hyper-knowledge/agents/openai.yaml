@@ -1,0 +1,7 @@
+interface:
+  display_name: "Hyper-Knowledge"
+  short_description: "Build and visualize higher-order knowledge graphs"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"
+  brand_color: "#6F9B8A"
+  default_prompt: "Use $hyper-knowledge to build a provenance-aware higher-order knowledge graph and export an offline interactive view."

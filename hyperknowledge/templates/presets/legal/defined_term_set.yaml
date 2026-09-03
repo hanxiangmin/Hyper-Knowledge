@@ -1,0 +1,55 @@
+language: [zh, en]
+
+name: defined_term_set
+type: set
+tags: [legal, contract, terminology]
+
+description:
+  zh: '定义术语集合模板 - 从合同和法律文书中提取术语定义'
+  en: 'Defined Term Set Template - Extract term definitions from contracts and legal documents'
+
+output:
+  description:
+    zh: '合同中的术语定义集合'
+    en: 'Set of term definitions in contracts'
+  fields:
+    - name: term
+      type: str
+      description:
+        zh: '被定义的术语'
+        en: 'Defined term'
+      required: true
+    - name: defined_in
+      type: str
+      description:
+        zh: '定义所在位置（如条款编号）'
+        en: 'Location of definition (e.g., clause number)'
+      required: true
+    - name: meaning
+      type: str
+      description:
+        zh: '术语含义摘要'
+        en: 'Summary of term meaning'
+      required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的法律文书分析师，负责从合同中准确提取术语定义。'
+    en: 'You are a professional legal document analyst responsible for accurately extracting term definitions from contracts.'
+  rules:
+    zh:
+      - '提取所有明确定义的术语'
+      - '定义位置应标注具体的条款或章节'
+      - '含义摘要应精炼概括核心定义'
+      - '同一术语的多次定义应合并'
+    en:
+      - 'Extract all explicitly defined terms'
+      - 'Definition location should specify the specific clause or section'
+      - 'Meaning summary should concisely summarize the core definition'
+      - 'Multiple definitions of the same term should be merged'
+
+identifiers:
+  item_id: term
+
+display:
+  label: '{term}'

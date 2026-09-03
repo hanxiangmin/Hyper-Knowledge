@@ -1,0 +1,249 @@
+"""MCP server exposing Hyper-Knowledge knowledge abstracts.
+
+Lets MCP-capable assistants query and export existing Knowledge Abstracts over
+the Model Context Protocol. Read + export only — it never creates, mutates, or
+deletes a KA.
+
+Tools:
+    - list_templates  : list available extraction templates
+    - info            : stats for a knowledge abstract (no LLM needed)
+    - search          : semantic retrieval over a KA (needs an index)
+    - ask             : RAG question-answering over a KA (needs an index)
+    - export_obsidian : export a KA to an Obsidian vault
+
+Run it (stdio transport):
+
+    hk-mcp
+    # or
+    python -m hyperknowledge.mcp_server
+
+LLM/embedder come from ``~/.hk/config.toml`` (same as the CLI). Requires the
+optional extra: ``pip install 'hyperknowledge[mcp]'``.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any
+
+from langchain_core.embeddings import Embeddings
+from langchain_core.language_models.chat_models import BaseChatModel
+
+SERVER_NAME = "hyper-knowledge"
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers (kept module-level so they can be monkeypatched in tests)
+# ---------------------------------------------------------------------------
+
+
+def _get_clients() -> tuple[BaseChatModel, Embeddings]:
+    """Return (llm, embedder) from the user's ~/.hk/config.toml."""
+    from hyperknowledge.utils.client import get_client
+
+    return get_client()
+
+
+def _template_and_lang(path: Path) -> tuple[str, str]:
+    """Read the template name and language from a KA's metadata.json."""
+    meta_path = path / "metadata.json"
+    if not meta_path.exists():
+        raise FileNotFoundError(f"No metadata.json in {path}")
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    template = meta.get("template")
+    if not template:
+        raise ValueError(f"No template recorded in {meta_path}")
+    return template, meta.get("lang", "en")
+
+
+def _load_ka(ka_path: str):
+    """Load a Knowledge Abstract from disk (needs LLM/embedder clients)."""
+    from hyperknowledge.utils.template_engine import Template
+
+    path = Path(ka_path)
+    if not (path / "data.json").exists():
+        raise FileNotFoundError(f"Not a knowledge abstract (no data.json): {ka_path}")
+    template, lang = _template_and_lang(path)
+    llm, emb = _get_clients()
+    ka = Template.create(template, lang, llm_client=llm, embedder=emb)
+    ka.load(path)
+    return ka
+
+
+def _dump(obj: Any) -> str:
+    return json.dumps(obj, ensure_ascii=False, indent=2, default=str)
+
+
+# ---------------------------------------------------------------------------
+# Tool implementations (registered with FastMCP in build_server)
+# ---------------------------------------------------------------------------
+
+
+def list_templates() -> str:
+    """List the available knowledge-extraction templates.
+
+    Returns a JSON array of {name, type, description}.
+    """
+    from hyperknowledge.utils.template_engine import Template
+
+    templates = Template.list(include_methods=False)
+    out = []
+    for name, cfg in sorted(templates.items()):
+        desc = getattr(cfg, "description", "") or ""
+        if isinstance(desc, dict):
+            desc = desc.get("en") or desc.get("zh") or ""
+        out.append(
+            {"name": name, "type": getattr(cfg, "type", None), "description": desc}
+        )
+    return _dump(out)
+
+
+def info(ka_path: str) -> str:
+    """Show information and statistics for a knowledge abstract.
+
+    Args:
+        ka_path: Path to the knowledge abstract directory.
+
+    Returns JSON with template, language, node/edge counts, and index status.
+    Does not require LLM/embedder configuration.
+    """
+    path = Path(ka_path)
+    data_file = path / "data.json"
+    if not data_file.exists():
+        return f"Not a knowledge abstract (no data.json): {ka_path}"
+
+    data = json.loads(data_file.read_text(encoding="utf-8"))
+    if isinstance(data, dict):
+        nodes = len(data.get("nodes", data.get("entities", [])))
+        edges = len(data.get("edges", data.get("relations", [])))
+    elif isinstance(data, list):
+        nodes, edges = len(data), 0
+    else:
+        nodes, edges = 0, 0
+
+    meta: dict = {}
+    meta_path = path / "metadata.json"
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+
+    index_dir = path / "index"
+    index_built = index_dir.exists() and any(index_dir.iterdir())
+
+    return _dump(
+        {
+            "path": str(path),
+            "template": meta.get("template"),
+            "lang": meta.get("lang"),
+            "nodes": nodes,
+            "edges": edges,
+            "index_built": index_built,
+        }
+    )
+
+
+def search(ka_path: str, query: str, top_k: int = 5) -> str:
+    """Semantic search over a knowledge abstract.
+
+    Args:
+        ka_path: Path to the knowledge abstract directory.
+        query: Natural-language search query.
+        top_k: Maximum number of results (for graphs: nodes and edges each).
+
+    Returns matching nodes/edges as JSON. The KA must have an index
+    (build it with `hk build-index`).
+    """
+    ka = _load_ka(ka_path)
+    try:
+        results = ka.search(query, top_k=top_k)
+    except ValueError as e:
+        return f"Cannot search: {e}. Build the index first with `hk build-index {ka_path}`."
+
+    if isinstance(results, tuple):
+        nodes, edges = results
+        return _dump(
+            {
+                "nodes": [_model_to_dict(n) for n in nodes],
+                "edges": [_model_to_dict(e) for e in edges],
+            }
+        )
+    return _dump({"results": [_model_to_dict(r) for r in results]})
+
+
+def ask(ka_path: str, question: str, top_k: int = 5) -> str:
+    """Answer a question using retrieval-augmented generation over a KA.
+
+    Args:
+        ka_path: Path to the knowledge abstract directory.
+        question: The question to answer.
+        top_k: Number of context items to retrieve.
+
+    Returns the generated answer. The KA must have an index.
+    """
+    ka = _load_ka(ka_path)
+    try:
+        response = ka.chat(question, top_k=top_k)
+    except ValueError as e:
+        return f"Cannot answer: {e}. Build the index first with `hk build-index {ka_path}`."
+    return getattr(response, "content", str(response))
+
+
+def export_obsidian(
+    ka_path: str,
+    output: str,
+    vault_name: str = "",
+    overwrite: bool = False,
+) -> str:
+    """Export a knowledge abstract to an Obsidian vault.
+
+    Args:
+        ka_path: Path to the knowledge abstract directory.
+        output: Destination vault directory.
+        vault_name: Vault name for the index note (defaults to the output dir name).
+        overwrite: Allow writing into an existing, non-empty directory.
+
+    Returns a summary of how many notes were written.
+    """
+    ka = _load_ka(ka_path)
+    if not hasattr(ka, "export_obsidian"):
+        return (
+            "Obsidian export is only supported for graph-type knowledge abstracts "
+            "(graph, hypergraph, temporal/spatial graphs)."
+        )
+    name = vault_name or Path(output).name or "Knowledge Vault"
+    try:
+        vault = ka.export_obsidian(output, vault_name=name, overwrite=overwrite)
+    except FileExistsError as e:
+        return f"{e} Pass overwrite=true to write into it."
+    count = len(list(Path(vault).glob("*.md")))
+    return f"Exported {count} notes to {vault}"
+
+
+def _model_to_dict(item: Any) -> Any:
+    if hasattr(item, "model_dump"):
+        return item.model_dump()
+    return item
+
+
+# ---------------------------------------------------------------------------
+# Server wiring
+# ---------------------------------------------------------------------------
+
+
+def build_server():
+    """Build the FastMCP server with all tools registered."""
+    from mcp.server.fastmcp import FastMCP
+
+    server = FastMCP(SERVER_NAME)
+    for fn in (list_templates, info, search, ask, export_obsidian):
+        server.tool()(fn)
+    return server
+
+
+def main() -> None:
+    """Entry point: run the MCP server over stdio."""
+    build_server().run()
+
+
+if __name__ == "__main__":
+    main()

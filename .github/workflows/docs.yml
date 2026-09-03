@@ -1,0 +1,98 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "pyproject.toml"
+      - ".github/workflows/docs.yml"
+      - "docs_hooks.py"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to deploy (e.g., 0.1.1 or latest)"
+        required: false
+        default: "latest"
+      alias:
+        description: "Alias to set (e.g., dev, stable)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install mkdocs-material mkdocs-static-i18n mkdocstrings[python] pymdown-extensions mike
+          uv pip install -e .
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch existing gh-pages branch
+        run: git fetch origin gh-pages || true
+
+      - name: Deploy with mike (local only)
+        run: |
+          VERSION="${{ github.event.inputs.version || 'latest' }}"
+          ALIAS="${{ github.event.inputs.alias }}"
+
+          if [ -n "$ALIAS" ]; then
+            uv run mike deploy --update-aliases "$VERSION" "$ALIAS"
+          else
+            uv run mike deploy "$VERSION"
+          fi
+
+          uv run mike set-default latest
+
+      - name: Export gh-pages site
+        run: |
+          mkdir -p _site
+          git archive gh-pages | tar -x -C _site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

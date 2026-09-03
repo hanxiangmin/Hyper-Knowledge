@@ -1,0 +1,104 @@
+language: [zh, en]
+
+name: earnings_summary
+type: model
+tags: [finance, earnings, investor-relations]
+
+description:
+  zh: '财报会议摘要模板 - 从财报电话会议记录中提取公司业绩、预期对比和前瞻指引'
+  en: 'Earnings Call Summary Template - Extract company performance, consensus comparison, and guidance from earnings call transcripts'
+
+output:
+  description:
+    zh: '财报会议的核心内容和关键信息'
+    en: 'Core content and key information from earnings calls'
+  fields:
+    - name: company_name
+      type: str
+      description:
+        zh: '公司名称'
+        en: 'Company name'
+      required: true
+    - name: quarter
+      type: str
+      description:
+        zh: '财报季度，格式如"2024Q3"'
+        en: 'Reporting quarter in format like "2024Q3"'
+      required: true
+    - name: reported_revenue
+      type: str
+      description:
+        zh: '报告期实际营收'
+        en: 'Reported revenue for the period'
+      required: true
+    - name: reported_eps
+      type: str
+      description:
+        zh: '报告期实际每股收益'
+        en: 'Reported earnings per share'
+      required: true
+    - name: revenue_vs_consensus
+      type: str
+      description:
+        zh: '营收与市场预期的对比'
+        en: 'Revenue comparison with market consensus'
+      required: true
+    - name: eps_vs_consensus
+      type: str
+      description:
+        zh: '每股收益与市场预期的对比'
+        en: 'EPS comparison with market consensus'
+      required: true
+    - name: guidance_revenue
+      type: str
+      description:
+        zh: '营收前瞻指引'
+        en: 'Revenue guidance'
+      required: false
+    - name: guidance_eps
+      type: str
+      description:
+        zh: '每股收益前瞻指引'
+        en: 'EPS guidance'
+      required: false
+    - name: overall_tone
+      type: str
+      description:
+        zh: '管理层整体语调：积极/中性/消极'
+        en: 'Overall management tone: positive/neutral/negative'
+      required: true
+    - name: key_highlights
+      type: list
+      description:
+        zh: '本次会议的主要亮点'
+        en: 'Key highlights from this call'
+      required: false
+    - name: key_concerns
+      type: list
+      description:
+        zh: '本次会议的主要关切问题'
+        en: 'Key concerns raised in this call'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的投研分析师，负责从财报电话会议记录中准确提取业绩数据和关键信息。'
+    en: 'You are a professional investment research analyst responsible for accurately extracting performance data and key information from earnings call transcripts.'
+  rules:
+    zh:
+      - '提取精确的营收和EPS数字，确保与财报一致'
+      - '对比数据应反映与市场共识预期的差异'
+      - '前瞻指引应区分营收指引和EPS指引'
+      - '语调评估应基于管理层措辞和信心程度'
+      - '亮点和关切应提炼自会议讨论的核心议题'
+    en:
+      - 'Extract precise revenue and EPS figures, ensuring consistency with financial reports'
+      - 'Comparison data should reflect the difference from market consensus expectations'
+      - 'Guidance should distinguish between revenue and EPS guidance'
+      - 'Tone assessment should be based on management language and confidence level'
+      - 'Highlights and concerns should distill the core topics discussed in the call'
+
+identifiers: {}
+
+display:
+  label: '{company_name} {quarter}'

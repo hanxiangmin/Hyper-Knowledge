@@ -1,0 +1,47 @@
+language: [zh, en]
+
+name: model
+type: model
+tags: [general]
+
+description:
+  zh: '通用结构模型知识模板 - 从任意文本中提取单个结构化对象，包含对象的名称和简要描述。'
+  en: 'General-purpose Model Knowledge Template - Extracts a single structured object from any text, including its name and brief description.'
+
+output:
+  description:
+    zh: '单个结构化对象的结果。'
+    en: 'Result of a single structured object.'
+  fields:
+  - name: name
+    type: str
+    description:
+      zh: '对象的名称或标题，使用文本中最稳定、最清晰的称呼。'
+      en: 'Name or title of the object, using the most stable and clear designation in the text.'
+  - name: description
+    type: str
+    description:
+      zh: '对象的简要描述，概括其身份、含义或在文本中的作用。'
+      en: 'Brief description of the object, summarizing its identity, meaning, or role in the text.'
+    required: false
+  - name: type
+    type: str
+    description:
+      zh: '对象的类型或分类标签。例如：用户信息/产品规格/配置参数/元数据/摘要信息等'
+      en: 'Type or category label of the object. Examples: user_info/product_spec/config_param/metadata/summary, etc.'
+    required: false
+
+guideline:
+  target:
+    zh: '你是一位信息提取专家。请从文本中提取一个核心对象，并提供其名称和简要描述。'
+    en: 'You are an information extraction expert. Extract one core object from the text and provide its name and brief description.'
+  rules:
+    zh:
+    - '提取文本中核心的、结构化的对象。'
+    - '优先使用原文中的稳定叫法，避免使用临时描述或简称。'
+    en:
+    - 'Extract the core, structured object from the text.'
+    - 'Prefer stable designations from the source text; avoid temporary descriptions or abbreviations.'
+
+display:
+  label: '{name}'

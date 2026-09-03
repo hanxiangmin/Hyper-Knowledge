@@ -1,0 +1,107 @@
+language: [zh, en]
+
+name: hospital_timeline
+type: temporal_graph
+tags: [medicine, hospital, timeline, clinical]
+
+description:
+  zh: '住院病程时间线模板 - 从病程记录和手术记录中提取患者住院期间的事件时间线'
+  en: 'Hospital Timeline Template - Extract patient in-hospital event timelines from clinical notes and surgical records'
+
+output:
+  description:
+    zh: '患者住院期间的事件顺序'
+    en: 'Sequence of patient in-hospital events'
+  entities:
+    description:
+      zh: '医疗事件'
+      en: 'Medical events'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '事件名称'
+          en: 'Event name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '事件类型：入院/检查/手术/用药/会诊/转科/出院/诊断/治疗等'
+          en: 'Event type: admission/examination/surgery/medication/consultation/transfer/discharge/diagnosis/treatment, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '事件描述'
+          en: 'Event description'
+        required: false
+  relations:
+    description:
+      zh: '事件之间的顺序和结果关系'
+      en: 'Sequence and result relationships between events'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '前置事件'
+          en: 'Prior event'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '后续事件'
+          en: 'Subsequent event'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：后续/导致/触发/依据/准备等'
+          en: 'Relation type: followed_by/leads_to/triggers/based_on/prepares_for, etc.'
+        required: true
+      - name: time
+        type: str
+        description:
+          zh: '事件发生日期。例如：2024-01-15/入院第3天/术后第1天等'
+          en: 'Event date. Examples: 2024-01-15/day_3_after_admission/day_1_after_surgery, etc.'
+        required: true
+      - name: performer
+        type: str
+        description:
+          zh: '执行人'
+          en: 'Performer'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的医疗分析师，负责从病程记录中准确提取患者住院期间的事件时间线。'
+    en: 'You are a professional medical analyst responsible for accurately extracting patient in-hospital event timelines from clinical notes.'
+  rules_for_entities:
+    zh:
+      - '提取关键的医疗事件作为实体'
+      - '事件类型应准确分类'
+      - '描述应精炼概括事件内容'
+    en:
+      - 'Extract key medical events as entities'
+      - 'Event types should be accurately classified'
+      - 'Descriptions should concisely summarize event content'
+  rules_for_relations:
+    zh:
+      - 'type为"后续"表示事件的时序关系'
+      - 'type为"导致"表示因果结果关系'
+      - 'performer应标注执行人或科室'
+    en:
+      - 'type follows indicates temporal sequence of events'
+      - 'type results_in indicates causal result relationship'
+      - 'Performer should indicate the executor or department'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}|{time}'
+  relation_members:
+    source: source
+    target: target
+  time_field: time
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

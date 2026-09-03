@@ -1,0 +1,126 @@
+language: [zh, en]
+
+name: biography_graph
+type: temporal_graph
+tags: [general, biography, life, events, timeline]
+
+description:
+  zh: '传记图模板 - 从人物传记、回忆录、年谱中提取实体和关系'
+  en: 'Biography Graph Template - Extract entities and relationships from biographies, memoirs, and chronicles'
+
+output:
+  description:
+    zh: '人物传记中的实体和关系网络'
+    en: "Entity and relationship network from biographies"
+  entities:
+    description:
+      zh: '传记中的实体'
+      en: 'Entities in the biography'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '实体名称'
+          en: 'Entity name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '实体类型，如：人物/地点/组织/作品/事件/成就/荣誉/职位等'
+          en: 'Entity type, e.g., person/location/organization/work/event/achievement/honor/position, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '实体描述'
+          en: 'Entity description'
+        required: false
+  relations:
+    description:
+      zh: '实体之间的关系'
+      en: 'Relationships between entities'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '关系起点实体'
+          en: 'Source entity'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '关系终点实体'
+          en: 'Target entity'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型，用简洁词语概括两个实体之间的连接方式。例如：师从/任职于/发明/创作/获得荣誉/亲属关系/合作关系/影响等'
+          en: 'Relation type, concisely describing the connection between two entities. Examples: mentored_by/employed_by/invented/created/received_honor/related_to/collaborated_with/influenced, etc.'
+        required: true
+      - name: time
+        type: str
+        description:
+          zh: '关系对应的时间；无明确时间时可留空。例如：1985年/20岁时/任职期间/2020年代初等'
+          en: 'Time associated with the relation; can be left empty if no explicit time. Examples: 1985/at_age_20/during_tenure/early_2020s, etc.'
+        required: false
+      - name: description
+        type: str
+        description:
+          zh: '对关系依据、方向或上下文含义的简要说明'
+          en: 'Brief description of relation basis, direction, or contextual meaning'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的传记分析师，擅长从人物传记、回忆录和年谱中提取实体和关系。'
+    en: 'You are a professional biography analyst skilled at extracting entities and relationships from biographies, memoirs, and chronicles.'
+  rules_for_entities:
+    zh:
+      - '提取传记主人公作为核心实体'
+      - '相关人物包括：家人、朋友、同事、对手、历史人物等'
+      - '同一实体在全文中保持命名一致'
+      - '仅提取文本中明确表达的实体'
+    en:
+      - 'Extract the biographical subject as the core entity'
+      - 'Related persons include: family, friends, colleagues, rivals, historical figures'
+      - 'Maintain consistent naming for the same entity throughout the text'
+      - 'Only extract entities explicitly expressed in the text'
+  rules_for_relations:
+    zh:
+      - '提取对理解人物生平有重要意义的关系'
+      - '仅在文本明确表达两个实体之间存在关系时创建关系'
+      - '优先使用文本中明确出现的关系词'
+      - '不要创建隐含的常识性关联'
+    en:
+      - 'Extract relationships of significant importance for understanding the person life'
+      - 'Create relationships only when the text explicitly expresses a relationship between two entities'
+      - 'Prefer relation words that explicitly appear in the text'
+      - 'Do not create implicit common-sense associations'
+  rules_for_time:
+    zh:
+      - '观察时间基准：{observation_time}'
+      - '绝对日期：保持原文格式（如"1985年"、"1985-03-15"）'
+      - '相对时间：转换为绝对时间（如"二十岁时"→"1965年"）'
+      - '模糊时间：保留原文表述，不推测具体年份'
+      - '时间范围：以最早时间点为准（如"1985-1989年"→"1985年"）'
+      - '仅提取文本中明确表达的时间'
+    en:
+      - 'Observation time baseline: {observation_time}'
+      - 'Absolute dates: Keep as-is (e.g., "1985", "1985-03-15")'
+      - 'Relative time: Convert to absolute (e.g., "at age twenty" → "1965")'
+      - 'Fuzzy time: Keep original expression, do not infer specific year'
+      - 'Time range: Use earliest time point (e.g., "1985-1989" → "1985")'
+      - 'Only extract time explicitly stated in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+  time_field: time
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}@{time}'

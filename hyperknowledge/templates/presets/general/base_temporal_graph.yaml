@@ -1,0 +1,114 @@
+language: [zh, en]
+
+name: temporal_graph
+type: temporal_graph
+tags: [general]
+
+description:
+  zh: '通用时序图结构知识模板 - 从任意文本中提取实体之间的关系，并在文本提供时间信息时为关系补充时间属性。'
+  en: 'General-purpose Temporal Graph Knowledge Template - Extracts relationships between entities from any text and supplements temporal attributes when time information is available.'
+
+output:
+  description:
+    zh: '包含实体节点、关系边及时间信息的时序图谱结果。'
+    en: 'Temporal graph result containing entity nodes, relation edges, and temporal information.'
+  entities:
+    description:
+      zh: '文本中可独立识别、可参与关系连接的实体节点。'
+      en: 'Entity nodes that can be independently identified and participate in relation connections.'
+    fields:
+    - name: name
+      type: str
+      description:
+        zh: '实体名称，使用文本中最明确、最稳定的称呼。'
+        en: 'Entity name, using the most explicit and stable designation in the text.'
+    - name: type
+      type: str
+      description:
+        zh: '实体类型。例如：人物/地点/组织/物品/概念/事件/制度/技术/产品/服务等'
+        en: 'Entity type. Examples: person/location/organization/object/concept/event/institution/technology/product/service, etc.'
+    - name: description
+      type: str
+      description:
+        zh: '对实体身份、含义或其在当前文本中作用的简要说明。'
+        en: 'Brief description of the entity identity, meaning, or its role in the current text.'
+      required: false
+  relations:
+    description:
+      zh: '实体之间的关系边；若文本提供时间，可在关系上补充时间属性。'
+      en: 'Relation edges between entities; temporal attributes can be added when time information is provided.'
+    fields:
+    - name: source
+      type: str
+      description:
+        zh: '关系起点实体，必须对应已提取实体的名称。'
+        en: 'Source entity of the relation, must correspond to the name of an extracted entity.'
+    - name: target
+      type: str
+      description:
+        zh: '关系终点实体，必须对应已提取实体的名称。'
+        en: 'Target entity of the relation, must correspond to the name of an extracted entity.'
+    - name: type
+      type: str
+      description:
+        zh: '关系类型，用简洁词语概括两个实体之间的连接方式。例如：创建/属于/位于/使用/影响/导致/参与/拥有/相关/先于/后续等'
+        en: 'Relation type, concisely describing the connection between two entities. Examples: created/belongs_to/located_at/uses/affects/causes/participates_in/owns/related_to/precedes/follows, etc.'
+    - name: time
+      type: str
+      description:
+        zh: '关系对应的时间；无明确时间时可留空。例如：2024年/20岁时/任职期间/2020年代初等'
+        en: 'Time associated with the relation; can be left empty if no explicit time is available. Examples: 2024/at_age_20/during_tenure/early_2020s, etc.'
+      required: false
+    - name: description
+      type: str
+      description:
+        zh: '对关系的简要补充说明；无额外信息时可留空。'
+        en: 'Brief supplementary explanation for the relation; can be left empty if no additional information is available.'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位时序知识图谱构建专家。请从文本中提取关键实体及其关系；如果文本提供了时间信息，再为关系补充时间属性。'
+    en: 'You are an expert in temporal knowledge graph construction. Extract key entities and their relationships from the text; supplement temporal attributes when time information is provided.'
+  rules_for_entities:
+    zh:
+    - '提取对理解文本事实、事件过程有价值，且能够参与关系连接的实体。'
+    - '同一实体在全文中保持命名一致。'
+    en:
+    - 'Extract entities that are valuable for understanding text facts and event processes, and that can participate in relation connections.'
+    - 'Maintain consistent naming for the same entity throughout the text.'
+  rules_for_relations:
+    zh:
+    - '仅在文本明确表达两个实体之间存在关系时创建关系边。'
+    en:
+    - 'Create relation edges only when the text explicitly expresses a relationship between two entities.'
+  rules_for_time:
+    zh:
+    - '当前观察日期：{observation_time}'
+    - 'time 是可选字段；仅在文本明确提供时间，或可依据相对时间可靠换算时填写。'
+    - '相对时间以 observation_time 为基准解析，如"去年/今年/明年""昨天/今天/明天""十年前/五年后"。'
+    - '若文本给出明确年份，则写为 YYYY；若给出完整日期，则写为 YYYY-MM-DD；保留文本可确定的最细粒度。'
+    - '若时间只对应关系成立、变化或终止中的某一时点，则记录最直接相关的那个时间。'
+    - '无法可靠确定时间时留空，不要根据常识补写。'
+    en:
+    - 'Current observation date: {observation_time}'
+    - 'time is optional; fill in only when the text explicitly provides time or when relative time can be reliably converted.'
+    - 'Parse relative time based on observation_time.'
+    - 'Write years as YYYY; write full dates as YYYY-MM-DD; preserve the finest granularity determinable from the text.'
+    - 'If time corresponds to only one point among establishment, change, or termination, record the most directly relevant time.'
+    - 'Leave empty when time cannot be reliably determined.'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}|{time}'
+  relation_members:
+    source: source
+    target: target
+  time_field: time
+
+options:
+  extraction_mode: two_stage
+
+display:
+  entity_label: '{name} ({type})'
+  relation_label: '{type}@{time}'

@@ -1,0 +1,11 @@
+{"assertion_id": "assertion:egfr-treatment-response", "node_id": "bio:egfr-ex19del", "ordinal": 0, "resolved": true, "role": "biomarker"}
+{"assertion_id": "assertion:egfr-treatment-response", "node_id": "drug:osimertinib", "ordinal": 1, "resolved": true, "role": "intervention"}
+{"assertion_id": "assertion:egfr-treatment-response", "node_id": "dx:advanced-nsclc", "ordinal": 2, "resolved": true, "role": "condition"}
+{"assertion_id": "assertion:egfr-treatment-response", "node_id": "outcome:response", "ordinal": 3, "resolved": true, "role": "outcome"}
+{"assertion_id": "assertion:egfr-treatment-response", "node_id": "cohort:synthetic-a", "ordinal": 4, "resolved": true, "role": "cohort"}
+{"assertion_id": "assertion:pdl1-immunotherapy", "node_id": "bio:pdl1-high", "ordinal": 0, "resolved": true, "role": "biomarker"}
+{"assertion_id": "assertion:pdl1-immunotherapy", "node_id": "drug:immunotherapy", "ordinal": 1, "resolved": true, "role": "intervention"}
+{"assertion_id": "assertion:pdl1-immunotherapy", "node_id": "dx:advanced-nsclc", "ordinal": 2, "resolved": true, "role": "condition"}
+{"assertion_id": "assertion:pdl1-immunotherapy", "node_id": "outcome:irae", "ordinal": 3, "resolved": true, "role": "outcome"}
+{"assertion_id": "assertion:spatial-proxy", "node_id": "region:primary", "ordinal": 0, "resolved": true, "role": "region_a"}
+{"assertion_id": "assertion:spatial-proxy", "node_id": "region:node", "ordinal": 1, "resolved": true, "role": "region_b"}

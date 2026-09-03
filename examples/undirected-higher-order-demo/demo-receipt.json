@@ -1,0 +1,76 @@
+{
+  "bundle": "E:\\GitHub\\Hyper-Knowledge\\examples\\undirected-higher-order-demo\\bundle",
+  "bundle_id": "bundle_52875d176f43be0e",
+  "claim_boundary": "Synthetic UI fixture; not clinical or scientific evidence.",
+  "counts": {
+    "assertions": 3,
+    "assertions_with_evidence": 3,
+    "members": 11,
+    "nodes": 10,
+    "unresolved_members": 0
+  },
+  "html": "E:\\GitHub\\Hyper-Knowledge\\examples\\undirected-higher-order-demo\\workbench.html",
+  "html_sha256": "a5123b86956c9220c9811c3378463f0cfe523f6c8cdefcddc7f2b20fc90151d1",
+  "schema_version": "hk.skill-demo/v1",
+  "status": "passed",
+  "synthetic": true,
+  "view": {
+    "bundle_id": "bundle_52875d176f43be0e",
+    "default_representation": "regularized_enclosure",
+    "graph_projection": "clique_expansion_default",
+    "graph_projection_modes": [
+      "clique_expansion",
+      "star_expansion"
+    ],
+    "html": "E:\\GitHub\\Hyper-Knowledge\\examples\\undirected-higher-order-demo\\workbench.html",
+    "hypergraph_projection": "regularized_enclosure_default",
+    "hypergraph_views": [
+      "regularized_enclosure",
+      "incidence_bipartite"
+    ],
+    "interaction_policy": "draggable_nodes_with_live_edge_and_enclosure_reflow",
+    "interface_model": "unified_higher_order_knowledge_graph",
+    "label_policy": "adaptive_wrapped_opaque_blocks",
+    "languages": [
+      "en",
+      "zh-CN"
+    ],
+    "layout": "undirected_force_or_membership_boundary",
+    "layout_seed": 17,
+    "offline": true,
+    "output": "workbench.html",
+    "output_sha256": "a5123b86956c9220c9811c3378463f0cfe523f6c8cdefcddc7f2b20fc90151d1",
+    "public_name": "Hyper-Knowledge",
+    "quality": "showcase",
+    "representation_order": [
+      "regularized_enclosure",
+      "incidence_bipartite",
+      "pairwise_projection"
+    ],
+    "representations": [
+      "regularized_enclosure",
+      "incidence_bipartite",
+      "pairwise_projection"
+    ],
+    "reset_policy": "clear_focus_selection_view_transform_and_drag_overrides",
+    "schema_version": "hk.view/v11",
+    "selection_policy": "relation_or_shared_node_incident_hyperedge_union",
+    "supported_topologies": [
+      "pairwise",
+      "hyperedge"
+    ],
+    "validation": {
+      "assertions": 3,
+      "assertions_with_evidence": 3,
+      "checks": 60,
+      "errors": 0,
+      "members": 11,
+      "nodes": 10,
+      "unresolved_members": 0,
+      "warnings": 0
+    },
+    "view": "contour",
+    "view_manifest": "E:\\GitHub\\Hyper-Knowledge\\examples\\undirected-higher-order-demo\\view-manifest.json",
+    "visual_review": "pending"
+  }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Hyper-Knowledge monochrome icon</title>
+  <g fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round">
+    <path d="M112 50C94 30 64 32 48 52c-12 14-10 32-20 44-16 18-16 46 0 64 10 12 8 30 20 44 16 20 46 22 64 2"/>
+    <path d="M144 50c18-20 48-18 64 2 12 14 10 32 20 44 16 18 16 46 0 64-10 12-8 30-20 44-16 20-46 22-64 2"/>
+    <rect x="36" y="104" width="184" height="50" rx="25" stroke-width="10"/>
+  </g>
+  <circle cx="78" cy="129" r="12" fill="#FFFFFF"/>
+  <circle cx="128" cy="129" r="12" fill="#FFFFFF"/>
+  <circle cx="178" cy="129" r="12" fill="#FFFFFF"/>
+</svg>

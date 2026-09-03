@@ -1,0 +1,61 @@
+{
+  "schema_version": "hyper-knowledge.promo/v1",
+  "generated_at": "2026-09-03",
+  "source_artifact": "examples/sushi-document-test/views/workbench.html",
+  "source_schema": "hk.view/v29",
+  "source_sha256": "d21386bed74fc0a586f053231c11aa74605a67ca8d114daf9538f62979a073af",
+  "renderer": "Microsoft Edge headless",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "captures": [
+    {
+      "file": "hyper-knowledge-enclosure-en.png",
+      "locale": "en",
+      "theme": "light",
+      "view": "regularized_enclosure",
+      "sha256": "d27105bd9597c70b9797d80e2202321c0888bb5df09e4018867e16039a59a540"
+    },
+    {
+      "file": "hyper-knowledge-enclosure-zh.png",
+      "locale": "zh-CN",
+      "theme": "dark",
+      "view": "regularized_enclosure",
+      "sha256": "714d11fb95ec14b9d2703cc476166016277d41689d949196f3981373ddd285c0"
+    },
+    {
+      "file": "hyper-knowledge-matrix-en.png",
+      "locale": "en",
+      "theme": "light",
+      "view": "incidence_matrix",
+      "sha256": "dd912b6d2ba87ff259be478edfa252cdeff5b07c2bf95d62d2825767aeeb674d"
+    },
+    {
+      "file": "hyper-knowledge-matrix-zh.png",
+      "locale": "zh-CN",
+      "theme": "dark",
+      "view": "incidence_matrix",
+      "sha256": "2f64b9f8e85c0f77ac66d05188728d8315b35efc6a0cbcb1bec6c8e9eee2499b"
+    },
+    {
+      "file": "hyper-knowledge-incidence-en.png",
+      "locale": "en",
+      "theme": "light",
+      "view": "incidence_focus",
+      "sha256": "35be73ab347790d96188134a68c1c3b35efcf8b9f9a13762c838094fabb2069b"
+    },
+    {
+      "file": "hyper-knowledge-incidence-zh.png",
+      "locale": "zh-CN",
+      "theme": "dark",
+      "view": "incidence_focus",
+      "sha256": "5d267483ad4f5f14259f1c59f8ea7a89f420c9ae2cf7071d9076d32ca8d7d3a0"
+    }
+  ],
+  "review": {
+    "static_visual_review": "passed",
+    "interactive_browser_review": "not_claimed_by_this_manifest",
+    "note": "Captures were rendered from the real offline workbench. Source-authored labels remain in the source language when UI chrome is switched."
+  }
+}

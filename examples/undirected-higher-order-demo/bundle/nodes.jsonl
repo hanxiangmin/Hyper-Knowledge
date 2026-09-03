@@ -1,0 +1,10 @@
+{"id": "bio:egfr-ex19del", "label": "EGFR exon 19 deletion", "properties": {"synthetic": true}, "type": "biomarker"}
+{"id": "bio:pdl1-high", "label": "PD-L1 high", "properties": {"synthetic": true}, "type": "biomarker"}
+{"id": "drug:osimertinib", "label": "Osimertinib", "properties": {"synthetic": true}, "type": "intervention"}
+{"id": "drug:immunotherapy", "label": "Immunotherapy", "properties": {"synthetic": true}, "type": "intervention"}
+{"id": "dx:advanced-nsclc", "label": "Advanced NSCLC", "properties": {"synthetic": true}, "type": "condition"}
+{"id": "outcome:response", "label": "Objective response", "properties": {"synthetic": true}, "type": "outcome"}
+{"id": "outcome:irae", "label": "Immune-related adverse event", "properties": {"synthetic": true}, "type": "outcome"}
+{"id": "cohort:synthetic-a", "label": "Synthetic cohort A", "properties": {"synthetic": true}, "type": "cohort"}
+{"id": "region:primary", "label": "Primary lung lesion", "properties": {"synthetic": true}, "type": "anatomy"}
+{"id": "region:node", "label": "Mediastinal lymph node", "properties": {"synthetic": true}, "type": "anatomy"}

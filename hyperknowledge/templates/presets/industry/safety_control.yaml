@@ -1,0 +1,102 @@
+language: [zh, en]
+
+name: safety_control
+type: graph
+tags: [industry, safety, hazard, control]
+
+description:
+  zh: '安全控制图模板 - 从安全管理手册中提取危险源、风险和控制措施的关系'
+  en: 'Safety Control Graph Template - Extract hazard-risk-control relationships from safety management manuals'
+
+output:
+  description:
+    zh: '危险源到风险到控制措施的关系链条'
+    en: 'Hazard to risk to control measure relationship chain'
+  entities:
+    description:
+      zh: '安全要素'
+      en: 'Safety elements'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '要素名称'
+          en: 'Element name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '要素类型：危险源/风险点/控制措施/防护设备/应急预案/责任人等'
+          en: 'Element type: hazard/risk_point/control_measure/protective_equipment/emergency_plan/responsible_person, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '说明'
+          en: 'Description'
+        required: false
+  relations:
+    description:
+      zh: '危险源、风险和控制措施的关系'
+      en: 'Relationships between hazards, risks, and control measures'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源要素'
+          en: 'Source element'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标要素'
+          en: 'Target element'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：导致/缓解/分配给/需要/预防/控制等'
+          en: 'Relation type: causes/mitigates/assigned_to/requires/prevents/controls, etc.'
+        required: true
+      - name: responsible_role
+        type: str
+        description:
+          zh: '责任角色'
+          en: 'Responsible role'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的安全工程师，负责从安全管理手册中准确提取安全控制关系。'
+    en: 'You are a professional safety engineer responsible for accurately extracting safety control relationships from safety management manuals.'
+  rules_for_entities:
+    zh:
+      - '提取危险源作为实体'
+      - '提取风险点作为实体'
+      - '提取控制措施作为实体'
+    en:
+      - 'Extract hazards as entities'
+      - 'Extract risk points as entities'
+      - 'Extract control measures as entities'
+  rules_for_relations:
+    zh:
+      - 'type为"导致"表示导致风险'
+      - 'type为"减轻"表示减轻风险'
+      - 'type为"分配"表示责任分配'
+      - 'responsible_role应标注具体的责任人或部门'
+    en:
+      - 'type causes indicates causing risk'
+      - 'type mitigates indicates mitigating risk'
+      - 'type assigned_to indicates responsibility assignment'
+      - 'Responsible role should indicate specific responsible person or department'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

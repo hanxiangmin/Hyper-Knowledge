@@ -1,0 +1,108 @@
+language: [zh, en]
+
+name: drug_interaction
+type: graph
+tags: [medicine, drug, interaction, pharmacy]
+
+description:
+  zh: '药物相互作用图模板 - 从药品说明书中提取药物之间的相互作用关系'
+  en: 'Drug Interaction Graph Template - Extract drug-drug interaction relationships from drug labels and interaction manuals'
+
+output:
+  description:
+    zh: '药物相互作用网络'
+    en: 'Drug interaction network'
+  entities:
+    description:
+      zh: '药物实体'
+      en: 'Drug entities'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '药物名称'
+          en: 'Drug name'
+        required: true
+      - name: drug_class
+        type: str
+        description:
+          zh: '药物类别'
+          en: 'Drug class'
+        required: false
+      - name: description
+        type: str
+        description:
+          zh: '药物说明'
+          en: 'Drug description'
+        required: false
+  relations:
+    description:
+      zh: '药物之间的相互作用'
+      en: 'Interactions between drugs'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '药物A名称'
+          en: 'Drug A name'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '药物B名称'
+          en: 'Drug B name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '相互作用类型：协同/拮抗/禁用/增效/减效/毒性增强等'
+          en: 'Interaction type: synergistic/antagonistic/contraindicated/enhances/reduces/toxicity_increased, etc.'
+        required: true
+      - name: mechanism
+        type: str
+        description:
+          zh: '作用机制'
+          en: 'Mechanism of action'
+        required: false
+      - name: severity
+        type: str
+        description:
+          zh: '严重程度：高/中/低'
+          en: 'Severity: high/medium/low'
+        required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的临床药师，负责从药品说明书中准确提取药物相互作用信息。'
+    en: 'You are a professional clinical pharmacist responsible for accurately extracting drug interaction information from drug labels.'
+  rules_for_entities:
+    zh:
+      - '提取药物通用名称作为实体'
+      - '药物类别应准确标注'
+      - '避免重复的药物实体'
+    en:
+      - 'Extract generic drug names as entities'
+      - 'Drug classes should be accurately labeled'
+      - 'Avoid duplicate drug entities'
+  rules_for_relations:
+    zh:
+      - '优先提取药品说明书中明确描述的药物相互作用'
+      - '严重程度应基于临床风险评估'
+      - '避免重复的相互作用记录'
+      - '仅提取文本中明确表达的相互作用'
+    en:
+      - 'Prioritize explicitly described drug interactions from drug labels'
+      - 'Severity should be based on clinical risk assessment'
+      - 'Avoid duplicate interaction records'
+      - 'Only extract interactions explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

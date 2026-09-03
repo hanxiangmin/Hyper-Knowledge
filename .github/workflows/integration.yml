@@ -1,0 +1,51 @@
+name: Integration Tests
+
+on:
+  schedule:
+    # Run nightly at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      python_version:
+        description: 'Python version to test'
+        required: false
+        default: '3.11'
+        type: choice
+        options:
+          - '3.11'
+          - '3.12'
+
+permissions:
+  contents: read
+
+jobs:
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    environment: integration-tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ github.event.inputs.python_version || '3.11' }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          uv pip install --system -e ".[all]"
+          uv pip install --system pytest
+
+      - name: Run integration tests
+        run: |
+          pytest -m integration -v --tb=short
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

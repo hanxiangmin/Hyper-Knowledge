@@ -1,0 +1,27 @@
+{
+  "schema_version": "hk.bundle/v1",
+  "bundle_id": "bundle_52875d176f43be0e",
+  "source_ka": null,
+  "source_data_sha256": null,
+  "template": "synthetic/biomedical-higher-order-graph",
+  "language": "en",
+  "topology_type": "mixed",
+  "sources": [
+    {
+      "path": "generated-demo",
+      "sha256": "synthetic",
+      "size_bytes": 0
+    }
+  ],
+  "counts": {
+    "nodes": 10,
+    "assertions": 3,
+    "members": 11,
+    "unresolved_members": 0,
+    "assertions_with_evidence": 3
+  },
+  "limitations": [
+    "All entities, assertions, and evidence are synthetic interface fixtures.",
+    "No clinical or scientific conclusion may be drawn from this demo."
+  ]
+}

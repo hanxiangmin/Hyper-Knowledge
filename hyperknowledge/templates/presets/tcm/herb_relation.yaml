@@ -1,0 +1,94 @@
+language: [zh, en]
+
+name: herb_relation
+type: graph
+tags: [tcm, herb, compatibility, interaction]
+
+description:
+  zh: '药材关联图模板 - 从方剂学文献中提取药材之间的配伍关系'
+  en: 'Herb Relation Graph Template - Extract herb compatibility relationships from formula literature'
+
+output:
+  description:
+    zh: '药材之间的配伍关系网络'
+    en: 'Herb compatibility relationship network'
+  entities:
+    description:
+      zh: '药材实体'
+      en: 'Herb entities'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '药材名称'
+          en: 'Herb name'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '药材说明'
+          en: 'Herb description'
+        required: false
+  relations:
+    description:
+      zh: '药材之间的配伍关系'
+      en: 'Herb compatibility relationships'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '药材A'
+          en: 'Herb A'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '药材B'
+          en: 'Herb B'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '配伍类型：相须/相使/相畏/相杀/相恶/相反等'
+          en: 'Compatibility type: synergistic/mutual-enhancing/mutual-repressing/toxicity-reducing/antagonistic/incompatible, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '配伍说明'
+          en: 'Compatibility description'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的中医药学家，负责从方剂学文献中准确提取药材之间的配伍关系。'
+    en: 'You are a professional traditional Chinese medicine scholar responsible for accurately extracting herb compatibility relationships from formula literature.'
+  rules_for_entities:
+    zh:
+      - '提取药材名称作为实体'
+      - '避免重复的药材实体'
+      - '描述应简洁概括药材特性'
+    en:
+      - 'Extract herb names as entities'
+      - 'Avoid duplicate herb entities'
+      - 'Description should concisely summarize herb characteristics'
+  rules_for_relations:
+    zh:
+      - '优先提取方剂学文献中明确描述的药材配伍关系'
+      - '避免重复的配伍关系记录'
+      - '仅提取文本中明确表达的配伍关系'
+    en:
+      - 'Prioritize explicitly described herb compatibility relationships from formula literature'
+      - 'Avoid duplicate compatibility relationship records'
+      - 'Only extract compatibility relationships explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

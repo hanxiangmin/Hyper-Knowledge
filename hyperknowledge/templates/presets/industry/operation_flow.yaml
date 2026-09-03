@@ -1,0 +1,108 @@
+language: [zh, en]
+
+name: operation_flow
+type: graph
+tags: [industry, operation, sop, workflow]
+
+description:
+  zh: '操作流程图模板 - 从SOP操作手册中提取操作步骤和流程关系'
+  en: 'Operation Flow Graph Template - Extract operation steps and flow relationships from SOP manuals'
+
+output:
+  description:
+    zh: '操作步骤的流程关系'
+    en: 'Operation step flow relationships'
+  entities:
+    description:
+      zh: '操作步骤'
+      en: 'Operation steps'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '步骤名称'
+          en: 'Step name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '步骤类型：动作/检查/切换/确认步骤/异常处理等'
+          en: 'Step type: action/check/switch/confirmation_step/exception_handling, etc.'
+        required: true
+      - name: equipment_state
+        type: str
+        description:
+          zh: '设备状态'
+          en: 'Equipment state'
+        required: false
+      - name: expected_result
+        type: str
+        description:
+          zh: '预期结果'
+          en: 'Expected result'
+        required: false
+  relations:
+    description:
+      zh: '步骤之间的执行关系'
+      en: 'Execution relationships between steps'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '前置步骤'
+          en: 'Prior step'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '后续步骤'
+          en: 'Subsequent step'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：后续/触发/导致/检查/条件为真/条件为假等'
+          en: 'Relation type: followed_by/triggers/leads_to/checks/if_true/if_false, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '关系说明'
+          en: 'Relationship description'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的操作工程师，负责从SOP操作手册中准确提取操作流程关系。'
+    en: 'You are a professional operation engineer responsible for accurately extracting operation flow relationships from SOP manuals.'
+  rules_for_entities:
+    zh:
+      - '提取每个具有独立功能的操作步骤作为实体'
+      - '步骤类型应准确分类'
+      - '设备状态应标注关键状态变化'
+    en:
+      - 'Extract each operation step with independent function as entity'
+      - 'Step types should be accurately classified'
+      - 'Equipment states should indicate key state changes'
+  rules_for_relations:
+    zh:
+      - 'type为"顺序"表示顺序执行'
+      - 'type为"触发"表示触发条件'
+      - 'type为"导致"表示导致状态变化'
+      - '仅提取文档中明确说明的关系'
+    en:
+      - 'type next indicates sequential execution'
+      - 'type triggers indicates trigger condition'
+      - 'type results_in indicates state change'
+      - 'Only extract explicitly stated relationships from the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

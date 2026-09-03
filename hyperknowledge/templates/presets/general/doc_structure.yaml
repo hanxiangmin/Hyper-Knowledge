@@ -1,0 +1,110 @@
+language: [zh, en]
+
+name: doc_structure
+type: graph
+tags: [general, document, structure, knowledge]
+
+description:
+  zh: '文档结构图模板 - 从技术文档、论文、报告中提取章节层级结构和交叉引用关系'
+  en: 'Document Structure Template - Extract chapter hierarchy and cross-reference relationships from technical documents, papers, and reports'
+
+output:
+  description:
+    zh: '文档的章节层级结构和引用关系网络'
+    en: 'Document chapter hierarchy and reference relationship network'
+  entities:
+    description:
+      zh: '文档中的章节和内容节点'
+      en: 'Chapter and content nodes in the document'
+    fields:
+      - name: title
+        type: str
+        description:
+          zh: '章节标题或内容标识'
+          en: 'Chapter title or content identifier'
+        required: true
+      - name: node_type
+        type: str
+        description:
+          zh: '节点类型：章/节/小节/段落/代码块/表格/图表/附录/参考文献等'
+          en: 'Node type: chapter/section/subsection/paragraph/code_block/table/figure/appendix/reference, etc.'
+        required: true
+      - name: level
+        type: int
+        description:
+          zh: '层级深度，从1开始（1=章，2=节，3=小节...）'
+          en: 'Hierarchy level starting from 1 (1=chapter, 2=section, 3=subsection...)'
+        required: true
+      - name: summary
+        type: str
+        description:
+          zh: '章节内容摘要'
+          en: 'Chapter content summary'
+        required: false
+  relations:
+    description:
+      zh: '章节之间的包含关系和交叉引用'
+      en: 'Containment relationships and cross-references between chapters'
+    fields:
+      - name: source
+        type: str
+        description:
+          zh: '源节点标题'
+          en: 'Source node title'
+        required: true
+      - name: target
+        type: str
+        description:
+          zh: '目标节点标题'
+          en: 'Target node title'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '关系类型，用简洁词语概括两个节点之间的连接方式。例如：包含/引用/前置/后续/相关/解释等'
+          en: 'Relation type, concisely describing the connection between two nodes. Examples: contains/references/precedes/follows/relates_to/explains, etc.'
+        required: true
+      - name: reference_context
+        type: str
+        description:
+          zh: '引用上下文说明（如"如图3.2所示"）'
+          en: 'Reference context (e.g., "as shown in Figure 3.2")'
+        required: false
+
+guideline:
+  target:
+    zh: '你是一位技术文档分析师，擅长从技术文档、论文和报告中提取结构化的章节层级和引用关系。'
+    en: 'You are a technical document analyst skilled at extracting structured chapter hierarchy and reference relationships from technical documents, papers, and reports.'
+  rules_for_entities:
+    zh:
+      - '提取所有具有独立标题的章节作为节点'
+      - 'code类型节点应标注代码片段的主要功能'
+      - 'table和figure类型节点应标注表格/图表的主题'
+      - 'level值应与文档实际层级结构一致'
+      - 'summary应概括该章节的核心内容，不超过50字'
+    en:
+      - 'Extract all chapters with independent titles as nodes'
+      - 'code type nodes should indicate the main functionality of code snippets'
+      - 'table and figure type nodes should indicate the subject of the table/figure'
+      - 'level values should match the actual document hierarchy'
+      - 'summary should summarize the core content of the chapter, not exceeding 50 characters'
+  rules_for_relations:
+    zh:
+      - 'type用简洁词语概括关系性质'
+      - '仅提取文档中明确标记的引用关系（如"见第X章"、"如图X所示"）'
+      - '不要创建隐含的语义关联，仅提取显式的引用关系'
+    en:
+      - 'Type should concisely describe the nature of the relationship'
+      - 'Only extract explicitly marked reference relationships (e.g., "see Chapter X", "as shown in Figure X")'
+      - 'Do not create implicit semantic associations, only explicit reference relationships'
+
+identifiers:
+  entity_id: title
+  relation_id: '{source}|{type}|{target}'
+  relation_members:
+    source: source
+    target: target
+
+display:
+  entity_label: '{title}'
+  relation_label: '{type}'

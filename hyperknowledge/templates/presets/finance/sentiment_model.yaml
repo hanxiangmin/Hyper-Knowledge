@@ -1,0 +1,62 @@
+language: [zh, en]
+
+name: sentiment_model
+type: model
+tags: [finance, sentiment, market-analysis]
+
+description:
+  zh: '市场情绪模型模板 - 从财经新闻和市场评论中提取量化情绪指标'
+  en: 'Market Sentiment Model Template - Extract quantified sentiment indicators from financial news and market commentary'
+
+output:
+  description:
+    zh: '市场情绪的量化评估结果'
+    en: 'Quantified market sentiment assessment result'
+  fields:
+    - name: sentiment_score
+      type: float
+      description:
+        zh: '情绪分数，范围从-1（极度负面）到1（极度正面）'
+        en: 'Sentiment score ranging from -1 (extremely negative) to 1 (extremely positive)'
+      required: true
+    - name: dominant_theme
+      type: str
+      description:
+        zh: '主导市场主题'
+        en: 'Dominant market theme'
+      required: true
+    - name: key_entities
+      type: list
+      description:
+        zh: '文本中提到的关键实体（公司、行业、产品等）'
+        en: 'Key entities mentioned in the text (companies, industries, products, etc.)'
+      required: false
+    - name: price_impact
+      type: str
+      description:
+        zh: '对价格/市场的影响预测'
+        en: 'Predicted impact on price/market'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的市场情绪分析师，负责从财经文本中量化评估市场情绪。'
+    en: 'You are a professional market sentiment analyst responsible for quantifying market sentiment from financial texts.'
+  rules:
+    zh:
+      - '情绪分数应客观反映文本整体情绪倾向'
+      - '-1到-0.3为负面，-0.3到0.3为中性，0.3到1为正面'
+      - '主导主题应提炼文本的核心议题'
+      - '关键实体应包括所有重要的公司和行业提及'
+      - '价格影响应基于文本对市场的预期判断'
+    en:
+      - 'Sentiment score should objectively reflect the overall emotional tendency of the text'
+      - '-1 to -0.3 is negative, -0.3 to 0.3 is neutral, 0.3 to 1 is positive'
+      - 'Dominant theme should distill the core topic of the text'
+      - 'Key entities should include all important company and industry mentions'
+      - 'Price impact should be based on the text expectations for the market'
+
+identifiers: {}
+
+display:
+  label: '{dominant_theme}'

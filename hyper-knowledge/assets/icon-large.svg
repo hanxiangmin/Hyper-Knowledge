@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Hyper-Knowledge</title>
+  <g fill="none" stroke="#202229" stroke-width="28" stroke-linecap="round">
+    <path d="M224 100c-36-40-96-36-128 4-24 28-20 64-40 88-32 36-32 92 0 128 20 24 16 60 40 88 32 40 92 44 128 4"/>
+    <path d="M288 100c36-40 96-36 128 4 24 28 20 64 40 88 32 36 32 92 0 128-20 24-16 60-40 88-32 40-92 44-128 4"/>
+  </g>
+  <rect x="72" y="208" width="368" height="100" rx="50" fill="none" stroke="#6F9B8A" stroke-width="20"/>
+  <circle cx="156" cy="258" r="24" fill="#202229"/>
+  <circle cx="256" cy="258" r="24" fill="#6F9B8A"/>
+  <circle cx="356" cy="258" r="24" fill="#202229"/>
+</svg>

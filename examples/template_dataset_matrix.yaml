@@ -1,0 +1,33 @@
+schema_version: hk.template-dataset-matrix/v1
+description: Explicit mappings documented by the bilingual template demos.
+cases:
+  - {template: finance/event_timeline, dataset: finance/annual_report_sample.md}
+  - {template: finance/ownership_graph, dataset: finance/ipo_prospectus_sample.md}
+  - {template: finance/risk_factor_set, dataset: finance/annual_report_sample.md}
+  - {template: finance/sentiment_model, dataset: finance/financial_news_sample.md}
+  - {template: finance/earnings_summary, dataset: finance/earnings_call_transcript_sample.md}
+  - {template: general/graph, dataset: general/arbitrary_tech_news.md}
+  - {template: general/hypergraph, dataset: general/encyclopedia_machine_learning.md}
+  - {template: general/list, dataset: general/regulation_company_policy.md}
+  - {template: general/biography_graph, dataset: general/biography_scientist.md}
+  - {template: general/concept_graph, dataset: general/encyclopedia_machine_learning.md}
+  - {template: industry/equipment_topology, dataset: industry/equipment_technical_manual.md}
+  - {template: industry/operation_flow, dataset: industry/operation_maintenance_manual.md}
+  - {template: industry/safety_control, dataset: industry/safety_management_handbook.md}
+  - {template: industry/emergency_response, dataset: industry/safety_management_handbook.md}
+  - {template: industry/failure_case, dataset: industry/failure_analysis_report.md}
+  - {template: legal/case_citation, dataset: legal/legal_treatise_sample.md}
+  - {template: legal/case_fact_timeline, dataset: legal/court_judgment_sample.md}
+  - {template: legal/compliance_list, dataset: legal/compliance_filing_sample.md}
+  - {template: legal/contract_obligation, dataset: legal/msa_contract_sample.md}
+  - {template: legal/defined_term_set, dataset: legal/msa_contract_sample.md}
+  - {template: medicine/anatomy_graph, dataset: medicine/textbook_sample.md}
+  - {template: medicine/discharge_instruction, dataset: medicine/discharge_summary_sample.md}
+  - {template: medicine/drug_interaction, dataset: medicine/package_insert_sample.md}
+  - {template: medicine/hospital_timeline, dataset: medicine/pathology_report_sample.md}
+  - {template: medicine/treatment_map, dataset: medicine/clinical_guideline_sample.md}
+  - {template: tcm/formula_composition, dataset: tcm/prescription_formulary_sample.md}
+  - {template: tcm/herb_property, dataset: tcm/herb_property_single.md}
+  - {template: tcm/herb_relation, dataset: tcm/herbal_compendium_sample.md}
+  - {template: tcm/meridian_graph, dataset: tcm/meridian_treatise_sample.md}
+  - {template: tcm/syndrome_reasoning, dataset: tcm/medical_case_record_sample.md}

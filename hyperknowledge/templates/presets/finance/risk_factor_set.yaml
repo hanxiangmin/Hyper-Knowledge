@@ -1,0 +1,55 @@
+language: [zh, en]
+
+name: risk_factor_set
+type: set
+tags: [finance, risk, risk-management]
+
+description:
+  zh: '风险因子集合模板 - 从年报风险章节中提取和归类风险因子'
+  en: 'Risk Factor Set Template - Extract and categorize risk factors from annual report risk sections'
+
+output:
+  description:
+    zh: '归类后的风险因子清单'
+    en: 'Categorized risk factor list'
+  fields:
+    - name: risk_factor
+      type: str
+      description:
+        zh: '风险因子描述'
+        en: 'Risk factor description'
+      required: true
+    - name: category
+      type: str
+      description:
+        zh: '风险类别：经营风险/财务风险/市场风险/法规风险/信用风险/操作风险/声誉风险等'
+        en: 'Risk category: operational/financial/market/regulatory/credit/operational/reputational, etc.'
+      required: true
+    - name: severity
+      type: str
+      description:
+        zh: '严重程度：高/中/低/极高/极低等'
+        en: 'Severity: high/medium/low/critical/minimal, etc.'
+      required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的风险分析师，负责从年报风险章节中准确提取和归类风险因子。'
+    en: 'You are a professional risk analyst responsible for accurately extracting and categorizing risk factors from annual report risk sections.'
+  rules:
+    zh:
+      - '提取的风险因子应完整保留原文的核心含义'
+      - '风险类别应根据因子性质准确归类'
+      - '严重程度应基于风险发生的可能性和影响程度评估'
+      - '同一类型的风险因子应保持归类一致性'
+    en:
+      - 'Extracted risk factors should fully preserve the core meaning from the source text'
+      - 'Risk category should be accurately classified based on the nature of the factor'
+      - 'Severity should be assessed based on likelihood and impact of risk occurrence'
+      - 'Risk factors of the same type should maintain classification consistency'
+
+identifiers:
+  item_id: risk_factor
+
+display:
+  label: '{risk_factor}'

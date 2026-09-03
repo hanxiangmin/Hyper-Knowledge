@@ -1,0 +1,49 @@
+language: [zh, en]
+
+name: set
+type: set
+tags: [general, set]
+
+description:
+  zh: '通用实体集合结构知识模板 - 从任意文本中识别关键实体，汇总为可复用的实体清单。'
+  en: 'General-purpose Entity Set Knowledge Template - Identifies key entities from any text and aggregates them into a reusable entity registry.'
+
+output:
+  description:
+    zh: '从文本中提取的实体集合。'
+    en: 'Entity set extracted from the text.'
+  fields:
+  - name: name
+    type: str
+    description:
+      zh: '实体名称，优先使用文本中最稳定、最清晰的称呼。'
+      en: 'Entity name, using the most stable and clear designation in the text.'
+  - name: type
+    type: str
+    description:
+      zh: '实体类型。例如：人物/机构/地点/物品/概念/事件/产品/服务/其他等'
+      en: 'Entity type. Examples: person/organization/location/object/concept/event/product/service/other, etc.'
+  - name: description
+    type: str
+    description:
+      zh: '对实体身份、含义或在文本中作用的简要说明。'
+      en: 'Brief description of the entity identity, meaning, or role in the text.'
+    required: false
+
+guideline:
+  target:
+    zh: '你是一位实体识别专家。请从文本中识别所有具有独立意义的实体。'
+    en: 'You are an entity recognition expert. Identify all entities with independent meaning from the text.'
+  rules:
+    zh:
+    - '提取对理解文本内容有意义的实体。'
+    - '不要把纯代词、泛称、临时描述短语或无独立指代意义的词语当作实体。'
+    en:
+    - 'Extract entities that are meaningful for understanding the text content.'
+    - 'Do not treat pure pronouns, generic terms, or non-referential phrases as entities.'
+
+identifiers:
+  item_id: name
+
+display:
+  label: '{name}'

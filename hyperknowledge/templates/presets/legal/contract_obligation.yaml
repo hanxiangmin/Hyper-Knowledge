@@ -1,0 +1,100 @@
+language: [zh, en]
+
+name: contract_obligation
+type: hypergraph
+tags: [legal, contract, obligation, parties]
+
+description:
+  zh: '合同义务图模板 - 从服务合同和采购合同中提取各方的权利义务关系'
+  en: 'Contract Obligation Graph Template - Extract rights and obligations of all parties from service contracts and procurement contracts'
+
+output:
+  description:
+    zh: '合同中各方的权利义务关系网络'
+    en: 'Network of rights and obligations of all parties in the contract'
+  entities:
+    description:
+      zh: '合同主体和义务要素'
+      en: 'Contract parties and obligation elements'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '主体名称或义务要素'
+          en: 'Party name or obligation element'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '实体类型：当事人/义务/权利/条件/例外/违约/赔偿等'
+          en: 'Entity type: party/obligation/right/condition/exception/breach/compensation, etc.'
+        required: true
+  relations:
+    description:
+      zh: '合同义务的触发和履行关系'
+      en: 'Triggering and performance relationships of contract obligations'
+    fields:
+      - name: party
+        type: list
+        description:
+          zh: '涉及的一方或多方当事人'
+          en: 'One or more parties involved'
+        required: true
+      - name: obligation
+        type: str
+        description:
+          zh: '具体义务内容'
+          en: 'Specific obligation content'
+        required: true
+      - name: trigger
+        type: str
+        description:
+          zh: '义务触发条件'
+          en: 'Obligation trigger condition'
+        required: false
+      - name: exception
+        type: str
+        description:
+          zh: '例外情形'
+          en: 'Exception situations'
+        required: false
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：必须履行/由...触发/由...豁免/享有权利/承担义务等'
+          en: 'Relation type: must_perform/triggered_by/exempt_by/entitled_to/obligated_to, etc.'
+        required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的合同律师，负责从服务合同和采购合同中准确提取各方的权利义务关系。'
+    en: 'You are a professional contract lawyer responsible for accurately extracting rights and obligations of all parties from service contracts and procurement contracts.'
+  rules_for_entities:
+    zh:
+      - '提取所有合同当事人作为实体'
+      - '提取核心义务要素作为实体'
+      - '条件要素和例外情形应单独标注'
+    en:
+      - 'Extract all contract parties as entities'
+      - 'Extract core obligation elements as entities'
+      - 'Condition elements and exceptions should be separately labeled'
+  rules_for_relations:
+    zh:
+      - '优先提取文本中明确描述的义务关系'
+      - '义务触发条件和例外情形应单独标注'
+      - 'party字段应包含所有涉及的当事人'
+      - '仅提取文本中明确表达的义务关系'
+    en:
+      - 'Prioritize explicitly described obligation relationships in the text'
+      - 'Obligation trigger conditions and exception situations should be separately labeled'
+      - 'Party field should include all parties involved'
+      - 'Only extract obligation relationships explicitly expressed in the text'
+
+identifiers:
+  entity_id: name
+  relation_id: '{obligation}|{type}'
+  relation_members: party
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

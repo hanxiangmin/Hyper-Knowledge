@@ -1,0 +1,106 @@
+language: [zh, en]
+
+name: treatment_map
+type: hypergraph
+tags: [medicine, treatment, clinical, decision]
+
+description:
+  zh: '治疗方案图模板 - 从临床指南中提取诊断、治疗和结果的映射关系'
+  en: 'Treatment Map Template - Extract diagnosis-treatment-outcome mapping relationships from clinical guidelines'
+
+output:
+  description:
+    zh: '诊断治疗决策路径'
+    en: 'Diagnosis-treatment decision paths'
+  entities:
+    description:
+      zh: '患者特征和治疗要素'
+      en: 'Patient characteristics and treatment elements'
+    fields:
+      - name: name
+        type: str
+        description:
+          zh: '要素名称'
+          en: 'Element name'
+        required: true
+      - name: type
+        type: str
+        description:
+          zh: '要素类型：患者特征/诊断/症状/体征/治疗/药物/手术/结果/预后等'
+          en: 'Element type: patient_characteristic/diagnosis/symptom/sign/treatment/medication/surgery/outcome/prognosis, etc.'
+        required: true
+      - name: description
+        type: str
+        description:
+          zh: '要素描述'
+          en: 'Element description'
+        required: false
+  relations:
+    description:
+      zh: '诊断、治疗和结果之间的映射关系'
+      en: 'Mapping relationships between diagnosis, treatment, and outcomes'
+    fields:
+      - name: conditions
+        type: list
+        description:
+          zh: '适用条件/患者特征'
+          en: 'Applicable conditions/patient characteristics'
+        required: false
+      - name: diagnosis
+        type: str
+        description:
+          zh: '诊断结果'
+          en: 'Diagnosis result'
+        required: true
+      - name: treatment
+        type: str
+        description:
+          zh: '治疗方案'
+          en: 'Treatment plan'
+        required: true
+      - name: outcome
+        type: str
+        description:
+          zh: '治疗结果'
+          en: 'Treatment outcome'
+        required: false
+      - name: type
+        type: str
+        description:
+          zh: '关系类型：适用于/禁忌联合/导致/改善/首选方案/替代方案等'
+          en: 'Relation type: indicated_for/contraindicated_with/leads_to/improves/first_line/alternative, etc.'
+        required: true
+
+guideline:
+  target:
+    zh: '你是一位专业的临床专家，负责从临床指南中准确提取治疗方案映射关系。'
+    en: 'You are a professional clinical expert responsible for accurately extracting treatment mapping relationships from clinical guidelines.'
+  rules_for_entities:
+    zh:
+      - '提取患者特征作为实体'
+      - '提取诊断结果作为实体'
+      - '提取治疗方案作为实体'
+      - '提取治疗结果作为实体'
+    en:
+      - 'Extract patient characteristics as entities'
+      - 'Extract diagnosis results as entities'
+      - 'Extract treatment plans as entities'
+      - 'Extract treatment outcomes as entities'
+  rules_for_relations:
+    zh:
+      - 'type为"适用"表示适应症'
+      - 'type为"禁忌"表示禁忌组合'
+      - 'conditions字段应包含所有相关的患者特征/适用条件'
+    en:
+      - 'type indicates indicates indication'
+      - 'type contraindicated_with indicates contraindicated combination'
+      - 'Conditions field should include all relevant patient characteristics/applicable conditions'
+
+identifiers:
+  entity_id: name
+  relation_id: '{diagnosis}|{type}|{treatment}'
+  relation_members: [conditions, diagnosis, treatment, outcome]
+
+display:
+  entity_label: '{name}'
+  relation_label: '{type}'

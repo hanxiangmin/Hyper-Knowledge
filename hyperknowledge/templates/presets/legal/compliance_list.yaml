@@ -1,0 +1,60 @@
+language: [zh, en]
+
+name: compliance_list
+type: list
+tags: [legal, compliance, regulation]
+
+description:
+  zh: '合规要求清单模板 - 从合规手册和审计报告中提取结构化的合规要求'
+  en: 'Compliance Requirements List Template - Extract structured compliance requirements from compliance manuals and audit reports'
+
+output:
+  description:
+    zh: '合规要求和监管事项清单'
+    en: 'List of compliance requirements and regulatory items'
+  fields:
+    - name: requirement
+      type: str
+      description:
+        zh: '合规要求描述'
+        en: 'Compliance requirement description'
+      required: true
+    - name: regulation
+      type: str
+      description:
+        zh: '依据法规'
+        en: 'Basis regulation'
+      required: true
+    - name: deadline
+      type: str
+      description:
+        zh: '完成期限'
+        en: 'Completion deadline'
+      required: false
+    - name: responsible_party
+      type: str
+      description:
+        zh: '责任人或责任部门'
+        en: 'Responsible party or department'
+      required: false
+
+guideline:
+  target:
+    zh: '你是一位专业的合规分析师，负责从合规文档中准确提取结构化的合规要求。'
+    en: 'You are a professional compliance analyst responsible for accurately extracting structured compliance requirements from compliance documents.'
+  rules:
+    zh:
+      - '提取的合规要求应完整保留原文的核心含义'
+      - '依据法规应标注具体的法规名称和条款'
+      - '完成期限应明确标注时间节点'
+      - '责任人应尽可能具体到部门或个人'
+    en:
+      - 'Extracted compliance requirements should fully preserve the core meaning from the source text'
+      - 'Basis regulations should specify the specific regulation name and clause'
+      - 'Completion deadlines should clearly indicate time milestones'
+      - 'Responsible parties should be as specific as possible to department or individual'
+
+identifiers: {}
+
+display:
+  label: '{requirement}'
