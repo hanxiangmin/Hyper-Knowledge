@@ -115,7 +115,7 @@ def main(
 ):
     # Configure logging after all imports complete so dependency loggers
     # (e.g. ontosight) don't override our level settings.
-    # Log level is controlled solely by the HYPER_EXTRACT_LOG_LEVEL env var.
+    # Log level is controlled solely by the HYPER_KNOWLEDGE_LOG_LEVEL env var.
     configure_logging()
     if version:
         from . import __version__

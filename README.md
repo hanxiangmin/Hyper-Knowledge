@@ -215,6 +215,10 @@ Issues and pull requests are welcome. Changes to graph semantics must preserve n
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SECURITY.md), [CHANGELOG.md](./CHANGELOG.md), and [CITATION.cff](./CITATION.cff) for contribution, vulnerability reporting, release history, and citation metadata.
 
+## Acknowledgements
+
+Hyper-Knowledge was inspired by and builds on ideas from [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract). We thank its authors and contributors for the open-source foundation.
+
 ## License
 
 Licensed under the [Apache License 2.0](./LICENSE).

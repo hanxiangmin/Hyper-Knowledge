@@ -26,7 +26,7 @@
 
 ## 前提条件
 
-- Hyper-Knowledge 已安装：`pip install hyperknowledge`
+- Hyper-Knowledge 已安装：`pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"`
 - OpenAI API 密钥已配置
 - 一篇研究论文（PDF 或文本格式）
 

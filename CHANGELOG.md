@@ -20,6 +20,9 @@ All notable changes to Hyper-Knowledge are documented here.
 - Enclosure layout uses circle-first, ellipse-fallback geometry and fixed thick contours.
 - Incidence views label roles directly on edges without repeating them in a footer legend.
 - CI, packaging, documentation, examples, and tests now target Hyper-Knowledge alone.
+- Configuration and logging use the canonical `.hk` directory and `HYPER_KNOWLEDGE_*` environment variables.
+- Installation examples use the verified GitHub source distribution.
+- The project acknowledges Hyper-Extract as an open-source inspiration without retaining legacy runtime aliases.
 
 ### Removed
 

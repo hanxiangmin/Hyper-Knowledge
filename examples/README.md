@@ -145,7 +145,7 @@ Nikola Tesla biography (1856-1943):
 
 ```bash
 # Install hyperknowledge (dependencies are automatically installed)
-uv pip install hyperknowledge
+uv pip install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
 
 # Configure API key
 # Option 1: Use .env file (recommended)

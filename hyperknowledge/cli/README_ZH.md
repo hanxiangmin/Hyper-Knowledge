@@ -10,7 +10,7 @@
 
 ```bash
 # 安装
-uv tool install hyperknowledge
+uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
 
 # 首次设置
 hk config init

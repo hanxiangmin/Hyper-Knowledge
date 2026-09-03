@@ -12,7 +12,7 @@
 ## 安装
 
 ```bash
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ## 基本用法

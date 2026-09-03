@@ -146,7 +146,7 @@ examples/
 
 ```bash
 # 安装 hyperknowledge（依赖项会自动安装）
-uv pip install hyperknowledge
+uv pip install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
 
 # 配置 API 密钥
 # 选项 1：使用 .env 文件（推荐）

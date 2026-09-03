@@ -12,7 +12,7 @@ Get started with the Hyper-Knowledge Python SDK in 5 minutes.
 ## Installation
 
 ```bash
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ## Basic Usage

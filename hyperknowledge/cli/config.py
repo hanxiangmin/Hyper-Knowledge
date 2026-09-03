@@ -9,7 +9,7 @@ from typing import Any
 
 import tomli_w
 
-DEFAULT_CONFIG_DIR = Path.home() / ".he"
+DEFAULT_CONFIG_DIR = Path.home() / ".hk"
 DEFAULT_CONFIG_FILE = DEFAULT_CONFIG_DIR / "config.toml"
 
 # Provider presets: base_url and default models for each provider

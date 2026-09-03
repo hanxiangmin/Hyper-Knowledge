@@ -225,7 +225,7 @@ hk config embedder --unset
 ### 文件位置
 
 - **Linux/macOS**: `~/.hk/config.toml`
-- **Windows**: `%USERPROFILE%\.he\config.toml`
+- **Windows**: `%USERPROFILE%\.hk\config.toml`
 
 ### 配置格式
 

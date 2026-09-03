@@ -10,7 +10,7 @@ A powerful command-line tool for extracting structured knowledge from unstructur
 
 ```bash
 # Install
-uv tool install hyperknowledge
+uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
 
 # First-time setup
 hk config init

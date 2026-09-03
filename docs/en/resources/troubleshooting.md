@@ -18,7 +18,7 @@ Solutions to common issues.
    ```bash
    python -m venv venv
    source venv/bin/activate
-   pip install hyperknowledge
+   pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
    ```
 
 ### ImportError: No module named 'hyperknowledge'
@@ -30,7 +30,7 @@ Solutions to common issues.
 1. Check Python version: `python --version` (need 3.11+)
 2. Verify installation: `pip list | grep hyper`
 3. Check virtual environment is activated
-4. Reinstall: `pip install --force-reinstall hyperknowledge`
+4. Reinstall: `pip install --force-reinstall "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"`
 
 ---
 

@@ -14,7 +14,7 @@
 
     ```bash
     # 1. 安装 CLI 工具
-    uv tool install hyperknowledge
+    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
 
     # 2. 配置 API 密钥（以百炼为例）
     hk config init -p bailian -k YOUR_BAILIAN_API_KEY

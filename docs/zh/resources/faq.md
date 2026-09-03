@@ -34,7 +34,7 @@ Hyper-Knowledge 是一个基于大语言模型的知识提取框架，可以将�
 ### 如何安装？
 
 ```bash
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ### 安装失败，提示 "No module named 'hyperknowledge'"
@@ -48,7 +48,7 @@ pip install --upgrade hyperknowledge
 ```bash
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ---

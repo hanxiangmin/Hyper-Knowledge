@@ -190,7 +190,7 @@ hk config embedder --unset
 配置存储在：
 
 - **Linux/macOS**: `~/.hk/config.toml`
-- **Windows**: `%USERPROFILE%\.he\config.toml`
+- **Windows**: `%USERPROFILE%\.hk\config.toml`
 
 ### 配置示例
 

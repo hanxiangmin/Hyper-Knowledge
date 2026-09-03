@@ -9,13 +9,13 @@ The Hyper-Knowledge CLI (`hk`) provides a powerful, easy-to-use interface for kn
 === "uv (recommended)"
 
     ```bash
-    uv tool install hyperknowledge
+    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pipx"
 
     ```bash
-    pipx install hyperknowledge
+    pipx install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 Verify installation:
@@ -270,7 +270,7 @@ hk search ./contract_kb/ "termination conditions"
 
 ## Getting Help
 
-- View help for any command: `he <command> --help`
+- View help for any command: `hk <command> --help`
 - List all templates: `hk list template`
 - List all methods: `hk list method`
 - [FAQ](../resources/faq.md)

@@ -1,4 +1,4 @@
-# HE Knowledge Bundle v1
+# Hyper-Knowledge Bundle v1
 
 `hk bundle export` creates a stable, machine-readable directory:
 

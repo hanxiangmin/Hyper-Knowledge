@@ -7,13 +7,15 @@ Build knowledge extraction pipelines with the Hyper-Knowledge Python API.
 ## Installation
 
 ```bash
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 For development:
 
 ```bash
-pip install hyperknowledge[dev]
+git clone https://github.com/hanxiangmin/Hyper-Knowledge.git
+cd Hyper-Knowledge
+uv sync --group dev
 ```
 
 ---

@@ -23,7 +23,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install hyperknowledge
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ---
@@ -287,7 +287,7 @@ if __name__ == "__main__":
 ## Troubleshooting
 
 **"No module named 'hyperknowledge'"**
-→ Run `pip install hyperknowledge`
+→ Run `pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"`
 
 **"API key not found"**
 → Check your `.env` file or set `OPENAI_API_KEY` environment variable

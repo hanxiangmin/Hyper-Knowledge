@@ -9,13 +9,13 @@ Hyper-Knowledge CLI (`hk`) 提供了强大、易用的界面，可直接从终�
 === "uv (推荐)"
 
     ```bash
-    uv tool install hyperknowledge
+    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pipx"
 
     ```bash
-    pipx install hyperknowledge
+    pipx install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 验证安装：
@@ -270,7 +270,7 @@ hk search ./contract_kb/ "终止条件"
 
 ## 获取帮助
 
-- 查看任何命令的帮助：`he <command> --help`
+- 查看任何命令的帮助：`hk <command> --help`
 - 列出所有模板：`hk list template`
 - 列出所有方法：`hk list method`
 - [常见问题](../resources/faq.md)

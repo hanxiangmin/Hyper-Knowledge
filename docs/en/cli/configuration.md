@@ -225,7 +225,7 @@ Running `hk config init` automatically creates `~/.hk/config.toml`.
 ### File Location
 
 - **Linux/macOS**: `~/.hk/config.toml`
-- **Windows**: `%USERPROFILE%\.he\config.toml`
+- **Windows**: `%USERPROFILE%\.hk\config.toml`
 
 ### Configuration Format
 

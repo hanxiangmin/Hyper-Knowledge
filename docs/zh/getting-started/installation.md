@@ -19,13 +19,13 @@ Hyper-Knowledge 需要 **Python 3.11+**。
     然后安装 Hyper-Knowledge：
 
     ```bash
-    uv tool install hyperknowledge
+    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pipx"
 
     ```bash
-    pipx install hyperknowledge
+    pipx install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
     > 没有安装 pipx？运行 `pip install pipx` 安装。
@@ -39,13 +39,13 @@ Hyper-Knowledge 需要 **Python 3.11+**。
 === "uv (推荐)"
 
     ```bash
-    uv pip install hyperknowledge
+    uv pip install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pip"
 
     ```bash
-    pip install hyperknowledge
+    pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
     ```
 
 ---
@@ -61,7 +61,7 @@ Hyper-Knowledge 需要 **Python 3.11+**。
     您应该看到类似输出：
 
     ```
-    Hyper-Knowledge CLI version 0.4.0
+    Hyper-Knowledge CLI version 0.8.0
     ```
 
 === "Python"

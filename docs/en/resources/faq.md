@@ -34,7 +34,7 @@ The software is open-source (Apache-2.0). You need an API key from a supported L
 ### How do I install it?
 
 ```bash
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ### Installation fails with "No module named 'hyperknowledge'"
@@ -48,7 +48,7 @@ Or use a virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install hyperknowledge
+pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
 ```
 
 ---

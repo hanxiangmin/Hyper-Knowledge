@@ -214,6 +214,10 @@ uv run hk skill doctor --scope project --project-root . --deep --json
 
 贡献方式、安全漏洞报告、版本记录和软件引用信息分别见 [CONTRIBUTING_ZH.md](./CONTRIBUTING_ZH.md)、[SECURITY.md](./SECURITY.md)、[CHANGELOG.md](./CHANGELOG.md) 与 [CITATION.cff](./CITATION.cff)。
 
+## 致谢
+
+Hyper-Knowledge 借鉴并发展了 [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) 的部分设计思路，感谢其作者与贡献者提供的开源基础。
+
 ## 许可证
 
 本项目采用 [Apache License 2.0](./LICENSE) 开源。

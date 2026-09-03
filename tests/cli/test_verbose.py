@@ -1,20 +1,23 @@
-"""Tests for log level configuration via HYPER_EXTRACT_LOG_LEVEL env var."""
+"""Tests for log level configuration via HYPER_KNOWLEDGE_LOG_LEVEL."""
 
 import logging
 import os
 from unittest.mock import patch
 
-import pytest
 from typer.testing import CliRunner
 
 from hyperknowledge.cli.cli import app
-from hyperknowledge.utils.logging import configure_logging, ENV_LOG_LEVEL
+from hyperknowledge.utils.logging import ENV_LOG_LEVEL, configure_logging
 
 runner = CliRunner()
 
 
 class TestLogLevelEnvVar:
-    """Test that log level is controlled by HYPER_EXTRACT_LOG_LEVEL env var."""
+    """Test that log level is controlled by the Hyper-Knowledge environment."""
+
+    def test_env_var_uses_canonical_name(self):
+        """The public logging variable uses the Hyper-Knowledge identity."""
+        assert ENV_LOG_LEVEL == "HYPER_KNOWLEDGE_LOG_LEVEL"
 
     def test_env_var_default_warning(self):
         """Without env var, default log level is WARNING."""
@@ -25,25 +28,25 @@ class TestLogLevelEnvVar:
             assert logging.getLogger().level == logging.WARNING
 
     def test_env_var_sets_debug(self):
-        """HYPER_EXTRACT_LOG_LEVEL=DEBUG sets root logger to DEBUG."""
+        """HYPER_KNOWLEDGE_LOG_LEVEL=DEBUG sets root logger to DEBUG."""
         with patch.dict(os.environ, {ENV_LOG_LEVEL: "DEBUG"}):
             configure_logging()
             assert logging.getLogger().level == logging.DEBUG
 
     def test_env_var_sets_info(self):
-        """HYPER_EXTRACT_LOG_LEVEL=INFO sets root logger to INFO."""
+        """HYPER_KNOWLEDGE_LOG_LEVEL=INFO sets root logger to INFO."""
         with patch.dict(os.environ, {ENV_LOG_LEVEL: "INFO"}):
             configure_logging()
             assert logging.getLogger().level == logging.INFO
 
     def test_env_var_sets_error(self):
-        """HYPER_EXTRACT_LOG_LEVEL=ERROR sets root logger to ERROR."""
+        """HYPER_KNOWLEDGE_LOG_LEVEL=ERROR sets root logger to ERROR."""
         with patch.dict(os.environ, {ENV_LOG_LEVEL: "ERROR"}):
             configure_logging()
             assert logging.getLogger().level == logging.ERROR
 
     def test_env_var_case_insensitive(self):
-        """HYPER_EXTRACT_LOG_LEVEL=debug (lowercase) should work."""
+        """HYPER_KNOWLEDGE_LOG_LEVEL=debug (lowercase) should work."""
         with patch.dict(os.environ, {ENV_LOG_LEVEL: "debug"}):
             configure_logging()
             assert logging.getLogger().level == logging.DEBUG

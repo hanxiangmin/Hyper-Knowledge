@@ -19,13 +19,13 @@ If you want to use the `hk` command from anywhere:
     Then install Hyper-Knowledge:
 
     ```bash
-    uv tool install hyperknowledge
+    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pipx"
 
     ```bash
-    pipx install hyperknowledge
+    pipx install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
     > Don't have pipx? Install it with `pip install pipx`.
@@ -39,13 +39,13 @@ If you want to use Hyper-Knowledge in your Python code:
 === "uv (recommended)"
 
     ```bash
-    uv pip install hyperknowledge
+    uv pip install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
     ```
 
 === "pip"
 
     ```bash
-    pip install hyperknowledge
+    pip install "hyper-knowledge @ git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
     ```
 
 ---
@@ -61,7 +61,7 @@ If you want to use Hyper-Knowledge in your Python code:
     You should see something like:
 
     ```
-    Hyper-Knowledge CLI version 0.4.0
+    Hyper-Knowledge CLI version 0.8.0
     ```
 
 === "Python"

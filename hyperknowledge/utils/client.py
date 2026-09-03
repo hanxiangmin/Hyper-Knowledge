@@ -21,7 +21,7 @@ from langchain_core.language_models.chat_models import BaseChatModel
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_CONFIG_DIR = Path.home() / ".he"
+DEFAULT_CONFIG_DIR = Path.home() / ".hk"
 DEFAULT_CONFIG_FILE = DEFAULT_CONFIG_DIR / "config.toml"
 
 # Official OpenAI API base URL — only this endpoint accepts pre-tokenized input
