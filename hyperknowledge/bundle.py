@@ -10,7 +10,6 @@ from typing import Any
 
 from hyperknowledge.utils.template_engine import Gallery, Template
 
-
 BUNDLE_SCHEMA_VERSION = "hk.bundle/v1"
 BUNDLE_VALIDATION_SCHEMA_VERSION = "hk.bundle-validation/v1"
 

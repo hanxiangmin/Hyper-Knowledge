@@ -9,7 +9,6 @@ from typing import Any
 
 from hyperknowledge.visualization import render_bundle_html
 
-
 DEMO_SCHEMA_VERSION = "hk.skill-demo/v1"
 
 

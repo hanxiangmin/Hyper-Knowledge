@@ -15,14 +15,16 @@
 </p>
 
 <p align="center">
+  <strong>Keywords:</strong> higher-order knowledge graph · hypergraph · hyperedge · n-ary relations · knowledge extraction · provenance · LLM · RAG · semantic search · Agent Skill
+</p>
+
+<p align="center">
   <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-2563eb.svg"></a>
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-3776ab.svg">
   <img alt="Agent Skill" src="https://img.shields.io/badge/Agent%20Skill-standard-7c3aed.svg">
   <img alt="Version 0.8.0" src="https://img.shields.io/badge/version-0.8.0-0f766e.svg">
   <img alt="Offline workbench" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
-
-> **Release status:** `0.8.0` is the source release candidate. The `hyper-knowledge` package name has not yet been published on PyPI, so the verified installation path is currently from source.
 
 ## Install the complete Agent Skill
 
@@ -69,8 +71,6 @@ The workbench offers three complementary views:
 | **Incidence matrix** | Dense overviews and exact membership lookup | Rows are nodes, columns are native hyperedges |
 | **Incidence focus** | Explaining which hyperedges contain one node | Shows only the selected node and its incident hyperedges |
 | **Enclosure view** | Reading higher-order structure spatially | Each colored enclosure is one native n-ary hyperedge |
-
-Pairwise graph view is available only for native two-node relations. Hyperedges are never silently replaced by clique-expanded pairwise facts.
 
 ## Why Hyper-Knowledge?
 

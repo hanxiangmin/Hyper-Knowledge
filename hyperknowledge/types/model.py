@@ -14,11 +14,11 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from ontomem.merger import BaseMerger, MergeStrategy, create_merger
 from ontosight import view_nodes
 
-from hyperknowledge.utils.logging import get_logger
 from hyperknowledge.utils.index_security import (
     verify_index_manifest,
     write_index_manifest,
 )
+from hyperknowledge.utils.logging import get_logger
 
 from .base import BaseAutoType, T
 

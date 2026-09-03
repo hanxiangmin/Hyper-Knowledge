@@ -10,7 +10,6 @@ from rich.console import Console
 
 from hyperknowledge.bundle import BundleExportError, export_bundle, validate_bundle
 
-
 console = Console()
 app = typer.Typer(name="bundle", help="Export versioned graph and hypergraph bundles")
 

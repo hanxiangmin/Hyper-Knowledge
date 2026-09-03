@@ -19,11 +19,11 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from ontosight import view_nodes
 from pydantic import BaseModel, Field, create_model
 
-from hyperknowledge.utils.logging import get_logger
 from hyperknowledge.utils.index_security import (
     verify_index_manifest,
     write_index_manifest,
 )
+from hyperknowledge.utils.logging import get_logger
 
 from .base import BaseAutoType
 

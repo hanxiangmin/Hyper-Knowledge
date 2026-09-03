@@ -10,7 +10,6 @@ from rich.console import Console
 
 from hyperknowledge.dataset_benchmark import benchmark_datasets, write_dataset_benchmark
 
-
 console = Console()
 app = typer.Typer(name="benchmark", help="Run deterministic Hyper-Knowledge benchmarks")
 

@@ -5,16 +5,21 @@ description = "A provenance-aware higher-order knowledge graph extraction, model
 readme = "README.md"
 requires-python = ">=3.11"
 keywords = [
-    "llm",
+    "knowledge-graph",
     "knowledge-extraction",
     "higher-order-knowledge-graph",
     "hypergraph",
-    "langchain",
-    "faiss",
-    "semantic-search",
-    "pydantic",
-    "nlp",
+    "hyperedge",
+    "n-ary-relations",
+    "provenance",
+    "provenance-tracking",
+    "llm",
     "rag",
+    "semantic-search",
+    "nlp",
+    "agent-skill",
+    "codex-skill",
+    "offline-visualization",
 ]
 authors = [{ name = "hanxiangmin" }]
 license = { text = "Apache-2.0" }
@@ -107,4 +112,5 @@ ignore = [
     "TRY004", # TypeError vs ValueError preference
     "S110",   # try/except/pass — intentional in some places
     "TC010",  # String forward-ref in X | Y union — needed for recursive types
+    "B008",   # Typer declares CLI parameters with Argument/Option defaults
 ]

@@ -3,8 +3,8 @@
 Provides a clean API for searching and creating knowledge extraction templates.
 """
 
-from typing import Any
 from pathlib import Path
+from typing import Any
 
 from langchain_core.embeddings import Embeddings
 from langchain_core.language_models import BaseChatModel

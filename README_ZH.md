@@ -15,14 +15,16 @@
 </p>
 
 <p align="center">
+  <strong>关键词：</strong>高阶知识图谱 · 超图 · 超边 · 多元关系 · 知识抽取 · 证据追溯 · 大语言模型 · RAG · 语义检索 · Agent Skill
+</p>
+
+<p align="center">
   <a href="./LICENSE"><img alt="许可证：Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-2563eb.svg"></a>
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-3776ab.svg">
   <img alt="标准 Agent Skill" src="https://img.shields.io/badge/Agent%20Skill-standard-7c3aed.svg">
   <img alt="版本 0.8.0" src="https://img.shields.io/badge/version-0.8.0-0f766e.svg">
   <img alt="离线工作台" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
-
-> **发布状态：** `0.8.0` 是当前源码发布候选版。`hyper-knowledge` 这个包名尚未发布到 PyPI，因此目前经过验证的安装方式是从源码安装。
 
 ## 安装完整 Agent Skill
 
@@ -69,8 +71,6 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 | **关联矩阵** | 元素很多时，如何稳定查看成员关系？ | 行是节点，列是原生超边 |
 | **关联聚焦** | 某个节点究竟属于哪些超边？ | 只展示当前节点及其所属超边 |
 | **包络视图** | 高阶结构在空间上如何组织？ | 每个彩色包络对应一条原生多元超边 |
-
-只有源数据中确实存在二元关系时，才提供二元图视图。系统不会把多元超边偷偷展开成一组看似等价的二元事实。
 
 ## 为什么使用 Hyper-Knowledge？
 

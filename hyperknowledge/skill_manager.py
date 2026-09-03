@@ -13,7 +13,6 @@ from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
-
 SKILL_NAME = "hyper-knowledge"
 OWNERSHIP_MANIFEST = ".hyperknowledge-skill.json"
 RUNTIME_MANIFEST = ".hyperknowledge-runtime.json"

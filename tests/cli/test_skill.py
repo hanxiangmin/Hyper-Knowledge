@@ -1,5 +1,6 @@
 """Codex skill installer tests."""
 
+import os
 from pathlib import Path
 
 import pytest
@@ -26,7 +27,8 @@ def test_user_skill_install_doctor_and_uninstall(tmp_path):
     assert (target / "SKILL.md").is_file()
     assert (target / "agents" / "openai.yaml").is_file()
     assert (target / ".hyperknowledge-runtime.json").is_file()
-    assert (target / "runtime" / "hk.cmd").is_file()
+    launcher = "hk.cmd" if os.name == "nt" else "hk"
+    assert (target / "runtime" / launcher).is_file()
     assert any((target / "runtime").iterdir())
     assert doctor_skill(scope="user", user_home=tmp_path)["status"] == "healthy"
 

@@ -6,7 +6,6 @@ import hashlib
 import json
 from pathlib import Path
 
-
 INDEX_MANIFEST = ".hyperknowledge-index.json"
 INDEX_SCHEMA_VERSION = "hk.index/v1"
 

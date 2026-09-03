@@ -15,7 +15,6 @@ from hyperknowledge.skill_manager import (
     uninstall_skill,
 )
 
-
 console = Console()
 app = typer.Typer(name="skill", help="Install and verify the Codex skill")
 
