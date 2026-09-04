@@ -7,8 +7,6 @@
   <a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/">中文文档</a>
 </p>
 
-![Hyper-Knowledge enclosure view](./docs/assets/showcase-v2/overview-enclosure-en.png)
-
 <h1 align="center">Hyper-Knowledge</h1>
 
 <p align="center">
@@ -30,6 +28,8 @@
   <img alt="Version 0.8.0" src="https://img.shields.io/badge/version-0.8.0-0f766e.svg">
   <img alt="Offline workbench" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
+
+[![Animated GIF tour: overview, hyperedge, node, and enclosure hover](./docs/assets/showcase-v2/tour-en.gif)](./docs/assets/showcase-v2/tour-en.gif)
 
 ## Install the complete Agent Skill
 
@@ -80,8 +80,6 @@ The Skill-only command does **not** install the Python runtime. Codex is the ver
 ## See it in action
 
 An eight-second tour: overview → one hyperedge → one node → hover highlight. The first six scenes last one second each; the final hover plays at half speed for two seconds. Cut from real local-browser recordings, with all ten captured states retained in the full screenshot gallery.
-
-[![Animated GIF tour: overview, hyperedge, node, and enclosure hover](./docs/assets/showcase-v2/tour-en.gif)](./docs/assets/showcase-v2/tour-en.gif)
 
 [Open full-size GIF](./docs/assets/showcase-v2/tour-en.gif) · [Chinese GIF](./docs/assets/showcase-v2/tour-zh.gif) · [All 10 states, full size](./docs/en/guide/workbench.md) · [Capture and reproduction notes](./docs/assets/showcase-v2/README.md)
 

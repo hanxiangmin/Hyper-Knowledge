@@ -7,8 +7,6 @@
   <a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/">English documentation</a>
 </p>
 
-![Hyper-Knowledge 中文包络视图](./docs/assets/showcase-v2/overview-enclosure-zh.png)
-
 <h1 align="center">Hyper-Knowledge</h1>
 
 <p align="center">
@@ -30,6 +28,8 @@
   <img alt="版本 0.8.0" src="https://img.shields.io/badge/version-0.8.0-0f766e.svg">
   <img alt="离线工作台" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
+
+[![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v2/tour-zh.gif)](./docs/assets/showcase-v2/tour-zh.gif)
 
 ## 安装完整 Agent Skill
 
@@ -79,8 +79,6 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 ## 实际效果
 
 8 秒看懂工作台：总览 → 一条超边 → 一个节点 → 悬停高亮。前六个画面各停留 1 秒，最后的悬停以半速播放 2 秒，剪自真实本地浏览器录屏；完整十个状态仍可在图集中逐一查看。
-
-[![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v2/tour-zh.gif)](./docs/assets/showcase-v2/tour-zh.gif)
 
 [查看原尺寸 GIF](./docs/assets/showcase-v2/tour-zh.gif) · [英文 GIF](./docs/assets/showcase-v2/tour-en.gif) · [10 个状态的完整大图](./docs/zh/guide/workbench.md) · [录制与复现说明](./docs/assets/showcase-v2/README.md)
 
