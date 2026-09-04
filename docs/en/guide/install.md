@@ -2,7 +2,17 @@
 
 There are two parts to the installation: a Python environment runs `hk`, and the Skill tells an agent when and how to use it. Copying `SKILL.md` alone does not install the runtime.
 
-## Install in an environment you will keep
+## Let Codex install it
+
+With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
+
+```bash
+codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json.'
+```
+
+This sends an installation request to Codex; review network and file-write approvals when prompted. If an existing installation has local edits, inspect them before replacing anything. [Official Codex CLI usage](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
+
+## Manual installation
 
 Use Python 3.11 or later:
 

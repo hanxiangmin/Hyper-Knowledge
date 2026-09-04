@@ -2,6 +2,11 @@
   <a href="./README.md">English</a> · <strong>简体中文</strong>
 </p>
 
+<p align="center">
+  <strong><a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/">在线文档（中文）</a></strong> ·
+  <a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/">English documentation</a>
+</p>
+
 ![Hyper-Knowledge 中文包络视图](./docs/assets/showcase-v2/overview-enclosure-zh.png)
 
 <h1 align="center">Hyper-Knowledge</h1>
@@ -27,6 +32,18 @@
 </p>
 
 ## 安装完整 Agent Skill
+
+### 让 Codex 安装
+
+已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
+
+```bash
+codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在持久 Python 环境中安装运行时和用户级 Codex Skill，最后运行 hk skill doctor --scope user --deep --json 验证。'
+```
+
+按提示确认联网和安装操作。[安装指南](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/)
+
+### 手动安装
 
 托管安装器会把规范 Skill 复制到 Codex 的发现目录，同时生成一个绑定当前 Python 环境的运行入口：
 

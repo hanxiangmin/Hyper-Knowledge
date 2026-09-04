@@ -16,6 +16,16 @@ hide:
 [Explore the Su Shi example](guide/sushi.md){ .md-button }
 </div>
 
+## Install with Codex
+
+With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
+
+```bash
+codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json.'
+```
+
+Review and approve network and installation requests when prompted. [Manual installation](guide/install.md)
+
 <figure class="hk-media" markdown>
 
 [![Animated GIF tour: three views, selection, and enclosure hover](../assets/showcase-v2/tour-en.gif)](../assets/showcase-v2/tour-en.gif)
@@ -95,11 +105,3 @@ The Skill turns the request into an inspectable workflow; `hk` executes it. Star
 <figcaption>Trace a relationship while the rest fades.</figcaption>
 </figure>
 </div>
-
-[Open the English GIF](../assets/showcase-v2/tour-en.gif) · [Explore all 10 captured states](guide/workbench.md) · [Command recipes](guide/commands.md)
-
-The short tour uses real browser footage; the gallery preserves all ten captured states. English controls and captions accompany the original Chinese entity names.
-
-The local Skill is the primary entry point. This documentation site explains and demonstrates the project; it does not accept document uploads or provide a hosted parser.
-
-[Design scope, open-source origins, and acknowledgements](guide/about.md)

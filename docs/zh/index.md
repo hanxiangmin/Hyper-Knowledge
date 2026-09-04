@@ -16,6 +16,16 @@ hide:
 [从苏轼案例开始](guide/sushi.md){ .md-button }
 </div>
 
+## 用 Codex 安装
+
+已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
+
+```bash
+codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在持久 Python 环境中安装运行时和用户级 Codex Skill，最后运行 hk skill doctor --scope user --deep --json 验证。'
+```
+
+按提示确认联网和安装操作。[手动安装](guide/install.md)
+
 <figure class="hk-media" markdown>
 
 [![三种视图、点击聚焦与包络悬停的 GIF 动画导览](../assets/showcase-v2/tour-zh.gif)](../assets/showcase-v2/tour-zh.gif)
@@ -94,11 +104,3 @@ Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型
 <figcaption>当前关系着色，其余内容淡化。</figcaption>
 </figure>
 </div>
-
-[查看中文 GIF](../assets/showcase-v2/tour-zh.gif) · [查看全部 10 个操作状态](guide/workbench.md) · [命令配方](guide/commands.md)
-
-短片剪自真实浏览器录屏，图集保留完整十个状态。英文版只切换界面与讲解，原文实体名称不变。
-
-这个项目以本地 Skill 为主要入口。文档站用于说明和展示，不接收上传文档，也不提供在线解析服务。
-
-[设计范围、开源来源与致谢](guide/about.md)

@@ -2,6 +2,11 @@
   <strong>English</strong> · <a href="./README_ZH.md">简体中文</a>
 </p>
 
+<p align="center">
+  <strong><a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/">Documentation</a></strong> ·
+  <a href="https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/">中文文档</a>
+</p>
+
 ![Hyper-Knowledge enclosure view](./docs/assets/showcase-v2/overview-enclosure-en.png)
 
 <h1 align="center">Hyper-Knowledge</h1>
@@ -27,6 +32,18 @@
 </p>
 
 ## Install the complete Agent Skill
+
+### Let Codex install it
+
+With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
+
+```bash
+codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json.'
+```
+
+Review and approve network and installation requests when prompted. [Installation guide](https://hanxiangmin.github.io/Hyper-Knowledge/latest/guide/install/)
+
+### Manual installation
 
 The managed installer copies the canonical Skill into Codex and creates a launcher pinned to the current Python environment:
 

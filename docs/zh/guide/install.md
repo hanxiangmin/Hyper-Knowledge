@@ -2,7 +2,17 @@
 
 安装分成两件事：Python 环境运行 `hk`，Skill 告诉智能体何时、怎样调用它。只复制 `SKILL.md` 不会自动安装运行时。
 
-## 安装到你的环境
+## 让 Codex 安装
+
+已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
+
+```bash
+codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在持久 Python 环境中安装运行时和用户级 Codex Skill，最后运行 hk skill doctor --scope user --deep --json 验证。'
+```
+
+这条命令向 Codex 发出安装请求，执行时按提示确认联网和写入权限。若已安装且有本地修改，先检查差异，不要直接覆盖。[Codex CLI 官方用法](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
+
+## 手动安装
 
 需要 Python 3.11 或更新版本。在准备长期保留的目录中执行：
 
