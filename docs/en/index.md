@@ -16,15 +16,19 @@ hide:
 [Explore the Su Shi example](guide/sushi.md){ .md-button }
 </div>
 
-## Install with Codex
+## Install from Codex chat
 
-With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
+Paste this request directly into a local Codex chat. No terminal command or `codex` prefix is needed:
 
-```bash
-codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json.'
+```text
+Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
+Follow the repository's manual installation steps to install the project runtime
+in a persistent Python environment and the user-level Codex Skill.
+Verify with hk skill doctor --scope user --deep --json.
+If an existing installation has local changes, ask before overwriting them.
 ```
 
-Review and approve network and installation requests when prompted. [Manual installation](guide/install.md)
+Review and approve network and file-write requests when prompted. [Terminal or manual installation](guide/install.md#terminal)
 
 <figure class="hk-media" markdown>
 

@@ -33,15 +33,18 @@
 
 ## 安装完整 Agent Skill
 
-### 让 Codex 安装
+### 在 Codex 聊天框安装（推荐）
 
-已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
+直接将下面这段话复制到本地 Codex 的聊天框，不需要打开终端，也不需要加 `codex` 前缀：
 
-```bash
-codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在持久 Python 环境中安装运行时和用户级 Codex Skill，最后运行 hk skill doctor --scope user --deep --json 验证。'
+```text
+请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
+按照仓库的手动安装步骤，在长期保留的 Python 环境中安装项目运行时和用户级 Codex Skill。
+完成后运行 hk skill doctor --scope user --deep --json 验证。
+已有安装如有本地修改，请先询问再覆盖。
 ```
 
-按提示确认联网和安装操作。[安装指南](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/)
+按提示确认联网和写入权限即可。[命令行或手动安装](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/#terminal)
 
 ### 手动安装
 

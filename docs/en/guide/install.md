@@ -2,15 +2,29 @@
 
 There are two parts to the installation: a Python environment runs `hk`, and the Skill tells an agent when and how to use it. Copying `SKILL.md` alone does not install the runtime.
 
-## Let Codex install it
+## Install from Codex chat (recommended)
+
+Paste this request directly into a local Codex chat. No terminal command or `codex` prefix is needed:
+
+```text
+Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
+Follow the repository's manual installation steps to install the project runtime
+in a persistent Python environment and the user-level Codex Skill.
+Verify with hk skill doctor --scope user --deep --json.
+If an existing installation has local changes, ask before overwriting them.
+```
+
+Review and approve network and file-write requests when prompted. If the installed Skill does not appear, restart Codex. [Official OpenAI documentation](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)
+
+## From the terminal (optional) { #terminal }
 
 With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
 
 ```bash
-codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json.'
+codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json. Ask before overwriting any existing local changes.'
 ```
 
-This sends an installation request to Codex; review network and file-write approvals when prompted. If an existing installation has local edits, inspect them before replacing anything. [Official Codex CLI usage](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
+This sends the same installation request from your terminal. Review and approve actions when prompted. [Official Codex CLI usage](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
 
 ## Manual installation
 
