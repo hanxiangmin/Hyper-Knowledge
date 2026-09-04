@@ -40,9 +40,9 @@
   },
   "render": {
     "html": "views/workbench.html",
-    "html_sha256": "d21386bed74fc0a586f053231c11aa74605a67ca8d114daf9538f62979a073af",
+    "html_sha256": "9bef260dbde2472bbc393779ca71b9f3f3ca499611314522d738c582077b487c",
     "view_manifest": "views/view-manifest.json",
-    "view_manifest_sha256": "4b3d581e11582a9defb323b61e6550ef1718e9e195cb05d298ceb4716456261c",
+    "view_manifest_sha256": "089dfd5ec35534bf004f66114b854cb385ede049d12058c2dcccd76a4993e19b",
     "inline_javascript_syntax": "passed",
     "default_view": "regularized_enclosure",
     "dense_strategy": "dominant_shared_node_space_filling_orbital_enclosures",
@@ -112,10 +112,10 @@
   },
   "visual_review": {
     "structural_contract": "passed",
-    "static_capture_review": "passed",
-    "interactive_browser_acceptance": "not_claimed",
-    "reason": "Six 1920x1080 captures were rendered from the real v29 offline workbench with Microsoft Edge headless and manually inspected. This receipt does not claim exhaustive interactive-browser acceptance.",
-    "evidence": "../../../docs/assets/hyper-knowledge-promo-manifest.json"
+    "interactive_browser_acceptance": "see_showcase_evidence",
+    "reason": "The current renderer output is covered by the bilingual showcase capture and QA manifests; earlier static captures remain historical evidence.",
+    "evidence": "../../../docs/assets/showcase-v2/live-manifest.json",
+    "qa": "../../../docs/assets/showcase-v2/live-qa.json"
   },
   "claim_boundary": [
     "This test validates file integrity, bundle contracts, provenance coverage, renderer behavior, and repository regression tests.",

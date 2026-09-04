@@ -143,6 +143,9 @@ venv.bak/
 # mkdocs documentation
 /site
 
+# Intermediate video segments are reproducible, not release assets.
+/docs/assets/showcase-v2/.render-work/
+
 # mypy
 .mypy_cache/
 .dmypy.json

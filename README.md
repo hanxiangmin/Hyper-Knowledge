@@ -2,7 +2,7 @@
   <strong>English</strong> · <a href="./README_ZH.md">简体中文</a>
 </p>
 
-![Hyper-Knowledge enclosure view](./docs/assets/hyper-knowledge-enclosure-en.png)
+![Hyper-Knowledge enclosure view](./docs/assets/showcase-v2/overview-enclosure-en.png)
 
 <h1 align="center">Hyper-Knowledge</h1>
 
@@ -58,19 +58,36 @@ The Skill-only command does **not** install the Python runtime. Codex is the ver
 
 ## See it in action
 
-These are real captures of the generated offline workbench using the repository's [Su Shi biography example](./examples/sushi-document-test/README.md), not product mockups. The interface is bilingual; source-authored node and relation names remain in the document's original language.
+An eight-second tour: overview → one hyperedge → one node → hover highlight. The first six scenes last one second each; the final hover plays at half speed for two seconds. Cut from real local-browser recordings, with all ten captured states retained in the full screenshot gallery.
 
-| Stable incidence matrix | Selected node and its incident hyperedges |
+[![Animated GIF tour: overview, hyperedge, node, and enclosure hover](./docs/assets/showcase-v2/tour-en.gif)](./docs/assets/showcase-v2/tour-en.gif)
+
+[Open full-size GIF](./docs/assets/showcase-v2/tour-en.gif) · [Chinese GIF](./docs/assets/showcase-v2/tour-zh.gif) · [All 10 states, full size](./docs/en/guide/workbench.md) · [Capture and reproduction notes](./docs/assets/showcase-v2/README.md)
+
+<details>
+<summary>Three interactions worth a closer look</summary>
+
+### One hyperedge: the San Su family
+
+[![Selected family hyperedge with four members and their roles](./docs/assets/showcase-v2/edge-incidence-en.png)](./docs/assets/showcase-v2/edge-incidence-en.png)
+
+### One node: Su Shi and his incident hyperedges
+
+[![Selected Su Shi node and its ten incident hyperedges](./docs/assets/showcase-v2/node-incidence-en.png)](./docs/assets/showcase-v2/node-incidence-en.png)
+
+### One hover: read an enclosure in context
+
+[![A hovered enclosure is lightly filled while unrelated content fades](./docs/assets/showcase-v2/hover-enclosure-en.png)](./docs/assets/showcase-v2/hover-enclosure-en.png)
+
+</details>
+
+The English tour uses English controls and captions. Node and relation names retain the Chinese wording of the [Su Shi source document](./examples/sushi-document-test/README.md).
+
+| View | Read it as |
 | --- | --- |
-| ![Incidence matrix in English UI](./docs/assets/hyper-knowledge-matrix-en.png) | ![Incidence focus in English UI](./docs/assets/hyper-knowledge-incidence-en.png) |
-
-The workbench offers three complementary views:
-
-| View | Best for | Semantic boundary |
-| --- | --- | --- |
-| **Incidence matrix** | Dense overviews and exact membership lookup | Rows are nodes, columns are native hyperedges |
-| **Incidence focus** | Explaining which hyperedges contain one node | Shows only the selected node and its incident hyperedges |
-| **Enclosure view** | Reading higher-order structure spatially | Each colored enclosure is one native n-ary hyperedge |
+| **Incidence matrix** | The full membership table; selecting a node or hyperedge highlights it without replacing the overview |
+| **Incidence view** | One node and its incident hyperedges, or one hyperedge and its members |
+| **Enclosure view** | Shared higher-order structure; click to focus, hover to isolate a relationship visually |
 
 ## Why Hyper-Knowledge?
 

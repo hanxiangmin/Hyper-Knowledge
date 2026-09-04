@@ -1,58 +1,62 @@
-# Hyper-Knowledge Documentation Configuration
-
 site_name: Hyper-Knowledge
-site_description: Provenance-aware higher-order knowledge graph extraction, modeling, and visualization
+site_url: https://hanxiangmin.github.io/Hyper-Knowledge/
+site_description: An Agent Skill for modeling relationships in context, tracing evidence, and exploring higher-order knowledge graphs offline.
 site_author: hanxiangmin
-
 repo_name: hanxiangmin/Hyper-Knowledge
 repo_url: https://github.com/hanxiangmin/Hyper-Knowledge
 edit_uri: edit/main/docs/
 
-hooks:
-  - docs_hooks.py
-
 theme:
   name: material
   language: en
+  font: false
   features:
-    - navigation.tracking
     - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.indexes
-    - navigation.path
+    - navigation.sections
     - navigation.top
     - search.suggest
     - search.highlight
     - content.code.copy
-    - content.code.annotate
-    - content.tabs.link
   palette:
-    primary: purple
-    accent: deep purple
+    primary: custom
+    accent: custom
   logo: assets/logo/logo-icon-white.svg
   favicon: assets/logo/logo-icon.svg
 
+extra_css:
+  - stylesheets/knowledge.css
+
+# The public handbook is authored around this Skill's own workflows.
+# Retain historical runtime manuals in Git, but do not publish or index them.
+exclude_docs: |
+  getting-started/
+  cli/
+  python/
+  concepts/
+  templates/
+  tutorials/
+  resources/
+  mcp.md
+  assets/examples/
+  assets/arch.jpg
+  assets/autotypes.jpg
+  assets/cli.png
+  assets/en_show.jpg
+  assets/hero.jpg
+  assets/zh_show.jpg
+  assets/showcase/
+  assets/showcase-v2/.render-work/
+  assets/showcase-v2/README.md
+  assets/showcase-v2/live-manifest.json
+  assets/showcase-v2/capture-manifest.json
+  assets/hyper-knowledge-promo-manifest.json
+
 plugins:
   - search
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: [hyperknowledge]
-          options:
-            docstring_style: google
-            show_source: false
-            show_root_heading: true
-            show_object_full_path: false
-            show_category_heading: true
-            show_if_no_docstring: false
-            members_order: source
-            group_by_category: true
-            filters:
-              - "!^_"  # Hide private methods
-            merge_init_into_class: false
-            show_signature_annotations: true
   - i18n:
       docs_structure: folder
+      # Shared assets live at docs/assets; the folder plugin treats them as default-locale files.
+      # check_docs_site.py requires a real source page in both languages.
       fallback_to_default: true
       languages:
         - locale: en
@@ -60,189 +64,38 @@ plugins:
           default: true
           build: true
           nav:
-            - Home: index.md
-            - Getting Started:
-                - getting-started/index.md
-                - getting-started/installation.md
-                - getting-started/cli-quickstart.md
-                - getting-started/python-quickstart.md
-            - CLI Guide:
-                - cli/index.md
-                - cli/workflow.md
-                - Commands:
-                    - cli/commands/parse.md
-                    - cli/commands/feed.md
-                    - cli/commands/show.md
-                    - cli/commands/export.md
-                    - cli/commands/build-index.md
-                    - cli/commands/clean.md
-                    - cli/commands/search.md
-                    - cli/commands/talk.md
-                    - cli/commands/info.md
-                    - cli/commands/list.md
-                    - cli/commands/config.md
-                - cli/configuration.md
-            - MCP Server: mcp.md
-            - Python SDK:
-                - python/index.md
-                - python/quickstart.md
-                - python/core-concepts.md
-                - Guides:
-                    - python/guides/using-templates.md
-                    - python/guides/using-methods.md
-                    - python/guides/working-with-autotypes.md
-                    - python/guides/provider-configuration.md
-                    - python/guides/custom-templates.md
-                    - python/guides/search-and-chat.md
-                    - python/guides/incremental-updates.md
-                    - python/guides/saving-loading.md
-                - API Reference:
-                    - Template API: python/api-reference/template.md
-                    - Auto-Types:
-                        - Base Type: python/api-reference/autotypes/base.md
-                        - Record Types: python/api-reference/autotypes/structures.md
-                        - Graph Types: python/api-reference/autotypes/graphs.md
-                    - Methods:
-                        - Registry: python/api-reference/methods/registry.md
-                        - Typical Methods: python/api-reference/methods/typical.md
-                        - RAG Methods: python/api-reference/methods/rag.md
-            - Concepts:
-                - concepts/index.md
-                - concepts/architecture.md
-                - concepts/provider-system.md
-                - concepts/autotypes.md
-                - concepts/methods.md
-                - concepts/templates-format.md
-            - Templates:
-                - templates/index.md
-                - Choosing:
-                    - templates/how-to-choose.md
-                    - templates/choosing/by-task.md
-                    - templates/choosing/by-output.md
-                - Examples:
-                    - templates/examples/research-paper.md
-                    - templates/examples/financial-report.md
-                    - templates/examples/legal-contract.md
-                - Reference:
-                    - templates/reference/overview.md
-                    - General: templates/reference/general.md
-                    - Finance: templates/reference/finance.md
-                    - Legal: templates/reference/legal.md
-                    - Medical: templates/reference/medicine.md
-                    - TCM: templates/reference/tcm.md
-                    - Industry: templates/reference/industry.md
-            - Tutorials:
-                - tutorials/index.md
-                - Research Assistant:
-                    - tutorials/research-assistant/index.md
-                    - tutorials/research-assistant/step1-extract.md
-                    - tutorials/research-assistant/step2-search.md
-                    - tutorials/research-assistant/step3-chat.md
-                - Knowledge Base:
-                    - tutorials/knowledge-base/index.md
-                    - tutorials/knowledge-base/step1-setup.md
-                    - tutorials/knowledge-base/step2-ingest.md
-                    - tutorials/knowledge-base/step3-query.md
-                - Document Analysis: tutorials/document-analysis/index.md
-            - Resources:
-                - resources/index.md
-                - resources/faq.md
-                - resources/troubleshooting.md
-                - resources/contributing.md
+            - Overview: index.md
+            - Use the Skill:
+                - Install and verify: guide/install.md
+                - Your first document: guide/document.md
+            - Model in context:
+                - Entities, events, and roles: guide/modeling.md
+                - Evidence and bundles: guide/artifacts.md
+            - Explore:
+                - Three views, three questions: guide/workbench.md
+                - The Su Shi walkthrough: guide/sushi.md
+            - Run locally:
+                - Command recipes: guide/commands.md
+                - Questions and troubleshooting: guide/faq.md
+            - Project: guide/about.md
         - locale: zh
-          name: 中文
+          name: 简体中文
           build: true
           nav:
-            - 首页: zh/index.md
-            - 入门指南:
-                - zh/getting-started/index.md
-                - zh/getting-started/installation.md
-                - zh/getting-started/cli-quickstart.md
-                - zh/getting-started/python-quickstart.md
-            - CLI 指南:
-                - zh/cli/index.md
-                - zh/cli/workflow.md
-                - 命令详解:
-                    - zh/cli/commands/parse.md
-                    - zh/cli/commands/feed.md
-                    - zh/cli/commands/show.md
-                    - zh/cli/commands/export.md
-                    - zh/cli/commands/build-index.md
-                    - zh/cli/commands/clean.md
-                    - zh/cli/commands/search.md
-                    - zh/cli/commands/talk.md
-                    - zh/cli/commands/info.md
-                    - zh/cli/commands/list.md
-                    - zh/cli/commands/config.md
-                - zh/cli/configuration.md
-            - MCP 服务器: zh/mcp.md
-            - Python SDK:
-                - zh/python/index.md
-                - zh/python/quickstart.md
-                - zh/python/core-concepts.md
-                - 使用指南:
-                    - zh/python/guides/using-templates.md
-                    - zh/python/guides/using-methods.md
-                    - zh/python/guides/working-with-autotypes.md
-                    - zh/python/guides/provider-configuration.md
-                    - zh/python/guides/custom-templates.md
-                    - zh/python/guides/search-and-chat.md
-                    - zh/python/guides/incremental-updates.md
-                    - zh/python/guides/saving-loading.md
-                - API 参考:
-                    - Template API: zh/python/api-reference/template.md
-                    - 自动类型:
-                        - 基础类型: zh/python/api-reference/autotypes/base.md
-                        - 记录类型: zh/python/api-reference/autotypes/structures.md
-                        - 图谱类型: zh/python/api-reference/autotypes/graphs.md
-                    - 方法:
-                        - 注册表: zh/python/api-reference/methods/registry.md
-                        - 典型方法: zh/python/api-reference/methods/typical.md
-                        - RAG 方法: zh/python/api-reference/methods/rag.md
-            - 核心概念:
-                - zh/concepts/index.md
-                - zh/concepts/architecture.md
-                - zh/concepts/provider-system.md
-                - zh/concepts/autotypes.md
-                - zh/concepts/methods.md
-                - zh/concepts/templates-format.md
-            - 模板库:
-                - zh/templates/index.md
-                - 选择指南:
-                    - 如何选择: zh/templates/how-to-choose.md
-                    - 按任务选择: zh/templates/choosing/by-task.md
-                    - 按输出类型选择: zh/templates/choosing/by-output.md
-                - 使用示例:
-                    - 研究论文分析: zh/templates/examples/research-paper.md
-                    - 财报分析: zh/templates/examples/financial-report.md
-                    - 合同分析: zh/templates/examples/legal-contract.md
-                - 参考:
-                    - 模板概览: zh/templates/reference/overview.md
-                    - 通用: zh/templates/reference/general.md
-                    - 金融: zh/templates/reference/finance.md
-                    - 法律: zh/templates/reference/legal.md
-                    - 医学: zh/templates/reference/medicine.md
-                    - 中医: zh/templates/reference/tcm.md
-                    - 工业: zh/templates/reference/industry.md
-            - 教程:
-                - zh/tutorials/index.md
-                - 研究助手:
-                    - zh/tutorials/research-assistant/index.md
-                    - zh/tutorials/research-assistant/step1-extract.md
-                    - zh/tutorials/research-assistant/step2-search.md
-                    - zh/tutorials/research-assistant/step3-chat.md
-                - 知识库:
-                    - zh/tutorials/knowledge-base/index.md
-                    - zh/tutorials/knowledge-base/step1-setup.md
-                    - zh/tutorials/knowledge-base/step2-ingest.md
-                    - zh/tutorials/knowledge-base/step3-query.md
-                - 文档分析:
-                    - zh/tutorials/document-analysis/index.md
-            - 资源:
-                - zh/resources/index.md
-                - zh/resources/faq.md
-                - zh/resources/troubleshooting.md
-                - zh/resources/contributing.md
+            - 概览: index.md
+            - 使用 Skill:
+                - 安装与检查: guide/install.md
+                - 处理第一份文档: guide/document.md
+            - 关系建模:
+                - 实体、事件与角色: guide/modeling.md
+                - 证据与数据包: guide/artifacts.md
+            - 图谱探索:
+                - 三种视图，三个问题: guide/workbench.md
+                - 苏轼案例实读: guide/sushi.md
+            - 本地运行:
+                - 常用命令配方: guide/commands.md
+                - 常见问题与排查: guide/faq.md
+            - 项目说明: guide/about.md
 
 extra:
   social:
@@ -252,25 +105,19 @@ extra:
     provider: mike
 
 markdown_extensions:
-  - pymdownx.highlight:
-      use_pygments: true
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
   - admonition
-  - pymdownx.details
+  - attr_list
+  - md_in_html
   - tables
   - toc:
       permalink: true
-  - attr_list
-  - md_in_html
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+
+validation:
+  nav:
+    omitted_files: warn
+  links:
+    not_found: warn
+    anchors: warn

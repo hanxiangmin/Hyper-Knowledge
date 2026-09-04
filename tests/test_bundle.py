@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 
 from hyperknowledge.bundle import export_bundle, read_bundle, validate_bundle
+from hyperknowledge.skill_manager import bundled_skill_path
 from hyperknowledge.visualization import render_bundle_html
-
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
@@ -82,6 +82,13 @@ def test_bundle_canonicalizes_undirected_pairwise_endpoints(tmp_path):
     assert "pairwise-line-explanation" in page
     assert "not a hyperedge boundary" in page
     assert "不是超边边界" in page
+    # Source and installed wheels must use the same self-contained Skill icon.
+    icon = (bundled_skill_path() / "assets" / "icon-small.svg").read_text(
+        encoding="utf-8"
+    )
+    assert icon.strip() in page
+    assert "__BRAND_ICON__" not in page
+    assert "M6 8l10-4 10 4v11l-10 9-10-9z" not in page
 
 
 def test_hypergraph_bundle_and_offline_workbench(tmp_path):
@@ -195,10 +202,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     )
     assert result["schema_version"] == "hk.view/v29"
     assert result["layout"] == "undirected_force_or_membership_boundary"
-    assert (
-        result["contour_geometry"]
-        == "circle_first_then_ellipse_membership_boundary"
-    )
+    assert result["contour_geometry"] == "circle_first_then_ellipse_membership_boundary"
     assert result["contour_spacing"] == "balanced_angular_gap_distribution"
     assert result["contour_separation"] == (
         "shared_relation_spring_and_nonincident_repulsion"
@@ -211,8 +215,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     )
     assert result["enclosure_space_policy"] == "aspect_aware_outer_frame_fill"
     assert (
-        result["enclosure_order_policy"]
-        == "descending_member_count_clockwise_from_top"
+        result["enclosure_order_policy"] == "descending_member_count_clockwise_from_top"
     )
     assert result["enclosure_hub_policy"] == "highest_membership_node_at_center"
     assert (
@@ -252,9 +255,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     )
     assert result["hyperedge_card_policy"] == "relation_hue_matched_framed"
     assert result["secondary_label_policy"] == "hidden_for_nodes_and_hyperedges"
-    assert result["chrome_text_policy"] == (
-        "hide_bundle_metadata_and_panel_explainer"
-    )
+    assert result["chrome_text_policy"] == ("hide_bundle_metadata_and_panel_explainer")
     assert result["enclosure_line_policy"] == (
         "single_uniform_relation_color_fixed_thick_width"
     )
@@ -267,8 +268,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
         "light_relation_tint_on_fill_boundary_or_label_hover"
     )
     assert (
-        result["dense_incidence_strategy"]
-        == "independent_interactive_incidence_matrix"
+        result["dense_incidence_strategy"] == "independent_interactive_incidence_matrix"
     )
     assert (
         result["matrix_selection_policy"]
@@ -283,9 +283,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
         == "single_hyperedge_complete_membership_expansion"
     )
     assert result["two_hyperedge_strategy"] == "shared_boundary_dual_lobe"
-    assert result["responsive_canvas"] == (
-        "aspect_aware_width_and_height_viewbox"
-    )
+    assert result["responsive_canvas"] == ("aspect_aware_width_and_height_viewbox")
     assert result["overview_space_usage"] == (
         "adaptive_horizontal_coordinate_expansion"
     )
@@ -305,9 +303,7 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     assert result["label_lod_policy"] == (
         "two_or_three_line_circle_labels_with_full_tooltip"
     )
-    assert result["fit_policy"] == (
-        "content_bounds_on_initial_focus_reset_and_resize"
-    )
+    assert result["fit_policy"] == ("content_bounds_on_initial_focus_reset_and_resize")
     assert result["pairwise_edge_labels"] == "native_predicate_labels"
     assert result["interaction_policy"] == (
         "draggable_nodes_with_live_edge_and_enclosure_reflow"
@@ -356,7 +352,9 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     assert "无向高阶结构" in page
     assert "圆形优先" not in page
     assert 'badge=layout.dominantNodeId?""' in page
-    assert ".hyper-envelope{fill:none;stroke:var(--hyper-color);stroke-width:2.4px" in page
+    assert (
+        ".hyper-envelope{fill:none;stroke:var(--hyper-color);stroke-width:2.4px" in page
+    )
     assert ".hyper-envelope.is-related{opacity:.82;stroke-width:3.2px}" in page
     assert ".hyper-envelope.is-hover-focus{opacity:1;stroke-width:3.2px}" in page
     assert "nodeCircleMetrics" in page
@@ -366,14 +364,17 @@ def test_hypergraph_bundle_and_offline_workbench(tmp_path):
     assert "membershipCount" in page
     assert "hyperedgeDegree" in page
     assert "legend-shared-node-swatch" in page
-    assert 'panel.viewport.querySelectorAll(".entity-mark,.hyper-envelope-layer,.hyperedge-label,.link")' in page
+    assert (
+        'panel.viewport.querySelectorAll(".entity-mark,.hyper-envelope-layer,.hyperedge-label,.link")'
+        in page
+    )
     assert "memberIds.has" in page
     assert "is-hover-focus" in page
     assert ".hyper-envelope-fill.is-hover-focus" in page
     assert "stroke:var(--hyper-color" in page
     assert 'nameOnly=parent.classList?.contains("entity-mark")' in page
-    assert "layout.classList.add(\"drawer-idle\")" in page
-    assert "layout.classList.remove(\"drawer-idle\")" in page
+    assert 'layout.classList.add("drawer-idle")' in page
+    assert 'layout.classList.remove("drawer-idle")' in page
     assert "https://" not in page
     assert "<script src=" not in page
     assert result["offline"] is True
@@ -398,9 +399,9 @@ def test_sushi_trajectory_preserves_time_place_stage_correspondence():
     )
     members_by_assertion = {}
     for member in bundle["members"]:
-        members_by_assertion.setdefault(member["assertion_id"], {})[
-            member["role"]
-        ] = member["node_id"]
+        members_by_assertion.setdefault(member["assertion_id"], {})[member["role"]] = (
+            member["node_id"]
+        )
 
     assert members_by_assertion["assertion:huizhou-exile-1094"] == {
         "被贬者": "person:su-shi",
@@ -422,7 +423,9 @@ def test_sushi_trajectory_preserves_time_place_stage_correspondence():
     assert not any(node_id.startswith("stage:") for node_id in node_ids)
     assert "event:imperial-exam-1057" not in node_ids
     assert "time:1057" in node_ids
-    predicates = {assertion["id"]: assertion["predicate"] for assertion in bundle["assertions"]}
+    predicates = {
+        assertion["id"]: assertion["predicate"] for assertion in bundle["assertions"]
+    }
     assert predicates["assertion:imperial-exam-1057"] == "科举考试"
     assert predicates["assertion:changzhou-return-1101"] == "北归"
 

@@ -4,17 +4,16 @@ import os
 from pathlib import Path
 
 import pytest
-from typer.testing import CliRunner
-
 from hyperknowledge.cli.cli import app
 from hyperknowledge.skill_manager import (
     SkillInstallError,
+    bundled_skill_path,
     doctor_skill,
     install_root,
     install_skill,
     uninstall_skill,
 )
-
+from typer.testing import CliRunner
 
 runner = CliRunner()
 
@@ -26,6 +25,12 @@ def test_user_skill_install_doctor_and_uninstall(tmp_path):
     assert installed["ok"] is True
     assert (target / "SKILL.md").is_file()
     assert (target / "agents" / "openai.yaml").is_file()
+    metadata = (target / "agents" / "openai.yaml").read_text(encoding="utf-8")
+    for name in ("icon-small.svg", "icon-large.svg"):
+        assert (target / "assets" / name).read_bytes() == (
+            bundled_skill_path() / "assets" / name
+        ).read_bytes()
+        assert f"./assets/{name}" in metadata
     assert (target / ".hyperknowledge-runtime.json").is_file()
     launcher = "hk.cmd" if os.name == "nt" else "hk"
     assert (target / "runtime" / launcher).is_file()
@@ -57,9 +62,7 @@ def test_user_install_root_prefers_codex_home(monkeypatch, tmp_path):
     assert install_root("user") == codex_home / "skills"
 
 
-def test_user_install_root_falls_back_to_default_codex_directory(
-    monkeypatch, tmp_path
-):
+def test_user_install_root_falls_back_to_default_codex_directory(monkeypatch, tmp_path):
     monkeypatch.delenv("CODEX_HOME", raising=False)
     monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
 

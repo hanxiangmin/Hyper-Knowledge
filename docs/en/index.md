@@ -1,212 +1,105 @@
-![Hyper-Knowledge Logo](../assets/logo/logo-horizontal.svg){ width="500" }
-
-> **Transform documents into structured knowledge with one command.**
-> 
-> *"告别文档焦虑，让信息一目了然"*
-
-**Hyper-Knowledge** is an intelligent, LLM-powered knowledge extraction framework. It transforms unstructured text into persistent, predictable, and strongly-typed knowledge structures—from simple lists to complex knowledge graphs, hypergraphs, and spatio-temporal graphs.
-
+---
+title: Hyper-Knowledge · Keep relationships in context
+description: An Agent Skill for higher-order knowledge graphs with atomic entities, event hyperedges, member roles, source evidence, and an offline three-view workbench.
+hide:
+  - toc
 ---
 
-## ⚡ 5-Minute Quick Start
+<div class="hk-hero" markdown>
+<p class="hk-kicker">Hyper-Knowledge / Agent Skill</p>
 
-=== "CLI (Terminal)"
+# Keep relationships in context.
 
-    ```bash
-    # 1. Install CLI tool
-    uv tool install git+https://github.com/hanxiangmin/Hyper-Knowledge.git
+<p class="hk-lead">A person, a time, a place, and a role often explain one event together. Hyper-Knowledge organizes that context as a hyperedge, with an agent-guided workflow, inspectable data bundles, and an offline workbench.</p>
 
-    # 2. Configure API Key (Bailian example)
-    hk config init -p bailian -k YOUR_BAILIAN_API_KEY
-
-    # 3. Extract knowledge from a document
-    hk parse tesla.md -t general/biography_graph -o ./output/ -l en
-
-    # 4. Visualize the knowledge graph
-    hk show ./output/
-    ```
-
-=== "Python"
-
-    ```python
-    from hyperknowledge import Template
-
-    # 1. Create a template
-    ka = Template.create("general/biography_graph", "en")
-
-    # 2. Extract knowledge
-    with open("tesla.md") as f:
-        result = ka.parse(f.read())
-
-    # 3. Visualize
-    result.show()
-    ```
-
-**→ Ready to dive deeper?** Check out the [Getting Started Guide](getting-started/index.md) or jump to [CLI](cli/index.md) / [Python SDK](python/index.md) documentation.
-
----
-
-## ✨ What Makes Hyper-Knowledge Different?
-
-<div class="grid cards" markdown>
-
--   :material-shape:{ .lg .middle } **8 Auto-Types**
-
-    ---
-
-    From simple `AutoList`/`AutoModel` to advanced `AutoGraph`, `AutoHypergraph`, and `AutoSpatioTemporalGraph`. Pick the right structure for your data.
-
--   :material-brain:{ .lg .middle } **10+ Extraction Engines**
-
-    ---
-
-    Built-in support for GraphRAG, LightRAG, Hyper-RAG, KG-Gen, iText2KG, and more. Choose the best method for your use case.
-
--   :material-file-document:{ .lg .middle } **80+ Domain Templates**
-
-    ---
-
-    Ready-to-use templates for Finance, Legal, Medical, TCM, and Industry. Zero configuration needed.
-
--   :material-sync:{ .lg .middle } **Incremental Evolution**
-
-    ---
-
-    Feed new documents to continuously expand your knowledge abstract. No need to reprocess everything.
-
+[Install the Skill](guide/install.md){ .md-button .md-button--primary }
+[Explore the Su Shi example](guide/sushi.md){ .md-button }
 </div>
 
----
+<figure class="hk-media" markdown>
 
-## 🎯 Choose Your Path
+[![Animated GIF tour: three views, selection, and enclosure hover](../assets/showcase-v2/tour-en.gif)](../assets/showcase-v2/tour-en.gif)
 
-<div class="grid cards" markdown>
+<figcaption>Eight-second looping GIF: overview → hyperedge → node → hover. The first six scenes last one second each; the final hover plays at half speed for two seconds. Click to open the full-size GIF.</figcaption>
+</figure>
 
--   :material-console:{ .lg .middle } __CLI User__
+## Start with a concrete question
 
-    ---
+“What happened to Su Shi, when, and where?” should not become one long node name.
 
-    Process documents directly from your terminal. Perfect for:
-    
-    - Quick knowledge extraction
-    - Batch document processing
-    - Building knowledge abstracts without coding
-    
-    [:octicons-arrow-right-24: CLI Guide](cli/index.md)
+| Entity nodes | Event hyperedge | Member roles |
+| --- | --- | --- |
+| Su Shi, 1101, Changzhou | Return north | Returning person, time, destination |
 
--   :material-language-python:{ .lg .middle } __Python Developer__
+The person and place can participate in another event. Each date stays attached to its own context. A source record belongs to the event so readers can check the underlying passage. [Learn the modeling approach](guide/modeling.md)
 
-    ---
+## Work toward an inspectable graph
 
-    Integrate into your Python applications. Perfect for:
-    
-    - Custom extraction pipelines
-    - Integration with existing workflows
-    - Building AI-powered applications
-    
-    [:octicons-arrow-right-24: Python SDK](python/index.md)
+<div class="hk-three" markdown>
+<section markdown>
 
--   :material-school:{ .lg .middle } __Want to Learn More?__
+### Model
 
-    ---
+Describe the task and material to the Skill. Identify entities, events, and roles before choosing a template and running extraction.
 
-    Understand the concepts and architecture:
-    
-    - How Auto-Types work
-    - Choosing extraction methods
-    - Creating custom templates
-    
-    [:octicons-arrow-right-24: Concepts](concepts/index.md)
+[Process your first document](guide/document.md)
+</section>
+<section markdown>
 
+### Check
+
+Keep nodes, assertions, memberships, and evidence in separate tables. Validate references and file identity; distinguish source support from model interpretation.
+
+[Read the bundle](guide/artifacts.md)
+</section>
+<section markdown>
+
+### Explore
+
+Move from the whole structure to a node and then to one hyperedge. Use the matrix for dense membership patterns and incidence for explicit roles.
+
+[Choose a view](guide/workbench.md)
+</section>
 </div>
 
----
+## A useful request to your agent
 
-## 🧩 The 8 Auto-Types at a Glance
-
-| Type | Use Case | Example Output |
-|------|----------|----------------|
-| **AutoModel** | Structured summaries | A pydantic model with specific fields |
-| **AutoList** | Collections of items | A list of entities or facts |
-| **AutoSet** | Deduplicated collections | A set of unique items |
-| **AutoGraph** | Entity-relationship networks | Knowledge graph with nodes and edges |
-| **AutoHypergraph** | Multi-entity relationships | Hyperedges connecting multiple nodes |
-| **AutoTemporalGraph** | Time-based relationships | Graph with temporal information |
-| **AutoSpatialGraph** | Location-based relationships | Graph with geographic data |
-| **AutoSpatioTemporalGraph** | Time + Space combined | Full context with when and where |
-
-→ [Learn which Auto-Type to choose](concepts/autotypes.md)
-
----
-
-## 🏗️ Architecture Overview
-
-Hyper-Knowledge follows a **three-layer architecture**:
-
-```mermaid
-graph TD
-    A[Your Document] --> B[CLI / Python API]
-    B --> C[Template]
-    B --> D[Method]
-    C --> E[Auto-Type]
-    D --> E
-    E --> F[Structured Knowledge]
-
-    subgraph "Layer 3: Templates & Methods"
-        C
-        D
-    end
-
-    subgraph "Layer 2: Core Engine"
-        E
-    end
-
-    subgraph "Layer 1: Output"
-        F
-    end
+```text
+Use hyper-knowledge on this document.
+Keep people, places, and times as separate nodes. Preserve each event as a
+hyperedge with member roles. Deliver a validated bundle and an offline
+workbench, and identify relationships that lack source support.
 ```
 
-1. **Auto-Types** — Define the output data structure (8 types)
-2. **Methods** — Provide extraction algorithms (RAG-based and Typical)
-3. **Templates** — Offer domain-specific, ready-to-use configurations
+The Skill turns the request into an inspectable workflow; `hk` executes it. Start with the offline demo to check the installation and renderer before configuring a model. [Install and verify](guide/install.md)
 
-You can use Hyper-Knowledge at any level: pick a template for quick results, choose a method for more control, or work directly with Auto-Types for full customization.
+## Look first, then go deeper
 
----
+<div class="hk-gallery" markdown>
+<figure markdown>
 
-## 📊 Comparison with Other Tools
+[![The full incidence matrix](../assets/showcase-v2/overview-matrix-en.png)](../assets/showcase-v2/overview-matrix-en.png)
 
-| Feature | GraphRAG | LightRAG | KG-Gen | **Hyper-Knowledge** |
-|---------|:--------:|:--------:|:------:|:-----------------:|
-| Knowledge Graph | ✅ | ✅ | ✅ | ✅ |
-| Temporal Graph | ✅ | ❌ | ❌ | ✅ |
-| Spatial Graph | ❌ | ❌ | ❌ | ✅ |
-| Hypergraph | ❌ | ❌ | ❌ | ✅ |
-| Domain Templates | ❌ | ❌ | ❌ | ✅ |
-| CLI Tool | ✅ | ❌ | ❌ | ✅ |
-| Multi-language | ✅ | ❌ | ❌ | ✅ |
+<figcaption>Map memberships without crossing lines.</figcaption>
+</figure>
+<figure markdown>
 
----
+[![The selected San Su family hyperedge](../assets/showcase-v2/edge-incidence-en.png)](../assets/showcase-v2/edge-incidence-en.png)
 
-## 📚 Documentation Structure
+<figcaption>Expand one hyperedge into members and roles.</figcaption>
+</figure>
+<figure markdown>
 
-- **[Getting Started](getting-started/index.md)** — Installation and your first extraction
-- **[CLI Guide](cli/index.md)** — Complete terminal workflow documentation
-- **[Python SDK](python/index.md)** — API reference and developer guides
-- **[Concepts](concepts/index.md)** — Understanding the architecture
-- **[Templates](templates/index.md)** — Domain-specific extraction templates
-- **[Resources](resources/index.md)** — FAQ, troubleshooting, and contributing
+[![The highlighted family enclosure on hover](../assets/showcase-v2/hover-enclosure-en.png)](../assets/showcase-v2/hover-enclosure-en.png)
 
----
+<figcaption>Trace a relationship while the rest fades.</figcaption>
+</figure>
+</div>
 
-## 🤝 Contributing
+[Open the English GIF](../assets/showcase-v2/tour-en.gif) · [Explore all 10 captured states](guide/workbench.md) · [Command recipes](guide/commands.md)
 
-Contributions are welcome! Whether it's bug reports, feature requests, or documentation improvements, please feel free to submit an issue or pull request.
+The short tour uses real browser footage; the gallery preserves all ten captured states. English controls and captions accompany the original Chinese entity names.
 
-[:fontawesome-brands-github: GitHub Repository](https://github.com/hanxiangmin/Hyper-Knowledge){ .md-button .md-button--primary }
+The local Skill is the primary entry point. This documentation site explains and demonstrates the project; it does not accept document uploads or provide a hosted parser.
 
----
-
-## 📄 License
-
-Hyper-Knowledge is licensed under the [Apache-2.0 License](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/LICENSE).
+[Design scope, open-source origins, and acknowledgements](guide/about.md)

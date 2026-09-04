@@ -2,7 +2,7 @@
   <a href="./README.md">English</a> · <strong>简体中文</strong>
 </p>
 
-![Hyper-Knowledge 中文包络视图](./docs/assets/hyper-knowledge-enclosure-zh.png)
+![Hyper-Knowledge 中文包络视图](./docs/assets/showcase-v2/overview-enclosure-zh.png)
 
 <h1 align="center">Hyper-Knowledge</h1>
 
@@ -58,19 +58,36 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 
 ## 实际效果
 
-下面都是仓库内[苏轼生平示例](./examples/sushi-document-test/README.md)生成的真实离线工作台截图，不是产品效果图。界面支持中英文切换；来自原文的节点名与关系名会保留原始语言，不进行无依据翻译。
+8 秒看懂工作台：总览 → 一条超边 → 一个节点 → 悬停高亮。前六个画面各停留 1 秒，最后的悬停以半速播放 2 秒，剪自真实本地浏览器录屏；完整十个状态仍可在图集中逐一查看。
 
-| 稳定的关联矩阵 | 所选节点及其所属超边 |
+[![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v2/tour-zh.gif)](./docs/assets/showcase-v2/tour-zh.gif)
+
+[查看原尺寸 GIF](./docs/assets/showcase-v2/tour-zh.gif) · [英文 GIF](./docs/assets/showcase-v2/tour-en.gif) · [10 个状态的完整大图](./docs/zh/guide/workbench.md) · [录制与复现说明](./docs/assets/showcase-v2/README.md)
+
+<details>
+<summary>展开看三个交互特写</summary>
+
+### 选中超边：三苏家族与文学群体
+
+[![三苏超边的四个成员及其角色](./docs/assets/showcase-v2/edge-incidence-zh.png)](./docs/assets/showcase-v2/edge-incidence-zh.png)
+
+### 选中节点：苏轼属于哪些超边
+
+[![苏轼节点与其所属的十条超边](./docs/assets/showcase-v2/node-incidence-zh.png)](./docs/assets/showcase-v2/node-incidence-zh.png)
+
+### 悬停包络：突出当前关系
+
+[![当前包络浅色填充，其他内容淡化](./docs/assets/showcase-v2/hover-enclosure-zh.png)](./docs/assets/showcase-v2/hover-enclosure-zh.png)
+
+</details>
+
+英文版使用英文界面与讲解；节点名、超边名保留[苏轼原文示例](./examples/sushi-document-test/README.md)中的中文表达。
+
+| 视图 | 阅读方式 |
 | --- | --- |
-| ![中文界面的关联矩阵](./docs/assets/hyper-knowledge-matrix-zh.png) | ![中文界面的节点关联视图](./docs/assets/hyper-knowledge-incidence-zh.png) |
-
-工作台提供三种互补视图：
-
-| 视图 | 最适合回答的问题 | 语义边界 |
-| --- | --- | --- |
-| **关联矩阵** | 元素很多时，如何稳定查看成员关系？ | 行是节点，列是原生超边 |
-| **关联聚焦** | 某个节点究竟属于哪些超边？ | 只展示当前节点及其所属超边 |
-| **包络视图** | 高阶结构在空间上如何组织？ | 每个彩色包络对应一条原生多元超边 |
+| **关联矩阵** | 完整成员表；选中节点或超边后高亮对应位置，保留全局矩阵 |
+| **关联视图** | 查看一个节点所属的超边，或一条超边包含的成员 |
+| **包络视图** | 阅读共享的高阶结构；点击聚焦，悬停突出当前关系 |
 
 ## 为什么使用 Hyper-Knowledge？
 

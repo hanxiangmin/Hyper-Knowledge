@@ -102,6 +102,10 @@ packages = ["hyperknowledge"]
 [tool.hatch.build.targets.wheel.force-include]
 "hyper-knowledge" = "hyperknowledge/skill"
 
+[tool.pytest.ini_options]
+# Optional media-tool tests run separately from the installed Skill runtime.
+testpaths = ["tests"]
+
 [tool.ruff.lint]
 ignore = [
     "E731",   # Lambda assignment is fine

@@ -1,0 +1,2147 @@
+{
+  "schema": "hyper-knowledge.live-tour/v1",
+  "provenance": "Real isolated-browser interaction recordings; no screenshot-based reenactments.",
+  "editorial_changes": [
+    "caption overlays",
+    "aspect-preserving framing",
+    "six one-second scenes plus a two-second hover at half speed, with clean cuts"
+  ],
+  "source_labels": "Original Chinese source labels are retained in both interface languages.",
+  "qa": {
+    "visual_review": "pending; review the newly rendered outputs"
+  },
+  "locales": {
+    "zh": {
+      "locale": "zh",
+      "edit_profile": "short",
+      "short_hover_playback_rate": 0.5,
+      "source_recording": "capture/zh/session.webm",
+      "source_recording_sha256": "9e440f0894ce68b57dc5f8675a0473e680fc59784c5d6ed71fd971a5f0e1ea23",
+      "timeline": "capture/zh/timeline.json",
+      "timeline_sha256": "b97c6f592430ea84e32e540795b2aaa29994e725c6099c98e00e304060fca95b",
+      "source_workbench": "examples/sushi-document-test/views/workbench.html",
+      "source_workbench_sha256": "9bef260dbde2472bbc393779ca71b9f3f3ca499611314522d738c582077b487c",
+      "source_viewport": [
+        1920,
+        1200
+      ],
+      "screenshots": [
+        {
+          "scene": "overview-matrix",
+          "file": "overview-matrix-zh.png",
+          "sha256": "397e10b26945a8e89f7d68814d4eb121f377ffa79b93ea0f6c24a039ec3afebc",
+          "size": [
+            1920,
+            1231
+          ],
+          "capture_time_sec": 6.226232900000001,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 994,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1203.296875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "overview-incidence",
+          "file": "overview-incidence-zh.png",
+          "sha256": "44f281cfdfb20e5cf25f0623314bfa8dea517ec9d4e0c335f95c6de2f76c2f8d",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 11.6858071,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi"
+            ],
+            "relations": [
+              "assertion:family-san-su",
+              "assertion:imperial-exam-1057",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case",
+              "assertion:huangzhou-creation",
+              "assertion:hangzhou-governance",
+              "assertion:huizhou-exile-1094",
+              "assertion:danzhou-exile-1097",
+              "assertion:changzhou-return-1101",
+              "assertion:literary-affiliations"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "overview-enclosure",
+          "file": "overview-enclosure-zh.png",
+          "sha256": "cb2e0ef6853cc5dd3392c993500ad2ff83631b7affb68a6247f36fd3969b73c2",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 17.176121600000002,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-enclosure",
+          "file": "edge-enclosure-zh.png",
+          "sha256": "c5126e439d3986239bfada6aa13455beda6df163f1269c21e777d1979716997d",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 23.0532691,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "relations": [
+              "assertion:family-san-su"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-incidence",
+          "file": "edge-incidence-zh.png",
+          "sha256": "60c6e67f96e879b8d5d37c395090dfedfffb92602c702407ac8161e279b72fc6",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 28.200194500000002,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "relations": [
+              "assertion:family-san-su"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-xun",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-zhe",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "group:san-su",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-matrix",
+          "file": "edge-matrix-zh.png",
+          "sha256": "e9ba70a32d32e63696e88915d3589dbef187154c0820474035669b8c3b7ca0c7",
+          "size": [
+            1920,
+            1260
+          ],
+          "capture_time_sec": 33.71913159999999,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-xun",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-zhe",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "group:san-su",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 1022.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1231.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-matrix",
+          "file": "node-matrix-zh.png",
+          "sha256": "e824738399c31b8da33cf5ed23889a5b0389086943d535b51224c9d827293d36",
+          "size": [
+            1920,
+            1260
+          ],
+          "capture_time_sec": 39.205263,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:changzhou-return-1101"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:danzhou-exile-1097"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huizhou-exile-1094"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:hangzhou-governance"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huangzhou-creation"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:imperial-exam-1057"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:literary-affiliations"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:wutai-poetry-case"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:new-policies-conflict"
+              },
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 1022.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1231.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-incidence",
+          "file": "node-incidence-zh.png",
+          "sha256": "153b746c47ca102af2ce891e57249e1ecd93c20493036cabcfb66a6c5f89fa9a",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 44.711284899999995,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi"
+            ],
+            "relations": [
+              "assertion:family-san-su",
+              "assertion:imperial-exam-1057",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case",
+              "assertion:huangzhou-creation",
+              "assertion:hangzhou-governance",
+              "assertion:huizhou-exile-1094",
+              "assertion:danzhou-exile-1097",
+              "assertion:changzhou-return-1101",
+              "assertion:literary-affiliations"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:imperial-exam-1057"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:new-policies-conflict"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:wutai-poetry-case"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huangzhou-creation"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:hangzhou-governance"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huizhou-exile-1094"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:danzhou-exile-1097"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:changzhou-return-1101"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:literary-affiliations"
+              },
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-enclosure",
+          "file": "node-enclosure-zh.png",
+          "sha256": "87046e80b77460bf8e30ef525bca7eab75f2103090d4f443188afb468232de07",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 50.2587267,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "hover-enclosure",
+          "file": "hover-enclosure-zh.png",
+          "sha256": "b00f29f4da57152b66a5a5ee7d4ca44dacaa07dbbf2eb3130b9433bd2ce687f9",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 56.63056389999999,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 70,
+            "hoverFill": [
+              {
+                "id": "assertion:family-san-su",
+                "fill": "color(srgb 0.983686 0.92251 0.950549)",
+                "opacity": "0.88"
+              }
+            ],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        }
+      ],
+      "segments": [
+        {
+          "id": "overview-enclosure",
+          "raw_start_sec": 17.426121600000002,
+          "raw_end_sec": 18.426121600000002,
+          "raw_settled_sec": 17.176121600000002,
+          "output_start_frame": 0,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "overview-matrix",
+          "raw_start_sec": 6.476232900000001,
+          "raw_end_sec": 7.476232900000001,
+          "raw_settled_sec": 6.226232900000001,
+          "output_start_frame": 24,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "edge-enclosure",
+          "raw_start_sec": 23.3032691,
+          "raw_end_sec": 24.3032691,
+          "raw_settled_sec": 23.0532691,
+          "output_start_frame": 48,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "edge-incidence",
+          "raw_start_sec": 28.450194500000002,
+          "raw_end_sec": 29.450194500000002,
+          "raw_settled_sec": 28.200194500000002,
+          "output_start_frame": 72,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "node-matrix",
+          "raw_start_sec": 39.455263,
+          "raw_end_sec": 40.455263,
+          "raw_settled_sec": 39.205263,
+          "output_start_frame": 96,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "node-incidence",
+          "raw_start_sec": 44.961284899999995,
+          "raw_end_sec": 45.961284899999995,
+          "raw_settled_sec": 44.711284899999995,
+          "output_start_frame": 120,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "hover-enclosure",
+          "raw_start_sec": 59.43056389999999,
+          "raw_end_sec": 60.43056389999999,
+          "raw_settled_sec": 56.63056389999999,
+          "output_start_frame": 144,
+          "output_frames": 48,
+          "output_duration_sec": 2.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 0.5,
+          "filter_sha256": "71ec53a4e3134f18c610f4bc9033668cd6637a3c03936dca92f6f0617a1e4115"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "tour-zh.mp4",
+          "sha256": "b188a52145cd36db680712d82c5effa791c274e5931faacf61cfa6770b6bca58",
+          "bytes": 1341333,
+          "kind": "video",
+          "size": [
+            1920,
+            1280
+          ],
+          "fps": 24,
+          "frames": 192,
+          "duration_sec": 8.0,
+          "sample_aspect_ratio": "1:1",
+          "display_aspect_ratio": "3:2"
+        },
+        {
+          "file": "tour-zh.gif",
+          "sha256": "c1cb26575277ef9a998998caefb15172fc6c0d1c06cb3dd1c14829b4a796fa43",
+          "bytes": 936698,
+          "kind": "gif",
+          "size": [
+            1200,
+            800
+          ],
+          "fps": 12,
+          "frames": 96,
+          "duration_sec": 8.0
+        }
+      ]
+    },
+    "en": {
+      "locale": "en",
+      "edit_profile": "short",
+      "short_hover_playback_rate": 0.5,
+      "source_recording": "capture/en/session.webm",
+      "source_recording_sha256": "f1adf2d47823d60d8ccc1c563e73ef0867db60d064e74fb30edf75c0c7ea8470",
+      "timeline": "capture/en/timeline.json",
+      "timeline_sha256": "491c3045957427ef40a01744807ef4ed18059ed945d0e9de27f426f133bc7140",
+      "source_workbench": "examples/sushi-document-test/views/workbench.html",
+      "source_workbench_sha256": "9bef260dbde2472bbc393779ca71b9f3f3ca499611314522d738c582077b487c",
+      "source_viewport": [
+        1920,
+        1200
+      ],
+      "screenshots": [
+        {
+          "scene": "overview-matrix",
+          "file": "overview-matrix-en.png",
+          "sha256": "006672eb3151e0c8b44ee8d92d86b5912bacfedca78a3839512d6251c70da6d6",
+          "size": [
+            1920,
+            1231
+          ],
+          "capture_time_sec": 3.3295580000000045,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 994,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1203.296875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "overview-incidence",
+          "file": "overview-incidence-en.png",
+          "sha256": "829b290c9815e4d18fa395c50855e5bdd2b796c6edb3653a9c9fc09e4439863a",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 8.777580500000012,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi"
+            ],
+            "relations": [
+              "assertion:family-san-su",
+              "assertion:imperial-exam-1057",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case",
+              "assertion:huangzhou-creation",
+              "assertion:hangzhou-governance",
+              "assertion:huizhou-exile-1094",
+              "assertion:danzhou-exile-1097",
+              "assertion:changzhou-return-1101",
+              "assertion:literary-affiliations"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "overview-enclosure",
+          "file": "overview-enclosure-en.png",
+          "sha256": "6280cc0f315d1001e0ad3d88684afdc04d2f7e19e7f347576150416b4b786f79",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 14.254773100000007,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-enclosure",
+          "file": "edge-enclosure-en.png",
+          "sha256": "9cc9a265d7be6c0fa67dfd07f1819e997b32891c8c6a11f7f6a5d1f7e3f92066",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 19.8943879,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "relations": [
+              "assertion:family-san-su"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-incidence",
+          "file": "edge-incidence-en.png",
+          "sha256": "d49aa268c9fdc9c25d05d9dff6c4c237f49e290b6928ab5b0e1c3caabca36038",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 25.309659700000005,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "relations": [
+              "assertion:family-san-su"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-xun",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-zhe",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "group:san-su",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "edge-matrix",
+          "file": "edge-matrix-en.png",
+          "sha256": "be383031f3ec7c4016d35f2ba3c310838bd621d27a80fd8c8c5860dafebf5b68",
+          "size": [
+            1920,
+            1260
+          ],
+          "capture_time_sec": 30.80825050000001,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": "三苏家族与文学群体",
+            "selected": [
+              {
+                "node": "group:san-su",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-xun",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-zhe",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "assertion": "assertion:family-san-su"
+              }
+            ],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 1022.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1231.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-matrix",
+          "file": "node-matrix-en.png",
+          "sha256": "c37e26da326d80ce1e00d05b68ec27fd5eb61397b1dc036f0ac268090dba2a09",
+          "size": [
+            1920,
+            1260
+          ],
+          "capture_time_sec": 36.3062059,
+          "state": {
+            "representation": "matrix",
+            "nodes": [],
+            "relations": [],
+            "matrixRows": 38,
+            "matrixColumns": 10,
+            "matrixCells": 49,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:wutai-poetry-case"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:changzhou-return-1101"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:literary-affiliations"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:new-policies-conflict"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:hangzhou-governance"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:imperial-exam-1057"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:danzhou-exile-1097"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huizhou-exile-1094"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huangzhou-creation"
+              },
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 1022.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1231.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-incidence",
+          "file": "node-incidence-en.png",
+          "sha256": "cb33a6677116d4dc68ea7a6da3e6866fa14104298078be1ac247542a252b2c74",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 41.82150600000001,
+          "state": {
+            "representation": "incidence",
+            "nodes": [
+              "person:su-shi"
+            ],
+            "relations": [
+              "assertion:family-san-su",
+              "assertion:imperial-exam-1057",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case",
+              "assertion:huangzhou-creation",
+              "assertion:hangzhou-governance",
+              "assertion:huizhou-exile-1094",
+              "assertion:danzhou-exile-1097",
+              "assertion:changzhou-return-1101",
+              "assertion:literary-affiliations"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:family-san-su"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:imperial-exam-1057"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:new-policies-conflict"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:wutai-poetry-case"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huangzhou-creation"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:hangzhou-governance"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:huizhou-exile-1094"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:danzhou-exile-1097"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:changzhou-return-1101"
+              },
+              {
+                "node": "person:su-shi",
+                "assertion": "assertion:literary-affiliations"
+              },
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 912.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1121.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "node-enclosure",
+          "file": "node-enclosure-en.png",
+          "sha256": "f073bcc91b367cde23649b14a74c0bf35c6d3dd75a730b36009c2ca0cb87947c",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 47.350077800000015,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": "苏轼",
+            "selected": [
+              {
+                "node": "person:su-shi"
+              }
+            ],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "hoverMuted": 0,
+            "hoverFill": [],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1494,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1526,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1492,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1525,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        },
+        {
+          "scene": "hover-enclosure",
+          "file": "hover-enclosure-en.png",
+          "sha256": "a1b2bf9deddf44244de449daa82fdd7b071d5d8a4999633944f6afe0720e6f33",
+          "size": [
+            1920,
+            1200
+          ],
+          "capture_time_sec": 53.752889200000006,
+          "state": {
+            "representation": "contour",
+            "nodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su",
+              "person:ouyang-xiu",
+              "person:zeng-gong",
+              "time:1057",
+              "person:wang-anshi",
+              "person:song-shenzong",
+              "policy:new-policies",
+              "time:1067",
+              "person:li-ding",
+              "person:shu-dan",
+              "person:wang-shen",
+              "place:yushitai-prison",
+              "time:1079",
+              "place:huangzhou",
+              "work:nian-nu-jiao",
+              "work:qian-chibi-fu",
+              "work:ding-feng-bo",
+              "person:foyin",
+              "time:1080-1082",
+              "place:hangzhou",
+              "place:west-lake",
+              "infrastructure:su-causeway",
+              "institution:anlefang",
+              "time:1089",
+              "place:huizhou",
+              "place:danzhou",
+              "place:changzhou",
+              "time:1094",
+              "time:1097",
+              "time:1101",
+              "person:huang-tingjian",
+              "person:xin-qiji",
+              "group:tang-song-eight",
+              "group:song-four",
+              "work:huangzhou-cold-food"
+            ],
+            "relations": [
+              "assertion:changzhou-return-1101",
+              "assertion:danzhou-exile-1097",
+              "assertion:family-san-su",
+              "assertion:hangzhou-governance",
+              "assertion:huangzhou-creation",
+              "assertion:huizhou-exile-1094",
+              "assertion:imperial-exam-1057",
+              "assertion:literary-affiliations",
+              "assertion:new-policies-conflict",
+              "assertion:wutai-poetry-case"
+            ],
+            "matrixRows": 0,
+            "matrixColumns": 0,
+            "matrixCells": 0,
+            "drawerTitle": null,
+            "selected": [],
+            "hoverNodes": [
+              "person:su-shi",
+              "person:su-xun",
+              "person:su-zhe",
+              "group:san-su"
+            ],
+            "hoverMuted": 70,
+            "hoverFill": [
+              {
+                "id": "assertion:family-san-su",
+                "fill": "color(srgb 0.983686 0.92251 0.950549)",
+                "opacity": "0.88"
+              }
+            ],
+            "bounds": {
+              "panel": {
+                "x": 32,
+                "y": 209.296875,
+                "width": 1788,
+                "height": 957.5,
+                "top": 209.296875,
+                "right": 1820,
+                "bottom": 1166.796875,
+                "left": 32
+              },
+              "canvas": {
+                "x": 33,
+                "y": 270.796875,
+                "width": 1786,
+                "height": 850,
+                "top": 270.796875,
+                "right": 1819,
+                "bottom": 1120.796875,
+                "left": 33
+              }
+            },
+            "graphOutsideViewport": false
+          }
+        }
+      ],
+      "segments": [
+        {
+          "id": "overview-enclosure",
+          "raw_start_sec": 14.504773100000007,
+          "raw_end_sec": 15.504773100000007,
+          "raw_settled_sec": 14.254773100000007,
+          "output_start_frame": 0,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "overview-matrix",
+          "raw_start_sec": 3.5795580000000045,
+          "raw_end_sec": 4.579558000000004,
+          "raw_settled_sec": 3.3295580000000045,
+          "output_start_frame": 24,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "edge-enclosure",
+          "raw_start_sec": 20.1443879,
+          "raw_end_sec": 21.1443879,
+          "raw_settled_sec": 19.8943879,
+          "output_start_frame": 48,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "edge-incidence",
+          "raw_start_sec": 25.559659700000005,
+          "raw_end_sec": 26.559659700000005,
+          "raw_settled_sec": 25.309659700000005,
+          "output_start_frame": 72,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "node-matrix",
+          "raw_start_sec": 36.5562059,
+          "raw_end_sec": 37.5562059,
+          "raw_settled_sec": 36.3062059,
+          "output_start_frame": 96,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "node-incidence",
+          "raw_start_sec": 42.07150600000001,
+          "raw_end_sec": 43.07150600000001,
+          "raw_settled_sec": 41.82150600000001,
+          "output_start_frame": 120,
+          "output_frames": 24,
+          "output_duration_sec": 1.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 1,
+          "filter_sha256": "1d9360a76e653913918527ccae450bdc8eec17dd066fbbf8b235da2d1503c78a"
+        },
+        {
+          "id": "hover-enclosure",
+          "raw_start_sec": 56.5528892,
+          "raw_end_sec": 57.5528892,
+          "raw_settled_sec": 53.752889200000006,
+          "output_start_frame": 144,
+          "output_frames": 48,
+          "output_duration_sec": 2.0,
+          "editorial_camera": {
+            "maximum_scale": 1.0,
+            "starts_after_sec": 0,
+            "duration_sec": 0
+          },
+          "fade_through_background_sec": 0,
+          "playback_rate": 0.5,
+          "filter_sha256": "71ec53a4e3134f18c610f4bc9033668cd6637a3c03936dca92f6f0617a1e4115"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "tour-en.mp4",
+          "sha256": "7cd2465540e31c7716252548dc1b214b4ef63d3e0e04e0567a0a5e9688a77780",
+          "bytes": 1710055,
+          "kind": "video",
+          "size": [
+            1920,
+            1280
+          ],
+          "fps": 24,
+          "frames": 192,
+          "duration_sec": 8.0,
+          "sample_aspect_ratio": "1:1",
+          "display_aspect_ratio": "3:2"
+        },
+        {
+          "file": "tour-en.gif",
+          "sha256": "3ebc9ffedab9e472b7d1ebec15a294885460d261df62cd7247eea478b0874d77",
+          "bytes": 1358851,
+          "kind": "gif",
+          "size": [
+            1200,
+            800
+          ],
+          "fps": 12,
+          "frames": 96,
+          "duration_sec": 8.0
+        }
+      ]
+    }
+  }
+}

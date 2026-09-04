@@ -84,7 +84,7 @@
   ],
   "offline": true,
   "output": "workbench.html",
-  "output_sha256": "d21386bed74fc0a586f053231c11aa74605a67ca8d114daf9538f62979a073af",
+  "output_sha256": "9bef260dbde2472bbc393779ca71b9f3f3ca499611314522d738c582077b487c",
   "validation": {
     "checks": 210,
     "errors": 0,

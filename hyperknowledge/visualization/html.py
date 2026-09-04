@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from hyperknowledge.bundle import read_bundle, validate_bundle
+from hyperknowledge.skill_manager import bundled_skill_path
 
 
 def _safe_script_json(value: Any) -> str:
@@ -80,6 +81,12 @@ def render_bundle_html(
     )
     html = (
         _HTML.replace("__BUNDLE_DATA__", payload)
+        .replace(
+            "__BRAND_ICON__",
+            (bundled_skill_path() / "assets" / "icon-small.svg")
+            .read_text(encoding="utf-8")
+            .strip(),
+        )
         .replace("__INITIAL_VIEW__", initial_view)
         .replace("__INITIAL_HYPER_MODE__", initial_hyper_mode)
         .replace("__PAIRWISE_BUTTON__", pairwise_button)
@@ -228,8 +235,8 @@ button{font:inherit}
 button:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 46%,transparent);outline-offset:2px}
 .app-shell{min-height:100vh;padding:18px clamp(14px,2.2vw,32px) 28px}
 .topbar{display:flex;align-items:center;gap:18px;padding:14px 16px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{width:38px;height:38px;display:grid;place-items:center;flex:0 0 auto;border:1px solid color-mix(in srgb,var(--primary) 36%,var(--border));border-radius:12px;background:linear-gradient(145deg,var(--primary-soft),var(--entity-soft));color:var(--primary)}
-.brand-mark svg{width:25px;height:25px}.brand-copy{min-width:0}.brand-copy h1{margin:0;font-size:16px;line-height:1.2;font-weight:650;letter-spacing:-.015em}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{width:38px;height:38px;display:grid;place-items:center;flex:0 0 auto;border:1px solid #dfe6e2;border-radius:12px;background:#f5f8f6}
+.brand-mark svg{width:30px;height:30px}.brand-copy{min-width:0}.brand-copy h1{margin:0;font-size:16px;line-height:1.2;font-weight:650;letter-spacing:-.015em}
 .header-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.segmented{display:flex;padding:3px;border:1px solid var(--border);border-radius:12px;background:var(--surface-soft)}
 .representation-button,.language-button,.icon-button{border:0;color:var(--muted);background:transparent;cursor:pointer;transition:color .16s ease,background .16s ease,transform .16s ease}.representation-button,.language-button{padding:7px 11px;border-radius:9px}.representation-button:hover,.language-button:hover,.icon-button:hover{color:var(--ink);background:var(--primary-soft)}.representation-button[aria-pressed="true"],.language-button[aria-pressed="true"]{color:var(--surface-strong);background:var(--primary);box-shadow:0 3px 11px rgba(27,35,47,.14)}
 .icon-button{min-width:34px;height:34px;padding:0 9px;border:1px solid var(--border);border-radius:10px;display:inline-grid;place-items:center}.icon-button:active,.representation-button:active,.language-button:active{transform:translateY(1px)}
@@ -265,7 +272,7 @@ button:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid color-mix(in
   <header class="topbar">
     <div class="brand">
       <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32"><path d="M6 8l10-4 10 4v11l-10 9-10-9z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16" cy="4" r="2.4" fill="currentColor"/><circle cx="6" cy="8" r="2.4" fill="currentColor"/><circle cx="26" cy="8" r="2.4" fill="currentColor"/><circle cx="6" cy="19" r="2.4" fill="currentColor"/><circle cx="26" cy="19" r="2.4" fill="currentColor"/><circle cx="16" cy="28" r="2.4" fill="currentColor"/><path d="M6 8l20 11M26 8L6 19M16 4v24" stroke="currentColor" stroke-width="1" opacity=".55"/></svg>
+        __BRAND_ICON__
       </div>
       <div class="brand-copy"><h1 id="app-title">Hyper-Knowledge Workbench</h1></div>
     </div>
