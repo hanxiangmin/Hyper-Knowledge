@@ -22,9 +22,8 @@ Paste this request directly into a local Codex chat. No terminal command or `cod
 
 ```text
 Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
-Follow the repository's manual installation steps to install the project runtime
-in a normal local Python virtual environment and the user-level Codex Skill. Do not use Docker.
-Verify with hk skill doctor --scope user --deep --json.
+Follow the repository instructions to install the runtime in a local Python
+virtual environment and add the user-level Codex Skill.
 If an existing installation has local changes, ask before overwriting them.
 ```
 
@@ -85,7 +84,7 @@ hyperedge with member roles. Deliver a validated bundle and an offline
 workbench, and identify relationships that lack source support.
 ```
 
-The Skill turns the request into an inspectable workflow; `hk` executes it. Start with the offline demo to check the installation and renderer before configuring a model. [Install and verify](guide/install.md)
+The Skill turns the request into an inspectable workflow; `hk` executes it. Explore the workbench with the offline demo before configuring a model. [Install the Skill](guide/install.md)
 
 ## Look first, then go deeper
 

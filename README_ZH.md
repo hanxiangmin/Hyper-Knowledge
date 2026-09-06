@@ -39,8 +39,7 @@
 
 ```text
 请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-按照仓库的手动安装步骤，在普通本地 Python 虚拟环境中安装项目运行时和用户级 Codex Skill；不要使用 Docker。
-完成后运行 hk skill doctor --scope user --deep --json 验证。
+请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。
 已有安装如有本地修改，请先询问再覆盖。
 ```
 
@@ -48,7 +47,7 @@
 
 ### 手动安装
 
-安装 Skill 不需要 Docker，也不需要服务器；只需要一个普通的本地 Python 3.11+ 虚拟环境。
+使用本地 Python 3.11+ 虚拟环境安装。
 托管安装器会把规范 Skill 复制到 Codex 的发现目录，同时生成一个绑定当前 Python 环境的运行入口：
 
 ```bash
@@ -59,15 +58,15 @@ python -m venv .venv
 # Windows PowerShell：.\.venv\Scripts\Activate.ps1
 python -m pip install -e .
 hk skill install --scope user --json
-hk skill doctor --scope user --deep --json
 ```
 
 如果只想安装到当前项目：
 
 ```bash
 hk skill install --scope project --project-root . --json
-hk skill doctor --scope project --project-root . --deep --json
 ```
+
+安装后即可使用。遇到启动问题时，可运行[可选的安装自检](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/#installation-check)。
 
 如果运行时已经安装，而且 `hk` 已在 `PATH` 中，也可以使用标准 Agent Skills CLI，只复制 Skill 指令包：
 

@@ -70,7 +70,7 @@ plugins:
           nav:
             - Overview: index.md
             - Use the Skill:
-                - Install and verify: guide/install.md
+                - Install the Skill: guide/install.md
                 - Your first document: guide/document.md
             - Model in context:
                 - Entities, events, and roles: guide/modeling.md
@@ -88,7 +88,7 @@ plugins:
           nav:
             - 概览: index.md
             - 使用 Skill:
-                - 安装与检查: guide/install.md
+                - 安装 Skill: guide/install.md
                 - 处理第一份文档: guide/document.md
             - 关系建模:
                 - 实体、事件与角色: guide/modeling.md

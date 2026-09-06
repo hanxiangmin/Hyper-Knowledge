@@ -39,9 +39,8 @@ Paste this request directly into a local Codex chat. No terminal command or `cod
 
 ```text
 Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
-Follow the repository's manual installation steps to install the project runtime
-in a normal local Python virtual environment and the user-level Codex Skill. Do not use Docker.
-Verify with hk skill doctor --scope user --deep --json.
+Follow the repository instructions to install the runtime in a local Python
+virtual environment and add the user-level Codex Skill.
 If an existing installation has local changes, ask before overwriting them.
 ```
 
@@ -49,7 +48,7 @@ Review and approve network and file-write requests when prompted. [Terminal or m
 
 ### Manual installation
 
-Installing the Skill does not require Docker or a server; a normal local Python 3.11+ virtual environment is enough.
+Use a local Python 3.11+ virtual environment.
 The managed installer copies the canonical Skill into Codex and creates a launcher pinned to the current Python environment:
 
 ```bash
@@ -60,15 +59,15 @@ python -m venv .venv
 # Windows PowerShell: .\.venv\Scripts\Activate.ps1
 python -m pip install -e .
 hk skill install --scope user --json
-hk skill doctor --scope user --deep --json
 ```
 
-For a project-local installation, replace the last two commands with:
+For a project-local installation, replace the last command with:
 
 ```bash
 hk skill install --scope project --project-root . --json
-hk skill doctor --scope project --project-root . --deep --json
 ```
+
+You can use the Skill after installation. If it fails to start, run the [optional installation check](https://hanxiangmin.github.io/Hyper-Knowledge/latest/guide/install/#installation-check).
 
 If the runtime is already installed and `hk` is on `PATH`, the standard Agent Skills CLI can copy only the instruction bundle:
 

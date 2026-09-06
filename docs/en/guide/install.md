@@ -1,6 +1,6 @@
-# Install and verify
+# Install the Skill
 
-There are two parts to the installation: a Python environment runs `hk`, and the Skill tells an agent when and how to use it. Copying `SKILL.md` alone does not install the runtime. Installing the Skill does not require Docker or a server.
+Hyper-Knowledge runs in a local Python environment. The steps below install its runtime and add the Skill to Codex.
 
 ## Install from Codex chat (recommended)
 
@@ -8,9 +8,8 @@ Paste this request directly into a local Codex chat. No terminal command or `cod
 
 ```text
 Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
-Follow the repository's manual installation steps to install the project runtime
-in a normal local Python virtual environment and the user-level Codex Skill. Do not use Docker.
-Verify with hk skill doctor --scope user --deep --json.
+Follow the repository instructions to install the runtime in a local Python
+virtual environment and add the user-level Codex Skill.
 If an existing installation has local changes, ask before overwriting them.
 ```
 
@@ -21,7 +20,7 @@ Review and approve network and file-write requests when prompted. If the install
 With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
 
 ```bash
-codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a normal local Python virtual environment and user-level Codex Skill, do not use Docker, then verify with hk skill doctor --scope user --deep --json. Ask before overwriting any existing local changes.'
+codex 'Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow the repository instructions to install the runtime in a local Python virtual environment and add the user-level Codex Skill. If an existing installation has local changes, ask before overwriting them.'
 ```
 
 This sends the same installation request from your terminal. Review and approve actions when prompted. [Official Codex CLI usage](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
@@ -52,20 +51,17 @@ Then install the runtime and user-level Skill:
 
 ```bash
 python -m pip install -e .
-hk --version
 hk skill install --scope user --json
-hk skill doctor --scope user --deep --json
 ```
 
-The managed installer creates a launcher bound to this Python environment. Keep the environment in place. If you replace or move it, reinstall the Skill and run doctor again.
+You can use the Skill after installation. Its launcher uses this Python environment, so keep the source directory and `.venv` in place. Reinstall the Skill if you change environments.
 
 ## Limit installation to one project
 
-Replace the final two commands above with:
+Replace the final command above with:
 
 ```bash
 hk skill install --scope project --project-root . --json
-hk skill doctor --scope project --project-root . --deep --json
 ```
 
 Project scope makes the selected runtime explicit for that project; user scope is convenient across personal projects. The managed integration currently targets Codex. Other Agent Skills clients need their own runtime-invocation check.
@@ -85,3 +81,13 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 ```
 
 Next: [process your own document](document.md), or follow the [troubleshooting sequence](faq.md).
+
+## Optional installation check { #installation-check }
+
+If the Skill fails to start, this command helps locate the problem. It checks the Skill files, Python path, and launcher, then tries graph generation with a built-in example.
+
+```bash
+hk skill doctor --scope user --deep --json
+```
+
+`doctor` diagnoses the installation. `--deep` adds a trial run, and `--json` makes the result easy for Codex to read. This check is optional and runs locally, without uploading documents or calling a model. For a project installation, use `--scope project --project-root .` instead.

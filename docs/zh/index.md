@@ -22,8 +22,7 @@ hide:
 
 ```text
 请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-按照仓库的手动安装步骤，在普通本地 Python 虚拟环境中安装项目运行时和用户级 Codex Skill；不要使用 Docker。
-完成后运行 hk skill doctor --scope user --deep --json 验证。
+请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。
 已有安装如有本地修改，请先询问再覆盖。
 ```
 
@@ -83,7 +82,7 @@ hide:
 输出可校验的 bundle 和离线工作台，列出缺少来源支持的关系。
 ```
 
-Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型配置也可以先运行离线演示，确认安装和渲染是否正常。[安装与检查](guide/install.md)
+Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型配置也可以先运行离线演示，体验图谱工作台。[安装 Skill](guide/install.md)
 
 ## 先看清，再深入
 

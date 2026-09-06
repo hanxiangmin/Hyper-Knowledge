@@ -1,6 +1,6 @@
-# 安装与检查
+# 安装 Skill
 
-安装分成两件事：Python 环境运行 `hk`，Skill 告诉智能体何时、怎样调用它。只复制 `SKILL.md` 不会自动安装运行时。安装 Skill 不需要 Docker，也不需要服务器。
+Hyper-Knowledge 在本地 Python 环境中运行。下面的安装方式会准备好运行程序，并把 Skill 加入 Codex。
 
 ## 在 Codex 聊天框安装（推荐）
 
@@ -8,8 +8,7 @@
 
 ```text
 请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-按照仓库的手动安装步骤，在普通本地 Python 虚拟环境中安装项目运行时和用户级 Codex Skill；不要使用 Docker。
-完成后运行 hk skill doctor --scope user --deep --json 验证。
+请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。
 已有安装如有本地修改，请先询问再覆盖。
 ```
 
@@ -20,7 +19,7 @@
 已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
 
 ```bash
-codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在普通本地 Python 虚拟环境中安装运行时和用户级 Codex Skill，不使用 Docker，最后运行 hk skill doctor --scope user --deep --json 验证。已有安装如有本地修改，请先询问再覆盖。'
+codex '请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。已有安装如有本地修改，请先询问再覆盖。'
 ```
 
 这是从终端发起同样的安装请求，执行时按提示确认操作。[Codex CLI 官方用法](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
@@ -51,20 +50,17 @@ source .venv/bin/activate
 
 ```bash
 python -m pip install -e .
-hk --version
 hk skill install --scope user --json
-hk skill doctor --scope user --deep --json
 ```
 
-托管安装会生成绑定该 Python 环境的启动器。安装后不要删除或随意移动 `.venv`；若更换环境，重新安装 Skill 并运行 doctor。
+安装后即可使用。Skill 的启动器会使用这个 Python 环境，请保留源码目录和 `.venv`；更换环境后重新安装 Skill。
 
 ## 只用于当前项目
 
-把上面的最后两条命令替换为：
+把上面的最后一条命令替换为：
 
 ```bash
 hk skill install --scope project --project-root . --json
-hk skill doctor --scope project --project-root . --deep --json
 ```
 
 项目级安装便于团队明确这个项目使用哪个运行环境，用户级安装适合个人跨项目使用。当前托管集成针对 Codex；其他支持 Agent Skills 的客户端需自行确认运行时调用方式。
@@ -84,3 +80,13 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 ```
 
 下一步：[处理自己的文档](document.md)。遇到问题先看[排查顺序](faq.md)。
+
+## 安装自检（可选） { #installation-check }
+
+如果 Skill 无法启动，可以运行以下命令定位问题。它检查 Skill 文件、Python 路径和启动器，并用内置示例试跑图谱生成。
+
+```bash
+hk skill doctor --scope user --deep --json
+```
+
+`doctor` 的意思是安装诊断。`--deep` 加上实际试跑，`--json` 让 Codex 方便读取结果。这不是安装前置条件；整个检查在本地完成，不上传文档，也不调用模型。项目级安装改用 `--scope project --project-root .`。
