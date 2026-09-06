@@ -33,11 +33,8 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install ruff
-        run: uv tool install ruff
-
       - name: Run ruff linter
-        run: ruff check hyperknowledge
+        run: uvx ruff check hyperknowledge
 
       - name: Run ruff formatter check
-        run: ruff format --check hyperknowledge
+        run: uvx ruff format --check hyperknowledge
