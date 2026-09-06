@@ -1,6 +1,6 @@
 # Install and verify
 
-There are two parts to the installation: a Python environment runs `hk`, and the Skill tells an agent when and how to use it. Copying `SKILL.md` alone does not install the runtime.
+There are two parts to the installation: a Python environment runs `hk`, and the Skill tells an agent when and how to use it. Copying `SKILL.md` alone does not install the runtime. Installing the Skill does not require Docker or a server.
 
 ## Install from Codex chat (recommended)
 
@@ -9,7 +9,7 @@ Paste this request directly into a local Codex chat. No terminal command or `cod
 ```text
 Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
 Follow the repository's manual installation steps to install the project runtime
-in a persistent Python environment and the user-level Codex Skill.
+in a normal local Python virtual environment and the user-level Codex Skill. Do not use Docker.
 Verify with hk skill doctor --scope user --deep --json.
 If an existing installation has local changes, ask before overwriting them.
 ```
@@ -21,7 +21,7 @@ Review and approve network and file-write requests when prompted. If the install
 With Codex CLI installed and signed in, run this from a directory where you want to keep the project (Bash / PowerShell):
 
 ```bash
-codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a persistent Python environment and user-level Codex Skill, then verify with hk skill doctor --scope user --deep --json. Ask before overwriting any existing local changes.'
+codex 'Install the complete hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge. Follow its manual setup steps for the runtime in a normal local Python virtual environment and user-level Codex Skill, do not use Docker, then verify with hk skill doctor --scope user --deep --json. Ask before overwriting any existing local changes.'
 ```
 
 This sends the same installation request from your terminal. Review and approve actions when prompted. [Official Codex CLI usage](https://learn.chatgpt.com/docs/developer-commands?surface=cli)

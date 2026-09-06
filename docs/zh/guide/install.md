@@ -1,6 +1,6 @@
 # 安装与检查
 
-安装分成两件事：Python 环境运行 `hk`，Skill 告诉智能体何时、怎样调用它。只复制 `SKILL.md` 不会自动安装运行时。
+安装分成两件事：Python 环境运行 `hk`，Skill 告诉智能体何时、怎样调用它。只复制 `SKILL.md` 不会自动安装运行时。安装 Skill 不需要 Docker，也不需要服务器。
 
 ## 在 Codex 聊天框安装（推荐）
 
@@ -8,7 +8,7 @@
 
 ```text
 请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-按照仓库的手动安装步骤，在长期保留的 Python 环境中安装项目运行时和用户级 Codex Skill。
+按照仓库的手动安装步骤，在普通本地 Python 虚拟环境中安装项目运行时和用户级 Codex Skill；不要使用 Docker。
 完成后运行 hk skill doctor --scope user --deep --json 验证。
 已有安装如有本地修改，请先询问再覆盖。
 ```
@@ -20,14 +20,14 @@
 已安装并登录 Codex CLI 后，在准备保存项目的目录中运行（Bash / PowerShell）：
 
 ```bash
-codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在持久 Python 环境中安装运行时和用户级 Codex Skill，最后运行 hk skill doctor --scope user --deep --json 验证。已有安装如有本地修改，请先询问再覆盖。'
+codex '从 https://github.com/hanxiangmin/Hyper-Knowledge 安装完整的 hyper-knowledge：按仓库的手动安装步骤在普通本地 Python 虚拟环境中安装运行时和用户级 Codex Skill，不使用 Docker，最后运行 hk skill doctor --scope user --deep --json 验证。已有安装如有本地修改，请先询问再覆盖。'
 ```
 
 这是从终端发起同样的安装请求，执行时按提示确认操作。[Codex CLI 官方用法](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
 
 ## 手动安装
 
-需要 Python 3.11 或更新版本。在准备长期保留的目录中执行：
+需要 Python 3.11 或更新版本。在准备保存源码的普通本地目录中执行：
 
 ```bash
 git clone https://github.com/hanxiangmin/Hyper-Knowledge.git

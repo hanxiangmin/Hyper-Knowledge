@@ -40,7 +40,7 @@ Paste this request directly into a local Codex chat. No terminal command or `cod
 ```text
 Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
 Follow the repository's manual installation steps to install the project runtime
-in a persistent Python environment and the user-level Codex Skill.
+in a normal local Python virtual environment and the user-level Codex Skill. Do not use Docker.
 Verify with hk skill doctor --scope user --deep --json.
 If an existing installation has local changes, ask before overwriting them.
 ```
@@ -49,6 +49,7 @@ Review and approve network and file-write requests when prompted. [Terminal or m
 
 ### Manual installation
 
+Installing the Skill does not require Docker or a server; a normal local Python 3.11+ virtual environment is enough.
 The managed installer copies the canonical Skill into Codex and creates a launcher pinned to the current Python environment:
 
 ```bash

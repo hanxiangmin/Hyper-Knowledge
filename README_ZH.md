@@ -39,7 +39,7 @@
 
 ```text
 请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-按照仓库的手动安装步骤，在长期保留的 Python 环境中安装项目运行时和用户级 Codex Skill。
+按照仓库的手动安装步骤，在普通本地 Python 虚拟环境中安装项目运行时和用户级 Codex Skill；不要使用 Docker。
 完成后运行 hk skill doctor --scope user --deep --json 验证。
 已有安装如有本地修改，请先询问再覆盖。
 ```
@@ -48,6 +48,7 @@
 
 ### 手动安装
 
+安装 Skill 不需要 Docker，也不需要服务器；只需要一个普通的本地 Python 3.11+ 虚拟环境。
 托管安装器会把规范 Skill 复制到 Codex 的发现目录，同时生成一个绑定当前 Python 环境的运行入口：
 
 ```bash
