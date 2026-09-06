@@ -31,9 +31,9 @@ hide:
 
 <figure class="hk-media" markdown>
 
-[![三种视图、点击聚焦与包络悬停的 GIF 动画导览](../assets/showcase-v2/tour-zh.gif)](../assets/showcase-v2/tour-zh.gif)
+[![三种视图、点击聚焦与包络悬停的 GIF 动画导览](../assets/showcase-v3/tour-zh.gif)](../assets/showcase-v3/tour-zh.gif)
 
-<figcaption>8 秒循环 GIF：总览 → 超边 → 节点 → 悬停。前六个画面各 1 秒，最后的悬停半速播放 2 秒；点击可查看原尺寸 GIF。</figcaption>
+<figcaption>8 秒循环 GIF：结构总览 → 关联矩阵 → 点击超边 → 点击节点 → 包络悬停。画面剪自真实本地浏览器录屏；点击可查看原尺寸 GIF。</figcaption>
 </figure>
 
 ## 从一个具体问题出发
@@ -90,19 +90,25 @@ Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型
 <div class="hk-gallery" markdown>
 <figure markdown>
 
-[![完整关联矩阵](../assets/showcase-v2/overview-matrix-zh.png)](../assets/showcase-v2/overview-matrix-zh.png)
+[![胶囊超边的整体结构总览](../assets/showcase-v3/overview-enclosure-zh.png)](../assets/showcase-v3/overview-enclosure-zh.png)
+
+<figcaption>用整体结构先看共享节点与超边分布。</figcaption>
+</figure>
+<figure markdown>
+
+[![完整关联矩阵](../assets/showcase-v3/overview-matrix-zh.png)](../assets/showcase-v3/overview-matrix-zh.png)
 
 <figcaption>用矩阵查归属，避开交叉连线。</figcaption>
 </figure>
 <figure markdown>
 
-[![选中的三苏家族与文学群体超边](../assets/showcase-v2/edge-incidence-zh.png)](../assets/showcase-v2/edge-incidence-zh.png)
+[![选中的三苏超边](../assets/showcase-v3/edge-incidence-zh.png)](../assets/showcase-v3/edge-incidence-zh.png)
 
 <figcaption>展开一条超边，看成员与角色。</figcaption>
 </figure>
 <figure markdown>
 
-[![悬停时突出显示的三苏包络](../assets/showcase-v2/hover-enclosure-zh.png)](../assets/showcase-v2/hover-enclosure-zh.png)
+[![悬停时突出显示的三苏包络](../assets/showcase-v3/hover-enclosure-zh.png)](../assets/showcase-v3/hover-enclosure-zh.png)
 
 <figcaption>当前关系着色，其余内容淡化。</figcaption>
 </figure>

@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <strong>关键词：</strong>高阶知识图谱 · 超图 · 超边 · 多元关系 · 知识抽取 · 证据追溯 · 大语言模型 · RAG · 语义检索 · Agent Skill
+  <strong>关键词：</strong>高阶知识图谱 · 高阶关联建模 · 超图 · 超边 · 多元关系 · 多方关系 · 超图可视化 · 知识抽取 · 证据追溯 · 图谱 RAG · 语义检索 · Agent Skill
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
   <img alt="离线工作台" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
 
-[![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v2/tour-zh.gif)](./docs/assets/showcase-v2/tour-zh.gif)
+[![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v3/tour-zh.gif)](./docs/assets/showcase-v3/tour-zh.gif)
 
 ## 安装完整 Agent Skill
 
@@ -78,34 +78,39 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 
 ## 实际效果
 
-8 秒看懂工作台：总览 → 一条超边 → 一个节点 → 悬停高亮。前六个画面各停留 1 秒，最后的悬停以半速播放 2 秒，剪自真实本地浏览器录屏；完整十个状态仍可在图集中逐一查看。
+8 秒看懂工作台：总览 → 一条超边 → 一个节点 → 悬停高亮。前六个画面各停留 1 秒，最后的悬停以半速播放 2 秒，剪自真实本地浏览器录屏；完整十个状态仍可在图集中逐一查看。点击超边后的高亮是新版的核心交互：整张图仍然保留，但当前关系、成员和角色会被推到前景，其余内容自然退后。
 
-[查看原尺寸 GIF](./docs/assets/showcase-v2/tour-zh.gif) · [英文 GIF](./docs/assets/showcase-v2/tour-en.gif) · [10 个状态的完整大图](./docs/zh/guide/workbench.md) · [录制与复现说明](./docs/assets/showcase-v2/README.md)
+[查看原尺寸 GIF](./docs/assets/showcase-v3/tour-zh.gif) · [英文 GIF](./docs/assets/showcase-v3/tour-en.gif) · [10 个状态的完整大图](./docs/zh/guide/workbench.md) · [录制与复现说明](./docs/assets/showcase-v3/README.md)
 
 <details>
-<summary>展开看三个交互特写</summary>
+<summary>展开看四个状态特写</summary>
 
-### 选中超边：三苏家族与文学群体
+### 整体结构：一张图看胶囊超边
 
-[![三苏超边的四个成员及其角色](./docs/assets/showcase-v2/edge-incidence-zh.png)](./docs/assets/showcase-v2/edge-incidence-zh.png)
+[![胶囊超边的整体结构总览](./docs/assets/showcase-v3/overview-enclosure-zh.png)](./docs/assets/showcase-v3/overview-enclosure-zh.png)
 
-### 选中节点：苏轼属于哪些超边
+### 选中超边：三苏
 
-[![苏轼节点与其所属的十条超边](./docs/assets/showcase-v2/node-incidence-zh.png)](./docs/assets/showcase-v2/node-incidence-zh.png)
+[![三苏超边的四个成员及其角色](./docs/assets/showcase-v3/edge-incidence-zh.png)](./docs/assets/showcase-v3/edge-incidence-zh.png)
+
+### 选中节点：苏轼属于 18 条超边
+
+[![苏轼节点与其所属的 18 条超边](./docs/assets/showcase-v3/node-incidence-zh.png)](./docs/assets/showcase-v3/node-incidence-zh.png)
 
 ### 悬停包络：突出当前关系
 
-[![当前包络浅色填充，其他内容淡化](./docs/assets/showcase-v2/hover-enclosure-zh.png)](./docs/assets/showcase-v2/hover-enclosure-zh.png)
+[![当前包络浅色填充，其他内容淡化](./docs/assets/showcase-v3/hover-enclosure-zh.png)](./docs/assets/showcase-v3/hover-enclosure-zh.png)
 
 </details>
 
-英文版使用英文界面与讲解；节点名、超边名保留[苏轼原文示例](./examples/sushi-document-test/README.md)中的中文表达。
+英文版使用英文界面与讲解；节点名、超边名保留[苏轼高阶关联展示案例](./examples/sushi-local-preview/README.md)中的中文表达。
 
 | 视图 | 阅读方式 |
 | --- | --- |
 | **关联矩阵** | 完整成员表；选中节点或超边后高亮对应位置，保留全局矩阵 |
-| **关联视图** | 查看一个节点所属的超边，或一条超边包含的成员 |
-| **包络视图** | 阅读共享的高阶结构；点击聚焦，悬停突出当前关系 |
+| **关联视图** | 查看一个节点所属的超边，或一条超边包含的成员与角色 |
+| **结构总览** | 用圆形实体、胶囊超边和淡化高亮阅读完整高阶结构 |
+| **逐条包络** | 一次阅读一条超边，适合慢慢核对成员与来源 |
 
 ## 为什么使用 Hyper-Knowledge？
 
@@ -220,7 +225,8 @@ hyper-knowledge/
 | --- | --- |
 | [`hyper-knowledge/`](./hyper-knowledge/) | 规范的标准 Agent Skill |
 | [`hyperknowledge/`](./hyperknowledge/) | Python 运行时、API、渲染器与 `hk` 命令行入口 |
-| [`examples/sushi-document-test/`](./examples/sushi-document-test/) | 可审计的来源、bundle、回执与离线工作台示例 |
+| [`examples/sushi-local-preview/`](./examples/sushi-local-preview/) | 当前苏轼展示案例、胶囊总览、截图素材与离线工作台 |
+| [`examples/sushi-document-test/`](./examples/sushi-document-test/) | 早期可审计的来源、bundle、回执与离线工作台示例 |
 | [`tests/`](./tests/) | 单元、契约、CLI、Skill 与渲染器测试 |
 | [`docs/`](./docs/) | 文档和发布素材 |
 
@@ -251,7 +257,7 @@ uv run hk skill doctor --scope project --project-root . --deep --json
 
 ## 致谢
 
-Hyper-Knowledge 借鉴并发展了 [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) 的部分设计思路，感谢其作者与贡献者提供的开源基础。
+Hyper-Knowledge 的部分思路受到开源项目 [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) 启发。本仓库独立定义高阶图谱模型、bundle 契约、Skill 流程和离线工作台。
 
 ## 许可证
 

@@ -32,9 +32,9 @@ Review and approve network and file-write requests when prompted. [Terminal or m
 
 <figure class="hk-media" markdown>
 
-[![Animated GIF tour: three views, selection, and enclosure hover](../assets/showcase-v2/tour-en.gif)](../assets/showcase-v2/tour-en.gif)
+[![Animated GIF tour: three views, selection, and enclosure hover](../assets/showcase-v3/tour-en.gif)](../assets/showcase-v3/tour-en.gif)
 
-<figcaption>Eight-second looping GIF: overview → hyperedge → node → hover. The first six scenes last one second each; the final hover plays at half speed for two seconds. Click to open the full-size GIF.</figcaption>
+<figcaption>Eight-second looping GIF: structure overview → matrix → selected hyperedge → selected node → enclosure hover. It is cut from a real local-browser recording; click to open the full-size GIF.</figcaption>
 </figure>
 
 ## Start with a concrete question
@@ -92,19 +92,25 @@ The Skill turns the request into an inspectable workflow; `hk` executes it. Star
 <div class="hk-gallery" markdown>
 <figure markdown>
 
-[![The full incidence matrix](../assets/showcase-v2/overview-matrix-en.png)](../assets/showcase-v2/overview-matrix-en.png)
+[![Whole-graph structure overview with capsule hyperedges](../assets/showcase-v3/overview-enclosure-en.png)](../assets/showcase-v3/overview-enclosure-en.png)
+
+<figcaption>Start from the full structure to see shared nodes and hyperedge distribution.</figcaption>
+</figure>
+<figure markdown>
+
+[![The full incidence matrix](../assets/showcase-v3/overview-matrix-en.png)](../assets/showcase-v3/overview-matrix-en.png)
 
 <figcaption>Map memberships without crossing lines.</figcaption>
 </figure>
 <figure markdown>
 
-[![The selected San Su family hyperedge](../assets/showcase-v2/edge-incidence-en.png)](../assets/showcase-v2/edge-incidence-en.png)
+[![The selected San Su hyperedge](../assets/showcase-v3/edge-incidence-en.png)](../assets/showcase-v3/edge-incidence-en.png)
 
 <figcaption>Expand one hyperedge into members and roles.</figcaption>
 </figure>
 <figure markdown>
 
-[![The highlighted family enclosure on hover](../assets/showcase-v2/hover-enclosure-en.png)](../assets/showcase-v2/hover-enclosure-en.png)
+[![The highlighted family enclosure on hover](../assets/showcase-v3/hover-enclosure-en.png)](../assets/showcase-v3/hover-enclosure-en.png)
 
 <figcaption>Trace a relationship while the rest fades.</figcaption>
 </figure>

@@ -1,0 +1,60 @@
+{
+  "build": {
+    "deterministic": true,
+    "original_example": "../sushi-document-test",
+    "script": "build_preview.py",
+    "script_sha256": "7cfbadc9a93844e32d470b9fcecd01865fc55463e52283332d104802d019b783"
+  },
+  "bundle_id": "bundle_sushi_local_preview_v1",
+  "counts": {
+    "assertions": 18,
+    "assertions_with_evidence": 18,
+    "members": 65,
+    "nodes": 39,
+    "unresolved_members": 0
+  },
+  "language": "zh",
+  "limitations": [
+    "This is a source-grounded role-aware showcase bundle for demonstrating higher-order relation modeling.",
+    "The source is a user-provided secondary biography. Claims are not independently historically fact-checked.",
+    "Relations are explicitly declared knowledge-pack editorial candidates, not an extraction run or human-confirmed facts; literal spans prove source presence, not historical truth.",
+    "The 1067 member is an accession background year, not an exact date of every new-policy disagreement.",
+    "The Huangzhou creation period and Anlefang founding have no invented exact endpoint/year.",
+    "Two-member assertions remain hyperedges in this role-aware bundle, without a separate pairwise view; no third member is invented and unrelated assertions are not merged."
+  ],
+  "modeling": {
+    "hyperedges": 18,
+    "native_pairwise": 0,
+    "no_composite_stage_nodes": true,
+    "shared_nodes": {
+      "person:su-shi": 18,
+      "person:su-xun": 2,
+      "person:su-zhe": 4,
+      "place:hangzhou": 3,
+      "place:huangzhou": 3,
+      "policy:new-policies": 2
+    }
+  },
+  "presentation": {
+    "contour_layout": "single_hyperedge",
+    "overview_layout": "radial_hypergraph"
+  },
+  "schema_version": "hk.bundle/v1",
+  "source_data_sha256": "65869e3042b4a3b7a83695f1a053f8a2d99a09d031167770d4636e433442c0ed",
+  "source_ka": null,
+  "sources": [
+    {
+      "path": "source/sushi.md",
+      "sha256": "65869e3042b4a3b7a83695f1a053f8a2d99a09d031167770d4636e433442c0ed",
+      "size_bytes": 7053
+    }
+  ],
+  "table_sha256": {
+    "assertions.jsonl": "2755aceec87fd5d5a6d2bb8964ee3f6d9596e9e892fd0e7193b572db0f0fd04e",
+    "evidence.jsonl": "9c400fdd9260e13b046dc4070a84656db0cfdf43988fcc40f52c0b03d600bd31",
+    "members.jsonl": "d8aab54a60d041a91e1d85c5f7b5153edf324a1a154c69188efea03afb1d52e7",
+    "nodes.jsonl": "ca15b7da4ea32fe2205d9ea65ad2d3e3e45c5605d4893429921c4c658cbb675b"
+  },
+  "template": "editorial/biography-role-aware-local-preview-v1",
+  "topology_type": "hypergraph"
+}

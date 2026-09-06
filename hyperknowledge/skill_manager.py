@@ -54,6 +54,20 @@ def _managed_files(skill_dir: Path) -> dict[str, str]:
     }
 
 
+def _skill_content(files: dict[str, str]) -> dict[str, str]:
+    """Separate shipped instructions/assets from machine-specific launchers."""
+    return {
+        name: digest
+        for name, digest in files.items()
+        if name != RUNTIME_MANIFEST and not name.startswith("runtime/")
+    }
+
+
+def _content_digest(files: dict[str, str]) -> str:
+    serialized = json.dumps(files, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
 def _write_runtime(skill_dir: Path) -> dict[str, object]:
     runtime_dir = skill_dir / "runtime"
     runtime_dir.mkdir(parents=True, exist_ok=True)
@@ -214,8 +228,27 @@ def inspect_installation(target: Path) -> dict[str, object]:
         if actual[relative_path] != expected[relative_path]:
             issues.append(f"modified file: {relative_path}")
 
+    locally_modified = bool(issues)
     installed_version = manifest.get("package_version")
     current_version = _package_version()
+    # Older v1 manifests have no separate content snapshot. Their original
+    # managed-file hashes still let us distinguish an outdated installation
+    # from local edits, without trusting the package version alone.
+    installed_content = manifest.get("bundled_files")
+    if not isinstance(installed_content, dict):
+        installed_content = _skill_content(expected)
+    current_content = _skill_content(_managed_files(bundled_skill_path()))
+    changed_content = sorted(
+        name
+        for name in set(installed_content) | set(current_content)
+        if installed_content.get(name) != current_content.get(name)
+    )
+    update_available = bool(changed_content) or installed_version != current_version
+    if changed_content:
+        issues.append(
+            f"bundled skill content is newer or different ({len(changed_content)} files); "
+            "run hk skill install to update"
+        )
     if installed_version != current_version:
         issues.append(
             f"version mismatch: installed={installed_version}, package={current_version}"
@@ -223,10 +256,19 @@ def inspect_installation(target: Path) -> dict[str, object]:
 
     return {
         "ok": not issues,
-        "status": "healthy" if not issues else "drifted",
+        "status": "drifted"
+        if locally_modified
+        else "outdated"
+        if issues
+        else "healthy",
         "path": str(target),
         "package_version": current_version,
         "installed_version": installed_version,
+        "locally_modified": locally_modified,
+        "update_available": update_available,
+        "changed_bundled_files": changed_content,
+        "installed_content_sha256": _content_digest(installed_content),
+        "bundled_content_sha256": _content_digest(current_content),
         "issues": issues,
     }
 
@@ -269,6 +311,7 @@ def install_skill(
             "installed_at": datetime.now(UTC).isoformat(),
             "scope": scope,
             "runtime": runtime,
+            "bundled_files": _skill_content(_managed_files(source)),
             "files": _managed_files(staged),
         }
         (staged / OWNERSHIP_MANIFEST).write_text(

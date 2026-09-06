@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <strong>Keywords:</strong> higher-order knowledge graph · hypergraph · hyperedge · n-ary relations · knowledge extraction · provenance · LLM · RAG · semantic search · Agent Skill
+  <strong>Keywords:</strong> higher-order knowledge graph · higher-order relation modeling · hypergraph · hyperedge · n-ary relations · multi-way relation · hypergraph visualization · knowledge extraction · provenance · graph RAG · semantic search · Agent Skill
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
   <img alt="Offline workbench" src="https://img.shields.io/badge/workbench-offline-f59e0b.svg">
 </p>
 
-[![Animated GIF tour: overview, hyperedge, node, and enclosure hover](./docs/assets/showcase-v2/tour-en.gif)](./docs/assets/showcase-v2/tour-en.gif)
+[![Animated GIF tour: overview, hyperedge, node, and enclosure hover](./docs/assets/showcase-v3/tour-en.gif)](./docs/assets/showcase-v3/tour-en.gif)
 
 ## Install the complete Agent Skill
 
@@ -79,34 +79,39 @@ The Skill-only command does **not** install the Python runtime. Codex is the ver
 
 ## See it in action
 
-An eight-second tour: overview → one hyperedge → one node → hover highlight. The first six scenes last one second each; the final hover plays at half speed for two seconds. Cut from real local-browser recordings, with all ten captured states retained in the full screenshot gallery.
+An eight-second tour: overview → one hyperedge → one node → hover highlight. The first six scenes last one second each; the final hover plays at half speed for two seconds. Cut from real local-browser recordings, with all ten captured states retained in the full screenshot gallery. The highlighted hyperedge scene shows the design goal directly: keep the whole structure visible, but bring the selected relationship, its members, and their roles to the front.
 
-[Open full-size GIF](./docs/assets/showcase-v2/tour-en.gif) · [Chinese GIF](./docs/assets/showcase-v2/tour-zh.gif) · [All 10 states, full size](./docs/en/guide/workbench.md) · [Capture and reproduction notes](./docs/assets/showcase-v2/README.md)
+[Open full-size GIF](./docs/assets/showcase-v3/tour-en.gif) · [Chinese GIF](./docs/assets/showcase-v3/tour-zh.gif) · [All 10 states, full size](./docs/en/guide/workbench.md) · [Capture and reproduction notes](./docs/assets/showcase-v3/README.md)
 
 <details>
-<summary>Three interactions worth a closer look</summary>
+<summary>Four states worth a closer look</summary>
 
-### One hyperedge: the San Su family
+### Whole structure: capsule hyperedges in one map
 
-[![Selected family hyperedge with four members and their roles](./docs/assets/showcase-v2/edge-incidence-en.png)](./docs/assets/showcase-v2/edge-incidence-en.png)
+[![Whole-graph structure overview with capsule hyperedges](./docs/assets/showcase-v3/overview-enclosure-en.png)](./docs/assets/showcase-v3/overview-enclosure-en.png)
 
-### One node: Su Shi and his incident hyperedges
+### One hyperedge: San Su
 
-[![Selected Su Shi node and its ten incident hyperedges](./docs/assets/showcase-v2/node-incidence-en.png)](./docs/assets/showcase-v2/node-incidence-en.png)
+[![Selected San Su hyperedge with four members and their roles](./docs/assets/showcase-v3/edge-incidence-en.png)](./docs/assets/showcase-v3/edge-incidence-en.png)
+
+### One node: Su Shi and his 18 incident hyperedges
+
+[![Selected Su Shi node and its 18 incident hyperedges](./docs/assets/showcase-v3/node-incidence-en.png)](./docs/assets/showcase-v3/node-incidence-en.png)
 
 ### One hover: read an enclosure in context
 
-[![A hovered enclosure is lightly filled while unrelated content fades](./docs/assets/showcase-v2/hover-enclosure-en.png)](./docs/assets/showcase-v2/hover-enclosure-en.png)
+[![A hovered enclosure is lightly filled while unrelated content fades](./docs/assets/showcase-v3/hover-enclosure-en.png)](./docs/assets/showcase-v3/hover-enclosure-en.png)
 
 </details>
 
-The English tour uses English controls and captions. Node and relation names retain the Chinese wording of the [Su Shi source document](./examples/sushi-document-test/README.md).
+The English tour uses English controls and captions. Node and relation names retain the Chinese wording of the [role-aware Su Shi showcase](./examples/sushi-local-preview/README.md).
 
 | View | Read it as |
 | --- | --- |
 | **Incidence matrix** | The full membership table; selecting a node or hyperedge highlights it without replacing the overview |
-| **Incidence view** | One node and its incident hyperedges, or one hyperedge and its members |
-| **Enclosure view** | Shared higher-order structure; click to focus, hover to isolate a relationship visually |
+| **Incidence view** | One node and its incident hyperedges, or one hyperedge and its members with roles |
+| **Structure overview** | A clean whole-graph map with circular entities, capsule hyperedges, and selection-aware fading |
+| **Enclosure reader** | A one-hyperedge-at-a-time reader for slower inspection of members and source details |
 
 ## Why Hyper-Knowledge?
 
@@ -222,7 +227,8 @@ hyper-knowledge/
 | --- | --- |
 | [`hyper-knowledge/`](./hyper-knowledge/) | Canonical standard Agent Skill |
 | [`hyperknowledge/`](./hyperknowledge/) | Python runtime, API, renderer, and `hk` CLI |
-| [`examples/sushi-document-test/`](./examples/sushi-document-test/) | Auditable source, bundle, receipts, and offline workbench |
+| [`examples/sushi-local-preview/`](./examples/sushi-local-preview/) | Current Su Shi showcase bundle, capsule overview, screenshots, and workbench |
+| [`examples/sushi-document-test/`](./examples/sushi-document-test/) | Earlier auditable source, bundle, receipts, and offline workbench |
 | [`tests/`](./tests/) | Unit, contract, CLI, Skill, and renderer tests |
 | [`docs/`](./docs/) | Documentation and release assets |
 
@@ -253,7 +259,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SECURITY.md), [CHANGEL
 
 ## Acknowledgements
 
-Hyper-Knowledge was inspired by and builds on ideas from [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract). We thank its authors and contributors for the open-source foundation.
+Hyper-Knowledge took inspiration from the open-source [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) project. This repository defines its own higher-order graph model, bundle contract, Skill workflow, and offline workbench.
 
 ## License
 

@@ -29,4 +29,6 @@ Before delivery, run:
 hk bundle validate BUNDLE --quality standard|showcase --json
 ```
 
-The receipt checks required files, schema version, unique identifiers, member and evidence references, topology arity, declared counts, and SHA-256 for every table. `standard` preserves unresolved members as warnings for audit workflows; `showcase` treats them as blocking errors.
+The receipt checks required files, schema version, nonempty unique identifiers, member and evidence references, distinct-node topology arity, declared counts, and SHA-256 for every table. Member roles must be nonempty strings, and ordinals must be nonnegative integers unique within a relation. Duplicate entity-role memberships fail; one entity may legitimately hold several different roles. `standard` preserves unresolved members as warnings; `showcase` treats them as blocking errors.
+
+Enriched Knowledge Abstract evidence records and explicit epistemic status survive export. For registered UTF-8 source files within the bundle's local project, validation also checks source hashes, one-based inclusive line spans, and literal quotes. A paraphrase belongs in `summary`, not `quote`. Quote mismatches are warnings in `standard` and errors in `showcase`. Unavailable or external sources produce availability warnings and are not read or downloaded. Source coverage means references exist, not that the underlying claim is independently true.

@@ -27,8 +27,15 @@ def _extractor(field_or_template: str) -> Callable[[Any], str]:
             missing = [f for f in fields if not hasattr(item, f)]
             if missing:
                 raise AttributeError(f"Missing fields: {missing}")
-            values = [getattr(item, f, None) for f in fields]
-            return field_or_template.format(**dict(zip(fields, values)))
+            values = {}
+            for field in fields:
+                value = getattr(item, field, None)
+                if isinstance(value, (list, tuple, set)):
+                    value = sorted(
+                        str(member) for member in value if member is not None
+                    )
+                values[field] = "" if value is None else value
+            return field_or_template.format(**values)
 
         return extractor
 
@@ -49,20 +56,40 @@ def _members_extractor(
     Hypergraph: 'members' -> lambda x: tuple(sorted(x.members)) or
                 'members' -> lambda x: tuple(sorted(x.m) for m in x.members)
     """
-    # Handle Graph
-    if isinstance(members, dict):
-        source_field = members.get("source")
-        target_field = members.get("target")
-        if not source_field or not target_field:
-            raise ValueError("relation_members must map source/target for a graph")
 
-        def extractor(item: Any) -> tuple[str, str]:
+    def values(item: Any, field: str) -> list[str]:
+        value = getattr(item, field, None)
+        if value is None:
+            return []
+        if isinstance(value, str):
+            return [value] if value.strip() else []
+        if not isinstance(value, (list, tuple, set)):
+            raise ValueError(
+                "Member fields must contain a node id or a list of node ids"
+            )
+        return [str(node) for node in value if node is not None and str(node).strip()]
+
+    # A source/target-only map remains the undirected pairwise convention.
+    # Other maps are role-aware hyperedges; do not drop their additional roles.
+    if isinstance(members, dict):
+        if set(members) == {"source", "target"}:
+
+            def extractor(item: Any) -> tuple[str, str]:
+                return tuple(
+                    sorted(
+                        (
+                            str(getattr(item, members["source"])),
+                            str(getattr(item, members["target"])),
+                        )
+                    )
+                )
+
+            return extractor
+
+        def extractor(item: Any) -> tuple[str, ...]:
             return tuple(
                 sorted(
-                    (
-                        str(getattr(item, source_field)),
-                        str(getattr(item, target_field)),
-                    )
+                    [node for field in members.values() for node in values(item, field)]
                 )
             )
 
@@ -72,25 +99,14 @@ def _members_extractor(
     if isinstance(members, str):
 
         def extractor(item: Any) -> tuple[str, ...]:
-            value = getattr(item, members)
-            if value is None:
-                return ()
-            if isinstance(value, str):
-                return (value,)
-            return tuple(sorted(str(member) for member in value if member is not None))
+            return tuple(sorted(values(item, members)))
 
         return extractor
 
     def extractor(item: Any) -> tuple[str, ...]:
         result: list[str] = []
         for field_name in members:
-            value = getattr(item, field_name)
-            if value is None:
-                continue
-            if isinstance(value, str):
-                result.append(value)
-            else:
-                result.extend(str(member) for member in value if member is not None)
+            result.extend(values(item, field_name))
         return tuple(sorted(result))
 
     return extractor

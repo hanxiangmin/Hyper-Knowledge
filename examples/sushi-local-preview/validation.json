@@ -1,0 +1,4401 @@
+{
+  "bundle": "examples/sushi-local-preview/bundle",
+  "bundle_id": "bundle_sushi_local_preview_v1",
+  "checks": [
+    {
+      "code": "bundle.required_file",
+      "evidence": "present",
+      "passed": true,
+      "subject": "manifest.json"
+    },
+    {
+      "code": "bundle.required_file",
+      "evidence": "present",
+      "passed": true,
+      "subject": "nodes.jsonl"
+    },
+    {
+      "code": "bundle.required_file",
+      "evidence": "present",
+      "passed": true,
+      "subject": "assertions.jsonl"
+    },
+    {
+      "code": "bundle.required_file",
+      "evidence": "present",
+      "passed": true,
+      "subject": "members.jsonl"
+    },
+    {
+      "code": "bundle.required_file",
+      "evidence": "present",
+      "passed": true,
+      "subject": "evidence.jsonl"
+    },
+    {
+      "code": "bundle.schema",
+      "evidence": "schema_version=hk.bundle/v1",
+      "passed": true,
+      "subject": "manifest.json"
+    },
+    {
+      "code": "bundle.evidence_ids",
+      "evidence": "21 unique ids across 21 rows",
+      "passed": true,
+      "subject": "evidence.jsonl"
+    },
+    {
+      "code": "bundle.node_ids",
+      "evidence": "39 unique ids across 39 rows",
+      "passed": true,
+      "subject": "nodes.jsonl"
+    },
+    {
+      "code": "bundle.assertion_ids",
+      "evidence": "18 unique ids across 18 rows",
+      "passed": true,
+      "subject": "assertions.jsonl"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:anlefang-founding-hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:1"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:1"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:1"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='创立者'",
+      "passed": true,
+      "subject": "members.jsonl:1"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:1"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:anlefang-founding-hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:2"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:2"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:2"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='设立地点'",
+      "passed": true,
+      "subject": "members.jsonl:2"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:2"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:anlefang-founding-hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:3"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=institution:anlefang",
+      "passed": true,
+      "subject": "members.jsonl:3"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:3"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='创立机构'",
+      "passed": true,
+      "subject": "members.jsonl:3"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:3"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:changzhou-return-1101",
+      "passed": true,
+      "subject": "members.jsonl:4"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:4"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:4"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='北归者'",
+      "passed": true,
+      "subject": "members.jsonl:4"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:4"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:changzhou-return-1101",
+      "passed": true,
+      "subject": "members.jsonl:5"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1101",
+      "passed": true,
+      "subject": "members.jsonl:5"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:5"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='北归年份'",
+      "passed": true,
+      "subject": "members.jsonl:5"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:5"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:changzhou-return-1101",
+      "passed": true,
+      "subject": "members.jsonl:6"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:changzhou",
+      "passed": true,
+      "subject": "members.jsonl:6"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:6"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='到达地点'",
+      "passed": true,
+      "subject": "members.jsonl:6"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:6"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:cold-food-calligraphy-authorship",
+      "passed": true,
+      "subject": "members.jsonl:7"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:7"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:7"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作者'",
+      "passed": true,
+      "subject": "members.jsonl:7"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:7"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:cold-food-calligraphy-authorship",
+      "passed": true,
+      "subject": "members.jsonl:8"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=work:huangzhou-cold-food",
+      "passed": true,
+      "subject": "members.jsonl:8"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:8"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='书法作品'",
+      "passed": true,
+      "subject": "members.jsonl:8"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:8"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:danzhou-exile-1097",
+      "passed": true,
+      "subject": "members.jsonl:9"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:9"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:9"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='被贬者'",
+      "passed": true,
+      "subject": "members.jsonl:9"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:9"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:danzhou-exile-1097",
+      "passed": true,
+      "subject": "members.jsonl:10"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1097",
+      "passed": true,
+      "subject": "members.jsonl:10"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:10"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='贬谪年份'",
+      "passed": true,
+      "subject": "members.jsonl:10"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:10"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:danzhou-exile-1097",
+      "passed": true,
+      "subject": "members.jsonl:11"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:danzhou",
+      "passed": true,
+      "subject": "members.jsonl:11"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:11"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='贬谪地点'",
+      "passed": true,
+      "subject": "members.jsonl:11"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:11"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:family-san-su",
+      "passed": true,
+      "subject": "members.jsonl:12"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:12"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:12"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='核心人物'",
+      "passed": true,
+      "subject": "members.jsonl:12"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:12"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:family-san-su",
+      "passed": true,
+      "subject": "members.jsonl:13"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-xun",
+      "passed": true,
+      "subject": "members.jsonl:13"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:13"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='父亲'",
+      "passed": true,
+      "subject": "members.jsonl:13"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:13"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:family-san-su",
+      "passed": true,
+      "subject": "members.jsonl:14"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-zhe",
+      "passed": true,
+      "subject": "members.jsonl:14"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:14"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='弟弟'",
+      "passed": true,
+      "subject": "members.jsonl:14"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:14"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:family-san-su",
+      "passed": true,
+      "subject": "members.jsonl:15"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=group:san-su",
+      "passed": true,
+      "subject": "members.jsonl:15"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:15"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='群体称谓'",
+      "passed": true,
+      "subject": "members.jsonl:15"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:15"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:hangzhou-appointment-1071",
+      "passed": true,
+      "subject": "members.jsonl:16"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:16"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:16"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='任职者'",
+      "passed": true,
+      "subject": "members.jsonl:16"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:16"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:hangzhou-appointment-1071",
+      "passed": true,
+      "subject": "members.jsonl:17"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1071",
+      "passed": true,
+      "subject": "members.jsonl:17"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:17"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='任职年份'",
+      "passed": true,
+      "subject": "members.jsonl:17"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:17"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:hangzhou-appointment-1071",
+      "passed": true,
+      "subject": "members.jsonl:18"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:18"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:18"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='任职地点'",
+      "passed": true,
+      "subject": "members.jsonl:18"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:18"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-arrival-1080",
+      "passed": true,
+      "subject": "members.jsonl:19"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:19"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:19"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='到达者'",
+      "passed": true,
+      "subject": "members.jsonl:19"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:19"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-arrival-1080",
+      "passed": true,
+      "subject": "members.jsonl:20"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1080",
+      "passed": true,
+      "subject": "members.jsonl:20"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:20"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='到达年份'",
+      "passed": true,
+      "subject": "members.jsonl:20"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:20"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-arrival-1080",
+      "passed": true,
+      "subject": "members.jsonl:21"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:huangzhou",
+      "passed": true,
+      "subject": "members.jsonl:21"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:21"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='到达地点'",
+      "passed": true,
+      "subject": "members.jsonl:21"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:21"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-foyin-friendship",
+      "passed": true,
+      "subject": "members.jsonl:22"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:22"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:22"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='友人'",
+      "passed": true,
+      "subject": "members.jsonl:22"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:22"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-foyin-friendship",
+      "passed": true,
+      "subject": "members.jsonl:23"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:foyin",
+      "passed": true,
+      "subject": "members.jsonl:23"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:23"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='友人'",
+      "passed": true,
+      "subject": "members.jsonl:23"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:23"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-foyin-friendship",
+      "passed": true,
+      "subject": "members.jsonl:24"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:huangzhou",
+      "passed": true,
+      "subject": "members.jsonl:24"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:24"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='交游地点'",
+      "passed": true,
+      "subject": "members.jsonl:24"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:24"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-literary-works",
+      "passed": true,
+      "subject": "members.jsonl:25"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:25"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:25"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='创作者'",
+      "passed": true,
+      "subject": "members.jsonl:25"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:25"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-literary-works",
+      "passed": true,
+      "subject": "members.jsonl:26"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:huangzhou",
+      "passed": true,
+      "subject": "members.jsonl:26"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:26"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='创作地点'",
+      "passed": true,
+      "subject": "members.jsonl:26"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:26"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-literary-works",
+      "passed": true,
+      "subject": "members.jsonl:27"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=work:nian-nu-jiao",
+      "passed": true,
+      "subject": "members.jsonl:27"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:27"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作品'",
+      "passed": true,
+      "subject": "members.jsonl:27"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:27"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-literary-works",
+      "passed": true,
+      "subject": "members.jsonl:28"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=work:qian-chibi-fu",
+      "passed": true,
+      "subject": "members.jsonl:28"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:28"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作品'",
+      "passed": true,
+      "subject": "members.jsonl:28"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:28"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huangzhou-literary-works",
+      "passed": true,
+      "subject": "members.jsonl:29"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=work:ding-feng-bo",
+      "passed": true,
+      "subject": "members.jsonl:29"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:29"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作品'",
+      "passed": true,
+      "subject": "members.jsonl:29"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=4",
+      "passed": true,
+      "subject": "members.jsonl:29"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huizhou-exile-1094",
+      "passed": true,
+      "subject": "members.jsonl:30"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:30"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:30"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='被贬者'",
+      "passed": true,
+      "subject": "members.jsonl:30"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:30"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huizhou-exile-1094",
+      "passed": true,
+      "subject": "members.jsonl:31"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1094",
+      "passed": true,
+      "subject": "members.jsonl:31"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:31"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='贬谪年份'",
+      "passed": true,
+      "subject": "members.jsonl:31"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:31"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:huizhou-exile-1094",
+      "passed": true,
+      "subject": "members.jsonl:32"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:huizhou",
+      "passed": true,
+      "subject": "members.jsonl:32"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:32"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='贬谪地点'",
+      "passed": true,
+      "subject": "members.jsonl:32"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:32"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:imperial-exam-1057",
+      "passed": true,
+      "subject": "members.jsonl:33"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:33"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:33"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='考生'",
+      "passed": true,
+      "subject": "members.jsonl:33"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:33"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:imperial-exam-1057",
+      "passed": true,
+      "subject": "members.jsonl:34"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-zhe",
+      "passed": true,
+      "subject": "members.jsonl:34"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:34"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='同科考生'",
+      "passed": true,
+      "subject": "members.jsonl:34"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:34"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:imperial-exam-1057",
+      "passed": true,
+      "subject": "members.jsonl:35"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:ouyang-xiu",
+      "passed": true,
+      "subject": "members.jsonl:35"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:35"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='主考官'",
+      "passed": true,
+      "subject": "members.jsonl:35"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:35"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:imperial-exam-1057",
+      "passed": true,
+      "subject": "members.jsonl:36"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:zeng-gong",
+      "passed": true,
+      "subject": "members.jsonl:36"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:36"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='被误认作者'",
+      "passed": true,
+      "subject": "members.jsonl:36"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:36"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:imperial-exam-1057",
+      "passed": true,
+      "subject": "members.jsonl:37"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1057",
+      "passed": true,
+      "subject": "members.jsonl:37"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:37"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='考试年份'",
+      "passed": true,
+      "subject": "members.jsonl:37"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=4",
+      "passed": true,
+      "subject": "members.jsonl:37"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:new-policies-conflict",
+      "passed": true,
+      "subject": "members.jsonl:38"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:38"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:38"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='批评者'",
+      "passed": true,
+      "subject": "members.jsonl:38"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:38"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:new-policies-conflict",
+      "passed": true,
+      "subject": "members.jsonl:39"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:wang-anshi",
+      "passed": true,
+      "subject": "members.jsonl:39"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:39"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='变法主持者'",
+      "passed": true,
+      "subject": "members.jsonl:39"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:39"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:new-policies-conflict",
+      "passed": true,
+      "subject": "members.jsonl:40"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:song-shenzong",
+      "passed": true,
+      "subject": "members.jsonl:40"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:40"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='新法时期君主'",
+      "passed": true,
+      "subject": "members.jsonl:40"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:40"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:new-policies-conflict",
+      "passed": true,
+      "subject": "members.jsonl:41"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=policy:new-policies",
+      "passed": true,
+      "subject": "members.jsonl:41"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:41"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='争议政策'",
+      "passed": true,
+      "subject": "members.jsonl:41"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:41"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:new-policies-conflict",
+      "passed": true,
+      "subject": "members.jsonl:42"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1067",
+      "passed": true,
+      "subject": "members.jsonl:42"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:42"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='即位背景年份'",
+      "passed": true,
+      "subject": "members.jsonl:42"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=4",
+      "passed": true,
+      "subject": "members.jsonl:42"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:san-su-tang-song-membership",
+      "passed": true,
+      "subject": "members.jsonl:43"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:43"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:43"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作家'",
+      "passed": true,
+      "subject": "members.jsonl:43"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:43"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:san-su-tang-song-membership",
+      "passed": true,
+      "subject": "members.jsonl:44"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-xun",
+      "passed": true,
+      "subject": "members.jsonl:44"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:44"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作家'",
+      "passed": true,
+      "subject": "members.jsonl:44"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:44"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:san-su-tang-song-membership",
+      "passed": true,
+      "subject": "members.jsonl:45"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-zhe",
+      "passed": true,
+      "subject": "members.jsonl:45"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:45"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='作家'",
+      "passed": true,
+      "subject": "members.jsonl:45"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:45"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:san-su-tang-song-membership",
+      "passed": true,
+      "subject": "members.jsonl:46"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=group:tang-song-eight",
+      "passed": true,
+      "subject": "members.jsonl:46"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:46"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='文学群体'",
+      "passed": true,
+      "subject": "members.jsonl:46"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:46"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-huang-poetry-name",
+      "passed": true,
+      "subject": "members.jsonl:47"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:47"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:47"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='并称诗人'",
+      "passed": true,
+      "subject": "members.jsonl:47"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:47"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-huang-poetry-name",
+      "passed": true,
+      "subject": "members.jsonl:48"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:huang-tingjian",
+      "passed": true,
+      "subject": "members.jsonl:48"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:48"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='并称诗人'",
+      "passed": true,
+      "subject": "members.jsonl:48"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:48"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-shi-song-four-membership",
+      "passed": true,
+      "subject": "members.jsonl:49"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:49"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:49"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='书家'",
+      "passed": true,
+      "subject": "members.jsonl:49"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:49"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-shi-song-four-membership",
+      "passed": true,
+      "subject": "members.jsonl:50"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=group:song-four",
+      "passed": true,
+      "subject": "members.jsonl:50"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:50"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='书法群体'",
+      "passed": true,
+      "subject": "members.jsonl:50"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:50"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-xin-ci-name",
+      "passed": true,
+      "subject": "members.jsonl:51"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:51"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:51"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='并称词人'",
+      "passed": true,
+      "subject": "members.jsonl:51"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:51"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:su-xin-ci-name",
+      "passed": true,
+      "subject": "members.jsonl:52"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:xin-qiji",
+      "passed": true,
+      "subject": "members.jsonl:52"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:52"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='并称词人'",
+      "passed": true,
+      "subject": "members.jsonl:52"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:52"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:west-lake-governance-1089",
+      "passed": true,
+      "subject": "members.jsonl:53"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:53"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:53"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='治理者'",
+      "passed": true,
+      "subject": "members.jsonl:53"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:53"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:west-lake-governance-1089",
+      "passed": true,
+      "subject": "members.jsonl:54"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:hangzhou",
+      "passed": true,
+      "subject": "members.jsonl:54"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:54"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='任职地点'",
+      "passed": true,
+      "subject": "members.jsonl:54"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:54"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:west-lake-governance-1089",
+      "passed": true,
+      "subject": "members.jsonl:55"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:west-lake",
+      "passed": true,
+      "subject": "members.jsonl:55"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:55"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='治理对象'",
+      "passed": true,
+      "subject": "members.jsonl:55"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:55"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:west-lake-governance-1089",
+      "passed": true,
+      "subject": "members.jsonl:56"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=infrastructure:su-causeway",
+      "passed": true,
+      "subject": "members.jsonl:56"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:56"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='修筑工程'",
+      "passed": true,
+      "subject": "members.jsonl:56"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:56"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:west-lake-governance-1089",
+      "passed": true,
+      "subject": "members.jsonl:57"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1089",
+      "passed": true,
+      "subject": "members.jsonl:57"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:57"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='任职与修堤年份'",
+      "passed": true,
+      "subject": "members.jsonl:57"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=4",
+      "passed": true,
+      "subject": "members.jsonl:57"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:58"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-shi",
+      "passed": true,
+      "subject": "members.jsonl:58"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:58"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='被指控者'",
+      "passed": true,
+      "subject": "members.jsonl:58"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=0",
+      "passed": true,
+      "subject": "members.jsonl:58"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:59"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:li-ding",
+      "passed": true,
+      "subject": "members.jsonl:59"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:59"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='指控者'",
+      "passed": true,
+      "subject": "members.jsonl:59"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=1",
+      "passed": true,
+      "subject": "members.jsonl:59"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:60"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:shu-dan",
+      "passed": true,
+      "subject": "members.jsonl:60"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:60"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='指控者'",
+      "passed": true,
+      "subject": "members.jsonl:60"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=2",
+      "passed": true,
+      "subject": "members.jsonl:60"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:61"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:su-zhe",
+      "passed": true,
+      "subject": "members.jsonl:61"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:61"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='求情者'",
+      "passed": true,
+      "subject": "members.jsonl:61"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=3",
+      "passed": true,
+      "subject": "members.jsonl:61"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:62"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=person:wang-shen",
+      "passed": true,
+      "subject": "members.jsonl:62"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:62"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='营救者'",
+      "passed": true,
+      "subject": "members.jsonl:62"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=4",
+      "passed": true,
+      "subject": "members.jsonl:62"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:63"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=place:yushitai-prison",
+      "passed": true,
+      "subject": "members.jsonl:63"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:63"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='拘押地点'",
+      "passed": true,
+      "subject": "members.jsonl:63"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=5",
+      "passed": true,
+      "subject": "members.jsonl:63"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:64"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=time:1079",
+      "passed": true,
+      "subject": "members.jsonl:64"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:64"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='案件年份'",
+      "passed": true,
+      "subject": "members.jsonl:64"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=6",
+      "passed": true,
+      "subject": "members.jsonl:64"
+    },
+    {
+      "code": "bundle.member_assertion_ref",
+      "evidence": "assertion_id=assertion:wutai-poetry-case",
+      "passed": true,
+      "subject": "members.jsonl:65"
+    },
+    {
+      "code": "bundle.member_node_ref",
+      "evidence": "node_id=policy:new-policies",
+      "passed": true,
+      "subject": "members.jsonl:65"
+    },
+    {
+      "code": "bundle.member_resolved_flag",
+      "evidence": "resolved=True, node_found=True",
+      "passed": true,
+      "subject": "members.jsonl:65"
+    },
+    {
+      "code": "bundle.member_role",
+      "evidence": "role='诗作批评对象'",
+      "passed": true,
+      "subject": "members.jsonl:65"
+    },
+    {
+      "code": "bundle.member_ordinal",
+      "evidence": "ordinal=7",
+      "passed": true,
+      "subject": "members.jsonl:65"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='创立安乐坊'",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='institution_founding'",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:anlefang-founding-hangzhou:1",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['创立者', '设立地点', '创立机构']",
+      "passed": true,
+      "subject": "assertion:anlefang-founding-hangzhou"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='北归'",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='biographical_return_event'",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:changzhou-return-1101:1",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['北归者', '北归年份', '到达地点']",
+      "passed": true,
+      "subject": "assertion:changzhou-return-1101"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=2, distinct_nodes=2",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='寒食帖作者'",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='calligraphy_authorship'",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "2 distinct role/node pairs across 2 rows",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1]",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:cold-food-calligraphy-authorship:1",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['作者', '书法作品']",
+      "passed": true,
+      "subject": "assertion:cold-food-calligraphy-authorship"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='贬谪儋州'",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='biographical_relocation_event'",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:danzhou-exile-1097:1",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['被贬者', '贬谪年份', '贬谪地点']",
+      "passed": true,
+      "subject": "assertion:danzhou-exile-1097"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=4, distinct_nodes=4",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='三苏'",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='family_literary_group'",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "4 distinct role/node pairs across 4 rows",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3]",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:family-san-su:1",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['核心人物', '父亲', '弟弟', '群体称谓']",
+      "passed": true,
+      "subject": "assertion:family-san-su"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='任杭州通判'",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='public_office_appointment'",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:hangzhou-appointment-1071:1",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['任职者', '任职年份', '任职地点']",
+      "passed": true,
+      "subject": "assertion:hangzhou-appointment-1071"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='抵达黄州'",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='biographical_relocation_event'",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "2 evidence references",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:huangzhou-arrival-1080:1",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:huangzhou-arrival-1080:2",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['到达者', '到达年份', '到达地点']",
+      "passed": true,
+      "subject": "assertion:huangzhou-arrival-1080"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='黄州交游'",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='place_bound_friendship'",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:huangzhou-foyin-friendship:1",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['友人', '友人', '交游地点']",
+      "passed": true,
+      "subject": "assertion:huangzhou-foyin-friendship"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=5, distinct_nodes=5",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='黄州创作'",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='place_bound_literary_creation'",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "5 distinct role/node pairs across 5 rows",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3, 4]",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:huangzhou-literary-works:1",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['创作者', '创作地点', '作品', '作品', '作品']",
+      "passed": true,
+      "subject": "assertion:huangzhou-literary-works"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=3, distinct_nodes=3",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='贬谪惠州'",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='biographical_relocation_event'",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "3 distinct role/node pairs across 3 rows",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2]",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:huizhou-exile-1094:1",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['被贬者', '贬谪年份', '贬谪地点']",
+      "passed": true,
+      "subject": "assertion:huizhou-exile-1094"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=5, distinct_nodes=5",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='科举考试'",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='examination_event'",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "5 distinct role/node pairs across 5 rows",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3, 4]",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:imperial-exam-1057:1",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['考生', '同科考生', '主考官', '被误认作者', '考试年份']",
+      "passed": true,
+      "subject": "assertion:imperial-exam-1057"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=5, distinct_nodes=5",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='新法政见分歧'",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='political_reform_conflict'",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "5 distinct role/node pairs across 5 rows",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3, 4]",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:new-policies-conflict:1",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['批评者', '变法主持者', '新法时期君主', '争议政策', '即位背景年份']",
+      "passed": true,
+      "subject": "assertion:new-policies-conflict"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=4, distinct_nodes=4",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='同列唐宋八大家'",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='source_explicit_joint_group_membership'",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "4 distinct role/node pairs across 4 rows",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3]",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:san-su-tang-song-membership:1",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['作家', '作家', '作家', '文学群体']",
+      "passed": true,
+      "subject": "assertion:san-su-tang-song-membership"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=2, distinct_nodes=2",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='苏黄并称'",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='poetry_joint_appellation'",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "2 distinct role/node pairs across 2 rows",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1]",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:su-huang-poetry-name:1",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['并称诗人', '并称诗人']",
+      "passed": true,
+      "subject": "assertion:su-huang-poetry-name"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=2, distinct_nodes=2",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='宋四家之首'",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='calligraphy_group_membership'",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "2 distinct role/node pairs across 2 rows",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1]",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:su-shi-song-four-membership:1",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['书家', '书法群体']",
+      "passed": true,
+      "subject": "assertion:su-shi-song-four-membership"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=2, distinct_nodes=2",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='苏辛并称'",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='ci_joint_appellation'",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "2 distinct role/node pairs across 2 rows",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1]",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "1 evidence references",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:su-xin-ci-name:1",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['并称词人', '并称词人']",
+      "passed": true,
+      "subject": "assertion:su-xin-ci-name"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=5, distinct_nodes=5",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='治理西湖'",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='place_bound_public_works'",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "5 distinct role/node pairs across 5 rows",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3, 4]",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "2 evidence references",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:west-lake-governance-1089:1",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:west-lake-governance-1089:2",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['治理者', '任职地点', '治理对象', '修筑工程', '任职与修堤年份']",
+      "passed": true,
+      "subject": "assertion:west-lake-governance-1089"
+    },
+    {
+      "code": "bundle.topology_arity",
+      "evidence": "topology=hyperedge, members=8, distinct_nodes=8",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "predicate='乌台诗案'",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "semantics='judicial_case_event'",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.assertion_required_field",
+      "evidence": "epistemic_status='editorial_candidate'",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.member_unique_role_node",
+      "evidence": "8 distinct role/node pairs across 8 rows",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.member_unique_ordinal",
+      "evidence": "ordinals=[0, 1, 2, 3, 4, 5, 6, 7]",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.evidence_refs_type",
+      "evidence": "evidence_refs must be a list of non-empty ids",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.evidence_coverage",
+      "evidence": "2 evidence references",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:wutai-poetry-case:1",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.evidence_ref",
+      "evidence": "evidence_ref=evidence:wutai-poetry-case:2",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.undirected_only",
+      "evidence": "directed=None",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.hyperedge_roles",
+      "evidence": "roles=['被指控者', '指控者', '指控者', '求情者', '营救者', '拘押地点', '案件年份', '诗作批评对象']",
+      "passed": true,
+      "subject": "assertion:wutai-poetry-case"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=43, line_end=43",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=43, source_lines=77",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:43-43",
+      "passed": true,
+      "subject": "evidence:anlefang-founding-hangzhou:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=55, line_end=55",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=55, source_lines=77",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:55-55",
+      "passed": true,
+      "subject": "evidence:changzhou-return-1101:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=59, line_end=59",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=59, source_lines=77",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:59-59",
+      "passed": true,
+      "subject": "evidence:cold-food-calligraphy-authorship:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=51, line_end=51",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=51, source_lines=77",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:51-51",
+      "passed": true,
+      "subject": "evidence:danzhou-exile-1097:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=3, line_end=3",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=3, source_lines=77",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:3-3",
+      "passed": true,
+      "subject": "evidence:family-san-su:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=21, line_end=21",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=21, source_lines=77",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:21-21",
+      "passed": true,
+      "subject": "evidence:hangzhou-appointment-1071:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=29, line_end=29",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=29, source_lines=77",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:29-29",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=33, line_end=33",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=33, source_lines=77",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:33-33",
+      "passed": true,
+      "subject": "evidence:huangzhou-arrival-1080:2"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=37, line_end=37",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=37, source_lines=77",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:37-37",
+      "passed": true,
+      "subject": "evidence:huangzhou-foyin-friendship:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=35, line_end=35",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=35, source_lines=77",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:35-35",
+      "passed": true,
+      "subject": "evidence:huangzhou-literary-works:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=51, line_end=51",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=51, source_lines=77",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:51-51",
+      "passed": true,
+      "subject": "evidence:huizhou-exile-1094:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=13, line_end=15",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=15, source_lines=77",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:13-15",
+      "passed": true,
+      "subject": "evidence:imperial-exam-1057:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=19, line_end=19",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=19, source_lines=77",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:19-19",
+      "passed": true,
+      "subject": "evidence:new-policies-conflict:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=3, line_end=3",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=3, source_lines=77",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:3-3",
+      "passed": true,
+      "subject": "evidence:san-su-tang-song-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=59, line_end=59",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=59, source_lines=77",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:59-59",
+      "passed": true,
+      "subject": "evidence:su-huang-poetry-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=59, line_end=59",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=59, source_lines=77",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:59-59",
+      "passed": true,
+      "subject": "evidence:su-shi-song-four-membership:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=59, line_end=59",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=59, source_lines=77",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:59-59",
+      "passed": true,
+      "subject": "evidence:su-xin-ci-name:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=41, line_end=41",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=41, source_lines=77",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:41-41",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=72, line_end=72",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=72, source_lines=77",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:72-72",
+      "passed": true,
+      "subject": "evidence:west-lake-governance-1089:2"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=25, line_end=25",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=25, source_lines=77",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:25-25",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:1"
+    },
+    {
+      "code": "bundle.evidence_source_ref",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_span",
+      "evidence": "line_start=27, line_end=27",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_text",
+      "evidence": "Evidence must provide a literal quote or an explicitly named summary",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_source_path",
+      "evidence": "source='source/sushi.md'",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_source_available",
+      "evidence": "local source available: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_source_sha256",
+      "evidence": "Source SHA256 matches inventory: source/sushi.md",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_source_text",
+      "evidence": "UTF-8 source text required for line validation",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_span_bounds",
+      "evidence": "line_end=27, source_lines=77",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.evidence_quote_verbatim",
+      "evidence": "Quote is a literal contiguous span of source/sushi.md:27-27",
+      "passed": true,
+      "subject": "evidence:wutai-poetry-case:2"
+    },
+    {
+      "code": "bundle.manifest_count",
+      "evidence": "declared=39, actual=39",
+      "passed": true,
+      "subject": "manifest.counts.nodes"
+    },
+    {
+      "code": "bundle.manifest_count",
+      "evidence": "declared=18, actual=18",
+      "passed": true,
+      "subject": "manifest.counts.assertions"
+    },
+    {
+      "code": "bundle.manifest_count",
+      "evidence": "declared=65, actual=65",
+      "passed": true,
+      "subject": "manifest.counts.members"
+    },
+    {
+      "code": "bundle.manifest_count",
+      "evidence": "declared=0, actual=0",
+      "passed": true,
+      "subject": "manifest.counts.unresolved_members"
+    },
+    {
+      "code": "bundle.manifest_count",
+      "evidence": "declared=18, actual=18",
+      "passed": true,
+      "subject": "manifest.counts.assertions_with_evidence"
+    }
+  ],
+  "diagnostics": [],
+  "file_sha256": {
+    "assertions.jsonl": "2755aceec87fd5d5a6d2bb8964ee3f6d9596e9e892fd0e7193b572db0f0fd04e",
+    "evidence.jsonl": "9c400fdd9260e13b046dc4070a84656db0cfdf43988fcc40f52c0b03d600bd31",
+    "manifest.json": "c6610e33f18e2f574861f08d972a78ad1b28ecc39272b16b7cabfdb85753a7b9",
+    "members.jsonl": "d8aab54a60d041a91e1d85c5f7b5153edf324a1a154c69188efea03afb1d52e7",
+    "nodes.jsonl": "ca15b7da4ea32fe2205d9ea65ad2d3e3e45c5605d4893429921c4c658cbb675b"
+  },
+  "quality": "showcase",
+  "schema_version": "hk.bundle-validation/v1",
+  "status": "passed",
+  "summary": {
+    "assertions": 18,
+    "assertions_with_evidence": 18,
+    "checks": 729,
+    "errors": 0,
+    "members": 65,
+    "nodes": 39,
+    "unresolved_members": 0,
+    "warnings": 0
+  }
+}

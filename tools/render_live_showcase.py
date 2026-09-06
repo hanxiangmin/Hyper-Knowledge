@@ -19,6 +19,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+ROOT = Path(__file__).resolve().parents[1]
 SIZE = (1920, 1280)
 FPS = 24
 GIF_FPS = 12
@@ -65,7 +66,7 @@ SHORT_COPY = {
             "三苏 · 四个成员",
             "谁，在关系中扮演什么角色",
             "苏轼 · 定位关联",
-            "一个节点，十条超边",
+            "一个节点，18 条超边",
             "当前关系清晰，其余淡出",
         ),
         "chapters": ("总览", "总览", "超边", "超边", "节点", "节点", "悬停"),
@@ -86,7 +87,7 @@ SHORT_COPY = {
             "Three Su family · Four members",
             "Each member has a role",
             "Su Shi · Locate memberships",
-            "One node, ten hyperedges",
+            "One node, 18 hyperedges",
             "One relation in focus; the rest fades",
         ),
         "chapters": (
@@ -110,7 +111,7 @@ COPY = {
             "Every member, every role",
             "Locate the same hyperedge",
             "Follow one node",
-            "Just its ten hyperedges",
+            "Just its 18 hyperedges",
             "See the shared context",
             "Hover to bring one relation forward",
         ),
@@ -122,7 +123,7 @@ COPY = {
             "The same four members, connected through their roles in one relation.",
             "Switch to the matrix without losing the selected hyperedge.",
             "Select Su Shi and locate his memberships across the matrix.",
-            "Focus on Su Shi and the ten hyperedges he belongs to.",
+            "Focus on Su Shi and the 18 hyperedges he belongs to.",
             "The enclosure view preserves the context of those memberships.",
             "A light fill highlights this hyperedge; unrelated elements fade back.",
         ),
@@ -148,7 +149,7 @@ COPY = {
             "成员与角色，一一对应",
             "在矩阵中定位同一条超边",
             "沿着一个节点阅读",
-            "只看它所属的十条超边",
+            "只看它所属的 18 条超边",
             "保留共享的关系上下文",
             "鼠标移入，让当前关系浮现",
         ),
@@ -160,7 +161,7 @@ COPY = {
             "同样的四个成员，以各自在关系中的角色连接。",
             "切换到关联矩阵，保留当前选中的超边。",
             "选中苏轼，在矩阵中定位他所属的关系。",
-            "聚焦苏轼，以及他所属的十条超边。",
+            "聚焦苏轼，以及他所属的 18 条超边。",
             "包络视图保留这些成员关系的共享上下文。",
             "超边浅色填充，关联节点保持清晰，其余元素退到背景。",
         ),
@@ -350,6 +351,22 @@ def render_locale(args: argparse.Namespace, locale: str) -> dict:
     video_path = source / timeline["video"]
     assert video_path.is_file(), video_path
     raw_sha256 = sha256(video_path)
+    source_workbench = timeline.get("source")
+    if source_workbench:
+        try:
+            source_workbench = (
+                Path(source_workbench).resolve().relative_to(ROOT).as_posix()
+            )
+        except ValueError:
+            source_workbench = str(source_workbench)
+    else:
+        source_workbench = "examples/sushi-document-test/views/workbench.html"
+    source_bundle = timeline.get("bundle")
+    if source_bundle:
+        try:
+            source_bundle = Path(source_bundle).resolve().relative_to(ROOT).as_posix()
+        except ValueError:
+            source_bundle = str(source_bundle)
     old_manifest_path = args.out / "live-manifest.json"
     old_locale = {}
     if args.reuse_segments and old_manifest_path.exists():
@@ -584,7 +601,9 @@ def render_locale(args: argparse.Namespace, locale: str) -> dict:
         "source_recording_sha256": raw_sha256,
         "timeline": f"capture/{locale}/timeline.json",
         "timeline_sha256": sha256(timeline_path),
-        "source_workbench": "examples/sushi-document-test/views/workbench.html",
+        "source_workbench": source_workbench,
+        "source_bundle": source_bundle,
+        "source_counts": timeline.get("sourceCounts"),
         "source_workbench_sha256": timeline.get("sourceSha256"),
         "source_viewport": [width, height],
         "screenshots": source_stills,

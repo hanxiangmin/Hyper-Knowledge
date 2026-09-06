@@ -91,14 +91,16 @@ guideline:
       - 'type为"适用"表示适应症'
       - 'type为"禁忌"表示禁忌组合'
       - 'conditions字段应包含所有相关的患者特征/适用条件'
+      - '不同条件或结果对应不同关系记录，不能仅因诊断和治疗相同而合并。'
     en:
       - 'type indicates indicates indication'
       - 'type contraindicated_with indicates contraindicated combination'
       - 'Conditions field should include all relevant patient characteristics/applicable conditions'
+      - 'Keep assertions with different conditions or outcomes separate even when diagnosis and treatment match.'
 
 identifiers:
   entity_id: name
-  relation_id: '{diagnosis}|{type}|{treatment}'
+  relation_id: '{diagnosis}|{type}|{treatment}|{conditions}|{outcome}'
   relation_members: [conditions, diagnosis, treatment, outcome]
 
 display:

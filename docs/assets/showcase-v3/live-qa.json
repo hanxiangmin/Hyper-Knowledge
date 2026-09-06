@@ -1,0 +1,49 @@
+{
+  "schema": "hyper-knowledge.live-tour-qa/v1",
+  "screenshots_checked": 20,
+  "ten_gallery_states_per_locale": true,
+  "edits": {
+    "en": {
+      "profile": "short",
+      "short_hover_playback_rate": 0.5,
+      "video_scenes": 7,
+      "video_duration_sec": 8.0,
+      "gallery_states": 10
+    },
+    "zh": {
+      "profile": "short",
+      "short_hover_playback_rate": 0.5,
+      "video_scenes": 7,
+      "video_duration_sec": 8.0,
+      "gallery_states": 10
+    }
+  },
+  "media": [
+    {
+      "file": "tour-en.mp4",
+      "hash": "passed",
+      "square_pixels": "passed",
+      "decode": "passed"
+    },
+    {
+      "file": "tour-en.gif",
+      "hash": "passed",
+      "square_pixels": "not applicable",
+      "decode": "passed"
+    },
+    {
+      "file": "tour-zh.mp4",
+      "hash": "passed",
+      "square_pixels": "passed",
+      "decode": "passed"
+    },
+    {
+      "file": "tour-zh.gif",
+      "hash": "passed",
+      "square_pixels": "not applicable",
+      "decode": "passed"
+    }
+  ],
+  "source_hashes_checked": true,
+  "visual_review": "Manual review is separate; no collision-free claim is implied."
+}

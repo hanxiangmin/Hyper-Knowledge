@@ -4,7 +4,7 @@
 
 ## 先读关系，再查成员
 
-在苏轼案例中，`assertion:family-san-su` 记录“三苏家族与文学群体”。它的 `topology` 是 `hyperedge`，`epistemic_status` 是 `model_predicted`，并通过 `evidence_refs` 指向来源记录。
+在苏轼案例中，`assertion:family-san-su` 记录“三苏”。它的 `topology` 是 `hyperedge`，`epistemic_status` 是 `editorial_candidate`，并通过 `evidence_refs` 指向来源记录。
 
 对应的成员表是：
 
@@ -19,7 +19,7 @@
 
 ## 沿着证据引用回到段落
 
-本例的 `evidence:family-san-su` 记录来源 `source/sushi.md`、第 3 行和对应引文。可以在[仓库源文档](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/examples/sushi-document-test/source/sushi.md)中核对。
+本例的 `evidence:family-san-su` 记录来源 `source/sushi.md`、第 3 行和对应引文。可以在[仓库源文档](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/examples/sushi-local-preview/source/sushi.md)中核对。
 
 证据表的用途是保留来源位置，不是替代阅读。模型可能误解段落，输入文档本身也可能有错误；“有来源”与“事实为真”是两回事。
 

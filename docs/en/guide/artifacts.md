@@ -4,7 +4,7 @@ The graph is not the only deliverable. An `hk.bundle/v1` bundle separates entiti
 
 ## Read the assertion, then its members
 
-In the Su Shi example, `assertion:family-san-su` records the Three Su family and literary group. Its `topology` is `hyperedge`, its `epistemic_status` is `model_predicted`, and `evidence_refs` points to a source record.
+In the Su Shi example, `assertion:family-san-su` records San Su. Its `topology` is `hyperedge`, its `epistemic_status` is `editorial_candidate`, and `evidence_refs` points to a source record.
 
 | Node ID | Role in this relationship |
 | --- | --- |
@@ -17,7 +17,7 @@ Here, “father” describes Su Xun's participation in this particular context. 
 
 ## Follow the evidence reference
 
-`evidence:family-san-su` identifies `source/sushi.md`, line 3, and the relevant quotation. Check it against the [source document in the repository](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/examples/sushi-document-test/source/sushi.md).
+`evidence:family-san-su` identifies `source/sushi.md`, line 3, and the relevant quotation. Check it against the [source document in the repository](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/examples/sushi-local-preview/source/sushi.md).
 
 An evidence record preserves a source location; it does not replace reading. A model can misinterpret a passage, and the passage itself can be wrong. Source coverage is not factual accuracy.
 

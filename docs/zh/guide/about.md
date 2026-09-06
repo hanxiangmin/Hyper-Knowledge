@@ -15,9 +15,9 @@ Hyper-Knowledge 面向一个具体任务：让智能体把领域文档整理成�
 
 ## 开源基础与致谢
 
-本项目借鉴并沿用了 [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) 的部分文档抽取基础，包括模板化提取、模型调用和 Knowledge Abstract 相关机制。感谢原项目作者与贡献者。
+本项目的部分思路受到开源项目 [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) 启发，感谢原项目作者与贡献者。
 
-Hyper-Knowledge 在这一基础上围绕高阶关系建模、规范化 bundle、Skill 管理和交互工作台组织自己的使用流程与实现。文档以这些具体工作为主线；上游抽取基础不作为独立原创成果宣称。代码复用遵循适用许可证，保留必要的版权与归属说明。
+Hyper-Knowledge 独立组织自己的高阶关系模型、规范化 bundle、Skill 管理和交互工作台。文档以这些具体工作为主线，不把超图、事件角色或来源追溯等通用概念包装成独立原创成果。
 
 ## 从哪里阅读代码
 
@@ -27,7 +27,8 @@ Hyper-Knowledge 在这一基础上围绕高阶关系建模、规范化 bundle、
 | [`hyperknowledge/bundle.py`](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/hyperknowledge/bundle.py) | 数据包导出与校验 |
 | [`hyperknowledge/skill_manager.py`](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/hyperknowledge/skill_manager.py) | 托管安装、检查与运行时绑定 |
 | [`hyperknowledge/visualization/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/hyperknowledge/visualization) | 可视化与离线 HTML 导出 |
-| [`examples/sushi-document-test/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-document-test) | 输入材料、bundle 与工作台案例 |
+| [`examples/sushi-local-preview/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-local-preview) | 当前苏轼展示案例、bundle 与胶囊总览工作台 |
+| [`examples/sushi-document-test/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-document-test) | 早期输入材料、bundle 与工作台案例 |
 
 ## 参与项目
 

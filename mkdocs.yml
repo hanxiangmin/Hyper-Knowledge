@@ -49,6 +49,10 @@ exclude_docs: |
   assets/showcase-v2/README.md
   assets/showcase-v2/live-manifest.json
   assets/showcase-v2/capture-manifest.json
+  assets/showcase-v3/.render-work/
+  assets/showcase-v3/README.md
+  assets/showcase-v3/live-manifest.json
+  assets/showcase-v3/live-qa.json
   assets/hyper-knowledge-promo-manifest.json
 
 plugins:

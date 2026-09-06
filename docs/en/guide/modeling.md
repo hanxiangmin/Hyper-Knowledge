@@ -38,7 +38,7 @@ The biography example separates exile in Huizhou, exile in Danzhou, and the retu
 
 ## A shared node does not create a new fact
 
-Appearing in ten hyperedges is a membership count. Central positioning, a larger circle, and crossing enclosures are display choices, not additional assertions. Dragging and zooming change the reading experience only.
+Appearing in 18 hyperedges is a membership count. Central positioning, a larger circle, and crossing enclosures are display choices, not additional assertions. Dragging and zooming change the reading experience only.
 
 Compact display labels may omit matching outer quotation or title marks; the stored label and detail panel retain the original. Disambiguate works, editions, and names with identifiers and properties rather than arbitrary truncation.
 

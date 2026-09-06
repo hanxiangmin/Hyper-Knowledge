@@ -15,9 +15,9 @@ These are the project's product and implementation priorities, not claims to hav
 
 ## Open-source foundations and acknowledgements
 
-This project draws on and reuses parts of [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract), including foundations for template-based extraction, model invocation, and Knowledge Abstract processing. We thank its authors and contributors.
+Some ideas in this project were inspired by the open-source [Hyper-Extract](https://github.com/yifanfeng97/hyper-extract) project. We thank its authors and contributors.
 
-Hyper-Knowledge builds its workflow and implementation around higher-order modeling, normalized bundles, Skill management, and an interactive workbench. This handbook follows those tasks. The inherited extraction foundation is not presented as independently original work. Reuse follows applicable licenses, with required copyright and attribution notices retained.
+Hyper-Knowledge independently organizes its own higher-order graph model, normalized bundle contract, Skill workflow, and interactive workbench. This handbook follows those tasks and does not present general concepts such as hypergraphs, event roles, or provenance as independent inventions.
 
 ## Where to read the code
 
@@ -27,7 +27,8 @@ Hyper-Knowledge builds its workflow and implementation around higher-order model
 | [`hyperknowledge/bundle.py`](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/hyperknowledge/bundle.py) | Bundle export and validation |
 | [`hyperknowledge/skill_manager.py`](https://github.com/hanxiangmin/Hyper-Knowledge/blob/main/hyperknowledge/skill_manager.py) | Managed installation, checks, and runtime binding |
 | [`hyperknowledge/visualization/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/hyperknowledge/visualization) | Visualization and offline HTML export |
-| [`examples/sushi-document-test/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-document-test) | Source material, bundle, and workbench example |
+| [`examples/sushi-local-preview/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-local-preview) | Current Su Shi showcase bundle and capsule overview workbench |
+| [`examples/sushi-document-test/`](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/sushi-document-test) | Earlier source material, bundle, and workbench example |
 
 ## Contribute
 

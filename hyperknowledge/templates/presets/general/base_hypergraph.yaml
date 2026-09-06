@@ -20,8 +20,8 @@ output:
     - name: name
       type: str
       description:
-        zh: '节点名称，使用文本中最明确、最稳定的称呼。'
-        en: 'Node name, using the most explicit and stable designation in the text.'
+        zh: '原子节点名称；人物、时间、地点分别建节点，不把年份、动作和地点拼成阶段节点。正式作品名可保留。'
+        en: 'Atomic node name. Keep people, times, and places separate; do not concatenate time, action, and location into a stage node. Official work titles may remain intact.'
     - name: type
       type: str
       description:
@@ -41,8 +41,8 @@ output:
     - name: name
       type: str
       description:
-        zh: '该超边的名称或标题，用于唯一标识这条多元关系。'
-        en: 'Name or title of this hyperedge, used to uniquely identify this multi-node relation.'
+        zh: '简短的动作或关系标题；相同标题可以对应不同事件，身份由成员、角色和上下文区分。'
+        en: 'Short action or relation title. Different events may share a title; members, roles, and context distinguish their identities.'
     - name: type
       type: str
       description:
@@ -51,8 +51,45 @@ output:
     - name: participants
       type: list
       description:
-        zh: '参与该超边的所有节点名称列表。'
-        en: 'List of all node names participating in this hyperedge.'
+        zh: '兼容字段：仅填写无法归入下列角色的成员。已有角色的节点不要重复填写。'
+        en: 'Compatibility field for members not covered by the roles below. Do not repeat classified nodes.'
+      required: false
+    - name: actors
+      type: list
+      description:
+        zh: '事件的参与人物或行动主体节点名称。'
+        en: 'Names of people or agents participating in this event.'
+      required: false
+    - name: objects
+      type: list
+      description:
+        zh: '事件涉及的作品、物品、政策或研究对象节点名称。'
+        en: 'Names of works, objects, policies, or subjects involved in this event.'
+      required: false
+    - name: times
+      type: list
+      description:
+        zh: '仅属于本次事件的明确时间节点名称，不推测未给出的起止日期。'
+        en: 'Explicit time nodes for this specific event; do not infer unstated interval endpoints.'
+      required: false
+    - name: places
+      type: list
+      description:
+        zh: '仅属于本次事件的地点节点名称。'
+        en: 'Place nodes belonging to this specific event.'
+      required: false
+    - name: organizations
+      type: list
+      description:
+        zh: '本次关系中的组织或群体节点名称。'
+        en: 'Organization or group nodes participating in this assertion.'
+      required: false
+    - name: outcomes
+      type: list
+      description:
+        zh: '原文明示的结果节点名称，没有结果时留空。'
+        en: 'Explicitly stated outcome nodes; leave empty if the source gives none.'
+      required: false
     - name: description
       type: str
       description:
@@ -78,15 +115,28 @@ guideline:
     - '仅在文本明确表达多个节点共同参与某个事件或关系时创建超边。'
     - '避免重复超边；若多个节点多次以相同方式共同参与同一事件，应合并为一条记录。'
     - '优先使用文本中明确出现的词语描述超边内容。'
+    - '用动作或关系作为超边类型，人物、时间、地点直接作为有角色的成员；两个不同节点也可构成超边，同一节点的多个角色只算一个节点。'
+    - '保留有来源支持的双成员超边，不因成员少而丢弃或改成另一种拓扑；不要添加虚构成员或拼接无关事实来凑数。'
+    - '不同时间、地点或条件的事件分别建立超边；不要把多个事件混成一条主题集合，也不要为美观添加原文未支持的关系。'
     en:
     - 'Create hyperedges only when the text explicitly expresses that multiple nodes jointly participate in an event or relation.'
     - 'Avoid duplicate hyperedges; if multiple nodes repeatedly participate in the same event in the same way, merge them into one record.'
     - 'Prefer words that explicitly appear in the text to describe hyperedge content.'
+    - 'Use the action or relation as the hyperedge type and connect atomic members with roles; two distinct nodes can also form a hyperedge. Multiple roles for one node do not increase the distinct member count.'
+    - 'Preserve supported two-member hyperedges without discarding them or changing topology based only on arity; never invent members or combine unrelated facts to increase member count.'
+    - 'Separate events with different times, places, or conditions; do not merge them into a thematic collection or invent relations for visual density.'
 
 identifiers:
   entity_id: name
-  relation_id: '{name}|{type}'
-  relation_members: participants
+  relation_id: '{name}|{type}|{actors}|{objects}|{times}|{places}|{organizations}|{outcomes}|{participants}'
+  relation_members:
+    actor: actors
+    object: objects
+    time: times
+    place: places
+    organization: organizations
+    outcome: outcomes
+    member: participants
 
 options:
   extraction_mode: two_stage

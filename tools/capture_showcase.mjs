@@ -15,6 +15,7 @@ const opt = (name, fallback) => args.includes(name) ? args[args.indexOf(name)+1]
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(opt('--out', join(root, 'temp/live-capture')));
 const source = resolve(opt('--source', join(root,'examples/sushi-document-test/views/workbench.html')));
+const bundle = resolve(opt('--bundle', join(dirname(dirname(source)), 'bundle')));
 const requestedModule = opt('--playwright', 'playwright');
 const modulePath = /[\\/]/.test(requestedModule) ? resolve(requestedModule) : requestedModule;
 await mkdir(out,{recursive:true});
@@ -34,6 +35,18 @@ const browser = await chromium.launch({headless:true, ...(opt('--browser')?{exec
 const viewport = {width:1920,height:1200};
 const edge = 'assertion:family-san-su';
 const node = 'person:su-shi';
+const readRows = async name => (await readFile(join(bundle, name), 'utf8')).trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+const [nodesTable, assertionsTable, membersTable] = await Promise.all(['nodes.jsonl', 'assertions.jsonl', 'members.jsonl'].map(readRows));
+const uniq = values => [...new Set(values.map(String))].sort();
+const edgeMembers = uniq(membersTable.filter(member => String(member.assertion_id) === edge).map(member => member.node_id));
+const nodeHyperedges = uniq(membersTable.filter(member => String(member.node_id) === node).map(member => member.assertion_id));
+const sourceCounts = {
+  nodes: nodesTable.length,
+  assertions: assertionsTable.length,
+  memberships: membersTable.length,
+  edgeMembers: edgeMembers.length,
+  nodeHyperedges: nodeHyperedges.length,
+};
 const sourceHash = createHash('sha256').update(await readFile(source)).digest('hex');
 const locales = opt('--locale','zh,en').split(',');
 try {
@@ -58,6 +71,10 @@ try {
   await page.goto(pathToFileURL(source).href);
   await page.locator(`[data-language="${locale}"]`).click();
   await page.waitForTimeout(600);
+  const enclosureView = await page.locator('[data-representation="overview"]').count() ? 'overview' : 'contour';
+  const edgeMarkSelector = await page.locator(`.overview-edge[data-assertion="${edge}"]`).count()
+    ? `.overview-edge[data-assertion="${edge}"]`
+    : `.hyperedge-label[data-assertion="${edge}"]`;
   const now=()=> (performance.now()-start)/1000;
   const scenes=[];
   const move=async selector=>{const b=await page.locator(selector).boundingBox();if(!b)throw new Error('Missing target: '+selector);await page.mouse.move(b.x+b.width/2,b.y+b.height/2,{steps:18});return b;};
@@ -78,16 +95,21 @@ try {
   const park=async()=>page.mouse.move(1900,90,{steps:14});
   const inspect=async()=>page.evaluate(()=>({
    representation:document.querySelector('.representation-button[aria-pressed="true"]').dataset.representation,
-   nodes:[...document.querySelectorAll('.entity-mark')].map(n=>n.dataset.node),
-   relations:[...document.querySelectorAll('.hyperedge-label,.assertion-mark')].map(n=>n.dataset.assertion),
+   nodes:[...new Set([...document.querySelectorAll('.entity-mark,.overview-node')].map(n=>n.dataset.node).filter(Boolean))],
+   relations:[...new Set([...document.querySelectorAll('.hyperedge-label,.assertion-mark,.overview-edge')].map(n=>n.dataset.assertion).filter(Boolean))],
    matrixRows:document.querySelectorAll('.matrix-row-label').length,
    matrixColumns:document.querySelectorAll('.matrix-column-header').length,
    matrixCells:document.querySelectorAll('.matrix-cell').length,
    drawerTitle:document.querySelector('.drawer-title')?.textContent||null,
    selected:[...document.querySelectorAll('.is-selected')].map(n=>({node:n.dataset.node,assertion:n.dataset.assertion})),
-   hoverNodes:[...document.querySelectorAll('.entity-mark:not(.is-hover-muted)')].map(n=>n.dataset.node),
-   hoverMuted:document.querySelectorAll('.is-hover-muted').length,
+   hoverNodes:[...new Set([
+    ...[...document.querySelectorAll('.entity-mark:not(.is-hover-muted)')].map(n=>n.dataset.node),
+    ...[...document.querySelectorAll('.overview-node.is-overview-related')].map(n=>n.dataset.node),
+   ].filter(Boolean))],
+   hoverMuted:document.querySelectorAll('.is-hover-muted,.is-overview-muted').length,
    hoverFill:[...document.querySelectorAll('.hyper-envelope-fill.is-hover-focus')].map(n=>({id:n.dataset.assertion,fill:getComputedStyle(n).fill,opacity:getComputedStyle(n).opacity})),
+   overviewFocus:[...document.querySelectorAll('.overview-edge.is-overview-related')].map(n=>n.dataset.assertion),
+   overviewRoles:[...document.querySelectorAll('.overview-role-label')].map(n=>({assertion:n.dataset.assertion,node:n.dataset.node,role:n.dataset.role})),
    bounds:{panel:document.querySelector('.viz-panel').getBoundingClientRect().toJSON(),canvas:document.querySelector('.canvas-wrap').getBoundingClientRect().toJSON()},
    graphOutsideViewport:document.querySelector('.canvas-wrap').getBoundingClientRect().bottom>innerHeight+1,
   }));
@@ -96,35 +118,48 @@ try {
    if(!hover)await park(); await page.waitForTimeout(650);
    const settledSec=now();const state=await inspect();
    if(state.graphOutsideViewport) throw new Error(id+': graph clipped');
-   if(id.startsWith('edge-') && state.representation!=='matrix' && (state.nodes.length!==4||state.relations.length!==1))throw new Error(id+': wrong edge membership');
-   if(id==='node-incidence'&&(state.nodes.length!==1||state.relations.length!==10))throw new Error('Wrong node membership summary');
-   if(state.representation==='matrix'&&(state.matrixRows!==38||state.matrixColumns!==10||state.matrixCells!==49))throw new Error('Wrong matrix dimensions');
-   if(hover&&(state.hoverNodes.length!==4||!state.hoverFill.some(f=>f.id===edge)||state.hoverMuted===0))throw new Error('Hover not exercised');
+   if(id.startsWith('edge-') && state.representation==='incidence' && (state.nodes.length!==sourceCounts.edgeMembers||state.relations.length!==1))throw new Error(id+': wrong edge membership');
+   if(id==='node-incidence'&&(state.nodes.length!==1||state.relations.length!==sourceCounts.nodeHyperedges))throw new Error('Wrong node membership summary');
+   if(state.representation==='matrix'&&(state.matrixRows!==sourceCounts.nodes||state.matrixColumns!==sourceCounts.assertions||state.matrixCells!==sourceCounts.memberships))throw new Error('Wrong matrix dimensions');
+   if(hover){
+    const hoverIsValid = (
+      state.hoverMuted > 0
+      && (
+        state.hoverFill.some(f=>f.id===edge)
+        || state.overviewFocus.includes(edge)
+      )
+      && (
+        state.hoverNodes.length===sourceCounts.edgeMembers
+        || state.overviewRoles.filter(role=>role.assertion===edge).length===sourceCounts.edgeMembers
+      )
+    );
+    if(!hoverIsValid)throw new Error('Hover not exercised');
+   }
    const screenshot=`${id}-${locale}.png`;
    await page.screenshot({path:join(folder,screenshot),fullPage:true});
-   if(hover){await page.waitForTimeout(2100);await park();await page.waitForTimeout(900);await move(`.hyperedge-label[data-assertion="${edge}"]`);await page.waitForTimeout(1700);}
+   if(hover){await page.waitForTimeout(2100);await park();await page.waitForTimeout(900);await move(edgeMarkSelector);await page.waitForTimeout(1700);}
    await page.waitForTimeout(Math.max(0,(hover?8:5.5)*1000-(performance.now()-start-startSec*1000)));
    const entry={id,startSec,endSec:now(),settledSec,screenshot,state,bounds:state.bounds};scenes.push(entry);
-   await writeFile(join(folder,'timeline.json'),JSON.stringify({locale,video:'session.webm',viewport,sourceSha256:sourceHash,scenes,errors},null,2));
+   await writeFile(join(folder,'timeline.json'),JSON.stringify({locale,video:'session.webm',viewport,source,sourceSha256:sourceHash,bundle,sourceCounts,scenes,errors},null,2));
    console.log(`${locale}: ${id} / ${state.nodes.length} nodes / ${state.relations.length} edges / ${state.matrixRows} matrix rows`);
   };
   await scene('overview-matrix',()=>view('matrix'));
   await scene('overview-incidence',()=>view('incidence'));
-  await scene('overview-enclosure',()=>view('contour'));
-  await scene('edge-enclosure',()=>click(`.hyperedge-label[data-assertion="${edge}"]`));
+  await scene('overview-enclosure',()=>view(enclosureView));
+  await scene('edge-enclosure',()=>click(edgeMarkSelector));
   await scene('edge-incidence',()=>view('incidence'));
   await scene('edge-matrix',()=>view('matrix'));
   await scene('node-matrix',()=>click(`.matrix-row-label[data-node="${node}"]`));
   await scene('node-incidence',()=>view('incidence'));
-  await scene('node-enclosure',()=>view('contour'));
+  await scene('node-enclosure',()=>view(enclosureView));
   await click('[data-action="reset"]');await park();await page.waitForTimeout(500);
-  await scene('hover-enclosure',()=>move(`.hyperedge-label[data-assertion="${edge}"]`),{hover:true});
+  await scene('hover-enclosure',()=>move(edgeMarkSelector),{hover:true});
   await park();await page.waitForTimeout(500);
   const cleared=await page.locator('.is-hover-muted,.is-hover-focus').count();if(cleared)throw new Error('Hover did not clear');
   const video=page.video();await context.close();await video.saveAs(join(folder,'session.webm'));
   if(errors.length)throw new Error(errors.join('\n'));
   const hash=createHash('sha256').update(await readFile(join(folder,'session.webm'))).digest('hex');
-  await writeFile(join(folder,'timeline.json'),JSON.stringify({locale,video:'session.webm',viewport,sourceSha256:sourceHash,videoSha256:hash,scenes,errors,hoverCleared:true,clockNote:'Scene timestamps use the local page-creation clock; recording starts within the initial navigation interval.'},null,2));
+  await writeFile(join(folder,'timeline.json'),JSON.stringify({locale,video:'session.webm',viewport,source,sourceSha256:sourceHash,bundle,sourceCounts,videoSha256:hash,scenes,errors,hoverCleared:true,clockNote:'Scene timestamps use the local page-creation clock; recording starts within the initial navigation interval.'},null,2));
  }
 } finally {await browser.close();}
 if(sourceHash!==createHash('sha256').update(await readFile(source)).digest('hex'))throw new Error('Workbench changed during capture');

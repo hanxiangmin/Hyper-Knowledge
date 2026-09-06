@@ -1,6 +1,8 @@
 """Codex skill installer tests."""
 
+import json
 import os
+import shutil
 from pathlib import Path
 
 import pytest
@@ -11,6 +13,7 @@ from hyperknowledge.skill_manager import (
     doctor_skill,
     install_root,
     install_skill,
+    inspect_installation,
     uninstall_skill,
 )
 from typer.testing import CliRunner
@@ -53,6 +56,73 @@ def test_installer_refuses_modified_managed_skill(tmp_path):
 
     with pytest.raises(SkillInstallError, match="drifted"):
         uninstall_skill(scope="user", user_home=tmp_path)
+
+
+def test_same_version_content_update_is_detected_and_backed_up(monkeypatch, tmp_path):
+    source = tmp_path / "bundled-skill"
+    shutil.copytree(bundled_skill_path(), source)
+    monkeypatch.setattr(
+        "hyperknowledge.skill_manager.bundled_skill_path", lambda: source
+    )
+    installed = install_skill(scope="user", user_home=tmp_path)
+    target = Path(installed["path"])
+    original = (target / "SKILL.md").read_bytes()
+    (source / "SKILL.md").write_bytes(original + b"\nUpdated modeling guidance.\n")
+
+    diagnosis = doctor_skill(scope="user", user_home=tmp_path)
+    assert diagnosis["status"] == "outdated"
+    assert diagnosis["ok"] is False
+    assert diagnosis["locally_modified"] is False
+    assert diagnosis["update_available"] is True
+    assert diagnosis["installed_version"] == diagnosis["package_version"]
+    assert diagnosis["changed_bundled_files"] == ["SKILL.md"]
+    assert diagnosis["installed_content_sha256"] != diagnosis["bundled_content_sha256"]
+
+    updated = install_skill(scope="user", user_home=tmp_path)
+    assert updated["ok"] is True
+    assert (Path(updated["backup_path"]) / "SKILL.md").read_bytes() == original
+    assert (target / "SKILL.md").read_bytes() == (source / "SKILL.md").read_bytes()
+    assert inspect_installation(target)["status"] == "healthy"
+
+
+def test_legacy_install_manifest_detects_new_content(monkeypatch, tmp_path):
+    source = tmp_path / "bundled-skill"
+    shutil.copytree(bundled_skill_path(), source)
+    monkeypatch.setattr(
+        "hyperknowledge.skill_manager.bundled_skill_path", lambda: source
+    )
+    installed = install_skill(scope="user", user_home=tmp_path)
+    target = Path(installed["path"])
+    manifest_path = target / ".hyperknowledge-skill.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest.pop("bundled_files")
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    assert inspect_installation(target)["status"] == "healthy"
+
+    (source / "references" / "new.md").write_text("New reference.", encoding="utf-8")
+    assert inspect_installation(target)["status"] == "outdated"
+
+
+def test_outdated_skill_with_user_edits_still_requires_force(monkeypatch, tmp_path):
+    source = tmp_path / "bundled-skill"
+    shutil.copytree(bundled_skill_path(), source)
+    monkeypatch.setattr(
+        "hyperknowledge.skill_manager.bundled_skill_path", lambda: source
+    )
+    installed = install_skill(scope="user", user_home=tmp_path)
+    target = Path(installed["path"])
+    (source / "SKILL.md").write_text("New shipped instructions.", encoding="utf-8")
+    (target / "SKILL.md").write_text("User custom instructions.", encoding="utf-8")
+
+    diagnosis = inspect_installation(target)
+    assert diagnosis["status"] == "drifted"
+    assert diagnosis["locally_modified"] is True
+    assert diagnosis["update_available"] is True
+    with pytest.raises(SkillInstallError, match="drifted"):
+        install_skill(scope="user", user_home=tmp_path)
+    assert (target / "SKILL.md").read_text(
+        encoding="utf-8"
+    ) == "User custom instructions."
 
 
 def test_user_install_root_prefers_codex_home(monkeypatch, tmp_path):

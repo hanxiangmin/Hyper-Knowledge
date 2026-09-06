@@ -35,7 +35,12 @@ def _value(item: dict[str, Any], expression: str | None) -> str:
         value = item.get(expression)
         return "" if value is None else str(value)
     fields = re.findall(r"\{(\w+)\}", expression)
-    replacements = {field: item.get(field, "") for field in fields}
+    replacements = {}
+    for field in fields:
+        value = item.get(field)
+        if isinstance(value, (list, tuple, set)):
+            value = sorted(str(member) for member in value if member is not None)
+        replacements[field] = "" if value is None else value
     return expression.format(**replacements)
 
 
@@ -54,8 +59,14 @@ def _member_values(value: Any) -> list[str]:
     if value is None:
         return []
     if isinstance(value, str):
-        return [value]
-    return [str(member) for member in value if member is not None]
+        return [value] if value.strip() else []
+    if not isinstance(value, (list, tuple, set)):
+        raise BundleExportError(
+            "Member fields must contain a node id or a list of node ids"
+        )
+    return [
+        str(member) for member in value if member is not None and str(member).strip()
+    ]
 
 
 def _members(
@@ -63,7 +74,7 @@ def _members(
 ) -> list[tuple[str, str, str | None]]:
     members: list[tuple[str, str, str | None]] = []
     if isinstance(relation_members, dict):
-        if relation_members.get("source") and relation_members.get("target"):
+        if set(relation_members) == {"source", "target"}:
             endpoint_ids = sorted(
                 (
                     str(relation.get(relation_members["source"], "")),
@@ -72,10 +83,20 @@ def _members(
             )
             return [("endpoint", node_id, None) for node_id in endpoint_ids]
         for role, field_name in relation_members.items():
-            value = relation.get(field_name)
-            if value is not None:
-                members.append((str(role), str(value), None))
-        return members
+            members.extend(
+                (str(role), node_id, None)
+                for node_id in _member_values(relation.get(field_name))
+            )
+        # A legacy participants list may accompany the new role-specific fields.
+        # Keep its otherwise unclassified members, without duplicating known roles.
+        classified = {node_id for role, node_id, _ in members if role != "member"}
+        return list(
+            dict.fromkeys(
+                member
+                for member in members
+                if member[0] != "member" or member[1] not in classified
+            )
+        )
     if isinstance(relation_members, str):
         return [
             ("member", member, None)
@@ -87,15 +108,15 @@ def _members(
                 (str(role), member, None)
                 for member in _member_values(relation.get(role, []))
             )
-        return members
+        return list(dict.fromkeys(members))
 
     if "source" in relation and "target" in relation:
         return [
             ("endpoint", node_id, None)
             for node_id in sorted((str(relation["source"]), str(relation["target"])))
         ]
-    values = relation.get("participants", [])
-    return [("member", str(member), None) for member in values]
+    values = _member_values(relation.get("participants", []))
+    return [("member", member, None) for member in values]
 
 
 def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -175,6 +196,11 @@ def export_bundle(
             }
         )
 
+    evidence_items = data.get("evidence", []) or []
+    if not isinstance(evidence_items, list) or any(
+        not isinstance(item, dict) for item in evidence_items
+    ):
+        raise BundleExportError("Assertion evidence must be a list of records")
     assertions: list[dict[str, Any]] = []
     members: list[dict[str, Any]] = []
     unresolved = 0
@@ -203,9 +229,9 @@ def export_bundle(
                 "id": assertion_id,
                 "predicate": predicate,
                 "topology": topology,
-                "semantics": "explicit_extraction",
-                "epistemic_status": "model_extracted",
-                "evidence_refs": [],
+                "semantics": relation.get("semantics", "explicit_extraction"),
+                "epistemic_status": relation.get("epistemic_status", "model_extracted"),
+                "evidence_refs": relation.get("evidence_refs", []),
                 "properties": relation,
             }
         )
@@ -225,6 +251,7 @@ def export_bundle(
     assertions.sort(key=lambda row: row["id"])
     members.sort(key=lambda row: (row["assertion_id"], row["ordinal"]))
     sources = metadata.get("sources", [])
+    assertions_with_evidence = sum(bool(row["evidence_refs"]) for row in assertions)
     bundle_id = _stable_id("bundle", {"data": data, "metadata": metadata})
     manifest = {
         "schema_version": BUNDLE_SCHEMA_VERSION,
@@ -240,11 +267,15 @@ def export_bundle(
             "assertions": len(assertions),
             "members": len(members),
             "unresolved_members": unresolved,
-            "assertions_with_evidence": 0,
+            "assertions_with_evidence": assertions_with_evidence,
         },
-        "limitations": [
-            "This Knowledge Abstract does not contain assertion-level source spans; evidence_refs remain empty."
-        ],
+        "limitations": (
+            [
+                "Some or all assertions lack source-level evidence; missing evidence is not inferred during export."
+            ]
+            if assertions_with_evidence < len(assertions)
+            else []
+        ),
     }
 
     (destination / "manifest.json").write_text(
@@ -253,7 +284,7 @@ def export_bundle(
     _write_jsonl(destination / "nodes.jsonl", nodes)
     _write_jsonl(destination / "assertions.jsonl", assertions)
     _write_jsonl(destination / "members.jsonl", members)
-    _write_jsonl(destination / "evidence.jsonl", [])
+    _write_jsonl(destination / "evidence.jsonl", evidence_items)
     report = (
         "# Hyper-Knowledge Bundle Report\n\n"
         f"- Bundle: `{bundle_id}`\n"
@@ -261,7 +292,7 @@ def export_bundle(
         f"- Assertions: {len(assertions)}\n"
         f"- Members: {len(members)}\n"
         f"- Unresolved members: {unresolved}\n"
-        "- Assertion-level evidence coverage: 0% because this Knowledge Abstract has no source spans\n\n"
+        f"- Assertions with evidence references: {assertions_with_evidence}/{len(assertions)}; reference coverage is not factual verification\n\n"
         "Hyperedges are preserved through the members table and are not flattened into pairwise facts.\n"
     )
     (destination / "REPORT.md").write_text(report, encoding="utf-8")
@@ -291,6 +322,157 @@ def read_bundle(bundle_path: str | Path) -> dict[str, Any]:
         "members": read_jsonl("members.jsonl"),
         "evidence": read_jsonl("evidence.jsonl"),
     }
+
+
+def _validate_source_evidence(
+    bundle: Path,
+    manifest: dict[str, Any],
+    evidence_items: list[dict[str, Any]],
+    quality: str,
+    check: Any,
+) -> None:
+    """Check local evidence when available, without fetching external sources.
+
+    A missing local source is an availability warning, not evidence of a false
+    claim. A quote is verbatim; a summary is explicitly not a verbatim quote.
+    """
+    sources = manifest.get("sources") or []
+    if not isinstance(sources, list):
+        check(
+            "bundle.source_inventory",
+            False,
+            "manifest.sources",
+            "Source inventory must be a list of records",
+        )
+        sources = []
+    inventory = {
+        str(source.get("path")): source
+        for source in sources
+        if isinstance(source, dict) and source.get("path")
+    }
+    cache: dict[Path, tuple[bytes, list[str] | None]] = {}
+    for index, item in enumerate(evidence_items):
+        if item.get("type") not in {"source_text_span", "source_text_summary"}:
+            continue
+        subject = str(item.get("id") or f"evidence.jsonl:{index + 1}")
+        source_name = item.get("source")
+        source = inventory.get(source_name) if isinstance(source_name, str) else None
+        check(
+            "bundle.evidence_source_ref",
+            source is not None,
+            subject,
+            f"source={source_name!r}",
+            supported_fix="Register the source path in manifest.sources",
+        )
+        start, end = item.get("line_start"), item.get("line_end")
+        span_valid = type(start) is int and type(end) is int and 1 <= start <= end
+        check(
+            "bundle.evidence_span",
+            span_valid,
+            subject,
+            f"line_start={start!r}, line_end={end!r}",
+            supported_fix="Use one-based inclusive line numbers with start <= end",
+        )
+        quote, summary = item.get("quote"), item.get("summary")
+        text_valid = any(
+            isinstance(text, str) and text.strip() for text in (quote, summary)
+        )
+        check(
+            "bundle.evidence_text",
+            text_valid,
+            subject,
+            "Evidence must provide a literal quote or an explicitly named summary",
+        )
+        if source is None:
+            continue
+        path = Path(source_name)
+        path_safe = path.is_absolute() or ".." not in path.parts
+        check(
+            "bundle.evidence_source_path", path_safe, subject, f"source={source_name!r}"
+        )
+        if not path_safe:
+            continue
+        candidates = (
+            [path] if path.is_absolute() else [bundle / path, bundle.parent / path]
+        )
+        source_ka = manifest.get("source_ka")
+        if isinstance(source_ka, str) and source_ka and not path.is_absolute():
+            candidates.append(Path(source_ka) / path)
+        # Metadata is not permission to read arbitrary files. Resolve symlinks
+        # and junctions before allowing source reads within the bundle's project.
+        allowed_root = bundle.parent.resolve()
+        local_path = None
+        for candidate in candidates:
+            try:
+                resolved = candidate.resolve()
+                if resolved.is_relative_to(allowed_root) and resolved.is_file():
+                    local_path = resolved
+                    break
+            except (OSError, RuntimeError):
+                continue
+        check(
+            "bundle.evidence_source_available",
+            local_path is not None,
+            subject,
+            f"local source {'available' if local_path else 'unavailable'}: {source_name}",
+            severity="warning",
+            supported_fix="Provide the original local source to enable span and quote checks",
+        )
+        if local_path is None:
+            continue
+        if local_path not in cache:
+            try:
+                content = local_path.read_bytes()
+            except OSError:
+                check(
+                    "bundle.evidence_source_readable",
+                    False,
+                    subject,
+                    "Local source cannot be read",
+                    severity="warning",
+                )
+                continue
+            try:
+                lines = content.decode("utf-8-sig").splitlines()
+            except UnicodeDecodeError:
+                lines = None
+            cache[local_path] = content, lines
+        content, lines = cache[local_path]
+        declared_hash = source.get("sha256")
+        if declared_hash:
+            check(
+                "bundle.evidence_source_sha256",
+                str(declared_hash).lower() == hashlib.sha256(content).hexdigest(),
+                subject,
+                f"Source SHA256 matches inventory: {source_name}",
+                supported_fix="Restore the registered source or explicitly update its provenance",
+            )
+        check(
+            "bundle.evidence_source_text",
+            lines is not None,
+            subject,
+            "UTF-8 source text required for line validation",
+            severity="warning",
+        )
+        if lines is None or not span_valid:
+            continue
+        in_bounds = end <= len(lines)
+        check(
+            "bundle.evidence_span_bounds",
+            in_bounds,
+            subject,
+            f"line_end={end}, source_lines={len(lines)}",
+        )
+        if in_bounds and isinstance(quote, str) and quote.strip():
+            excerpt = "\n".join(lines[start - 1 : end])
+            check(
+                "bundle.evidence_quote_verbatim",
+                quote.replace("\r\n", "\n") in excerpt,
+                subject,
+                f"Quote is a literal contiguous span of {source_name}:{start}-{end}",
+                severity="error" if quality == "showcase" else "warning",
+                supported_fix="Use a verbatim source span, or move the paraphrase to the summary field",
+            )
 
 
 def validate_bundle(
@@ -372,7 +554,9 @@ def validate_bundle(
     )
 
     def unique_ids(rows: list[dict[str, Any]], field: str) -> tuple[set[str], bool]:
-        values = [str(row.get(field, "")) for row in rows]
+        values = [row.get(field) for row in rows]
+        if any(not isinstance(value, str) or not value.strip() for value in values):
+            return {value for value in values if isinstance(value, str)}, False
         return set(values), bool(values) and "" not in values and len(
             set(values)
         ) == len(values)
@@ -380,6 +564,13 @@ def validate_bundle(
     node_ids, nodes_unique = unique_ids(nodes, "id")
     assertion_ids, assertions_unique = unique_ids(assertions, "id")
     evidence_ids = {str(row.get("id")) for row in evidence_items if row.get("id")}
+    check(
+        "bundle.evidence_ids",
+        not evidence_items or unique_ids(evidence_items, "id")[1],
+        "evidence.jsonl",
+        f"{len(evidence_ids)} unique ids across {len(evidence_items)} rows",
+        supported_fix="Assign a non-empty unique id to every evidence record",
+    )
     check(
         "bundle.node_ids",
         nodes_unique,
@@ -428,21 +619,83 @@ def validate_bundle(
             f"resolved={member.get('resolved')}, node_found={node_found}",
             supported_fix="Regenerate the resolved flag from the node table",
         )
+        check(
+            "bundle.member_role",
+            isinstance(member.get("role"), str) and bool(member["role"].strip()),
+            f"members.jsonl:{index + 1}",
+            f"role={member.get('role')!r}",
+            supported_fix="Use a non-empty semantic role string",
+        )
+        check(
+            "bundle.member_ordinal",
+            type(member.get("ordinal")) is int and member["ordinal"] >= 0,
+            f"members.jsonl:{index + 1}",
+            f"ordinal={member.get('ordinal')!r}",
+            supported_fix="Use a non-negative integer ordinal unique within the assertion",
+        )
 
     assertions_with_evidence = 0
     for assertion in assertions:
         assertion_id = str(assertion.get("id", ""))
         count = member_counts.get(assertion_id, 0)
+        assertion_members = members_by_assertion.get(assertion_id, [])
+        distinct_count = len(
+            {str(member.get("node_id", "")) for member in assertion_members}
+        )
         topology = assertion.get("topology")
-        valid_count = count == 2 if topology == "pairwise" else count >= 2
+        valid_count = (
+            distinct_count == 2 if topology == "pairwise" else distinct_count >= 2
+        )
         check(
             "bundle.topology_arity",
             topology in {"pairwise", "hyperedge"} and valid_count,
             assertion_id,
-            f"topology={topology}, members={count}",
-            supported_fix="Use two members for pairwise assertions and at least two for hyperedges",
+            f"topology={topology}, members={count}, distinct_nodes={distinct_count}",
+            supported_fix="Use two distinct nodes for pairwise assertions and at least two for hyperedges",
+        )
+        for field in ("predicate", "semantics", "epistemic_status"):
+            check(
+                "bundle.assertion_required_field",
+                isinstance(assertion.get(field), str)
+                and bool(assertion[field].strip()),
+                assertion_id,
+                f"{field}={assertion.get(field)!r}",
+                supported_fix=f"Provide a non-empty {field} string",
+            )
+        # Multiple roles for one node are meaningful; repeating the exact same
+        # role and node inflates incidence counts without adding information.
+        membership_keys = [
+            (str(member.get("node_id")), str(member.get("role")))
+            for member in assertion_members
+        ]
+        check(
+            "bundle.member_unique_role_node",
+            len(set(membership_keys)) == len(membership_keys),
+            assertion_id,
+            f"{len(set(membership_keys))} distinct role/node pairs across {count} rows",
+            supported_fix="Remove duplicate role/node memberships; keep distinct semantic roles",
+        )
+        ordinals = [member.get("ordinal") for member in assertion_members]
+        check(
+            "bundle.member_unique_ordinal",
+            all(type(value) is int for value in ordinals)
+            and len(set(str(value) for value in ordinals)) == len(ordinals),
+            assertion_id,
+            f"ordinals={ordinals}",
+            supported_fix="Assign each membership a unique non-negative ordinal within its assertion",
         )
         refs = assertion.get("evidence_refs", []) or []
+        refs_valid = isinstance(refs, list) and all(
+            isinstance(ref, str) and ref.strip() for ref in refs
+        )
+        check(
+            "bundle.evidence_refs_type",
+            refs_valid,
+            assertion_id,
+            "evidence_refs must be a list of non-empty ids",
+        )
+        if not refs_valid:
+            refs = []
         assertions_with_evidence += int(bool(refs))
         check(
             "bundle.evidence_coverage",
@@ -460,11 +713,7 @@ def validate_bundle(
                 f"evidence_ref={evidence_ref}",
                 supported_fix="Add the referenced evidence item or remove the stale reference",
             )
-        assertion_members = sorted(
-            members_by_assertion.get(assertion_id, []),
-            key=lambda item: int(item.get("ordinal", 0)),
-        )
-        roles = [str(member.get("role", "")) for member in assertion_members]
+        roles = [member.get("role") for member in assertion_members]
         check(
             "bundle.undirected_only",
             assertion.get("directed") is not True,
@@ -475,11 +724,12 @@ def validate_bundle(
         if topology == "hyperedge":
             check(
                 "bundle.hyperedge_roles",
-                all(roles),
+                all(isinstance(role, str) and role.strip() for role in roles),
                 assertion_id,
                 f"roles={roles}",
                 supported_fix="Assign an explicit role to every hyperedge member",
             )
+    _validate_source_evidence(bundle, manifest, evidence_items, quality, check)
     expected_counts = manifest.get("counts", {})
     actual_counts = {
         "nodes": len(nodes),
