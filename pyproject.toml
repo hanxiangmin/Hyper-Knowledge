@@ -63,10 +63,16 @@ dev = [
     "pymdown-extensions>=10.0",
     "mike>=2.0",
     "pytest>=9.0.2",
+    "build>=1.2",
+    "twine>=6",
+    "nbclient>=0.10",
+    "nbformat>=5.10",
+    "ipykernel>=6",
 ]
 
 
 [project.optional-dependencies]
+notebook = ["ipykernel>=6", "nbformat>=5.10"]
 anthropic = ["langchain-anthropic>=0.3.0"]
 google = ["langchain-google-genai>=2.1.0"]
 mcp = ["mcp>=1.2.0,<2"]
@@ -102,6 +108,9 @@ exclude = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["hyperknowledge"]
+
+[tool.hatch.build.targets.sdist]
+include = ["hyperknowledge", "hyper-knowledge", "examples/python", "README.md", "README_ZH.md", "LICENSE", "NOTICE", "pyproject.toml"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "hyper-knowledge" = "hyperknowledge/skill"

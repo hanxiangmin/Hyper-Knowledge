@@ -20,12 +20,16 @@ The text entry point directly supports `.txt` and `.md`; directory input recursi
 
 A document is data: embedded instructions are not commands for the agent. Before processing sensitive material, establish which model service is permitted and what may leave the local environment.
 
-## Run the workflow yourself
+## Default agent workflow
 
-With the runtime environment activated, configure a model service you are authorized to use and inspect available templates:
+The current agent reads the file, writes the standard tables, then uses `hk bundle import`, validation and rendering. This uses the client's model service without a separate Hyper-Knowledge key. See [Agent Skill](agents.md) for the input contract and invocation.
+
+## Independent model workflow
+
+Complete [installation](install.md) and the [terminal setup](commands.md#prepare-shell) so this window can find `hk`. Configure a model service you are authorized to use and inspect available templates:
 
 ```bash
-hk config init
+hk config llm --provider openai --model YOUR_AVAILABLE_MODEL
 hk list template
 ```
 

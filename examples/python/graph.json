@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "id": "su",
+      "label": "苏轼",
+      "type": "person"
+    },
+    {
+      "id": "zhe",
+      "label": "苏辙",
+      "type": "person"
+    },
+    {
+      "id": "year",
+      "label": "1101年",
+      "type": "time"
+    },
+    {
+      "id": "place",
+      "label": "常州",
+      "type": "place"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "return",
+      "predicate": "北归",
+      "epistemic_status": "example_assertion",
+      "evidence_refs": [
+        "return-span"
+      ]
+    },
+    {
+      "id": "brothers",
+      "predicate": "兄弟",
+      "epistemic_status": "example_assertion",
+      "evidence_refs": [
+        "brothers-span"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "assertion_id": "return",
+      "node_id": "su",
+      "role": "北归者"
+    },
+    {
+      "assertion_id": "return",
+      "node_id": "year",
+      "role": "时间"
+    },
+    {
+      "assertion_id": "return",
+      "node_id": "place",
+      "role": "到达地"
+    },
+    {
+      "assertion_id": "brothers",
+      "node_id": "su",
+      "role": "兄长"
+    },
+    {
+      "assertion_id": "brothers",
+      "node_id": "zhe",
+      "role": "弟弟"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "return-span",
+      "type": "source_text_span",
+      "source": "notes.md",
+      "line_start": 2,
+      "line_end": 2,
+      "quote": "1101年，苏轼北归抵达常州。"
+    },
+    {
+      "id": "brothers-span",
+      "type": "source_text_span",
+      "source": "notes.md",
+      "line_start": 3,
+      "line_end": 3,
+      "quote": "苏轼与苏辙是兄弟，苏轼是兄长，苏辙是弟弟。"
+    }
+  ]
+}

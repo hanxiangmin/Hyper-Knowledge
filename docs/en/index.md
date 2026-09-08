@@ -6,28 +6,136 @@ hide:
 ---
 
 <div class="hk-hero" markdown>
-<p class="hk-kicker">Hyper-Knowledge / Agent Skill</p>
+<p class="hk-kicker">Hyper-Knowledge / Python · CLI · Agent Skill</p>
 
 # Keep relationships in context.
 
 <p class="hk-lead">A person, a time, a place, and a role often explain one event together. Hyper-Knowledge organizes that context as a hyperedge, with an agent-guided workflow, inspectable data bundles, and an offline workbench.</p>
 
-[Install the Skill](guide/install.md){ .md-button .md-button--primary }
+[Get started](guide/install.md){ .md-button .md-button--primary }
 [Explore the Su Shi example](guide/sushi.md){ .md-button }
 </div>
 
-## Install from Codex chat
+## Two installation methods
 
-Paste this request directly into a local Codex chat. No terminal command or `codex` prefix is needed:
+Use your existing Python or Conda environment, or prepare one if needed. Choose either command-line or chat installation.
 
-```text
-Please install hyper-knowledge from https://github.com/hanxiangmin/Hyper-Knowledge.
-Follow the repository instructions to install the runtime in a local Python
-virtual environment and add the user-level Codex Skill.
-If an existing installation has local changes, ask before overwriting them.
+[Command-line instructions](guide/install.md#command-line){ .md-button .md-button--primary }
+[Chat instructions](guide/install.md#chat-install){ .md-button }
+
+<details markdown>
+<summary>Command-line installation: existing Python / Anaconda / Miniconda</summary>
+
+If you have a suitable **Python 3.11+ environment**, activate it and install directly. Anaconda / Miniconda users can follow the Conda steps below. Only users without an environment need the [Python / venv setup](guide/install.md#command-line).
+
+<details markdown>
+<summary>Anaconda / Miniconda: expand steps for creating or reusing an environment</summary>
+
+On Windows, open **Anaconda Prompt / Miniconda Prompt**; on macOS / Linux, use a Conda-enabled terminal.
+
+Run `conda env list` first. To create a new environment, confirm `hyper-knowledge` is not already in use, then run these lines in order, continuing only on success:
+
+<!-- hk-install-conda:start -->
+```bash
+conda create -n hyper-knowledge python=3.12 pip git
+conda activate hyper-knowledge
+```
+<!-- hk-install-conda:end -->
+
+To reuse a suitable environment instead, skip creation and run `conda activate research`, replacing `research` with your environment name. Check Python, pip and Git:
+
+```bash
+python --version
+python -c "import sys; print(sys.executable)"
+python -m pip --version
+git --version
 ```
 
-Review and approve network and file-write requests when prompted. [Terminal or manual installation](guide/install.md#terminal)
+Python should be 3.11+, and the interpreter and pip should belong to the chosen environment. If pip or Git is missing, confirm that environment changes are allowed, then run `conda install pip git` before installing this project. Do not install into `base` or experiments that must remain unchanged. No nested `.venv` is needed.
+
+In a new terminal, reactivate `hyper-knowledge` (or your chosen name) instead of reinstalling. [Detailed Conda, scripting and Notebook instructions](guide/install.md#reopen-shell)
+
+</details>
+
+In **the environment you selected**, run each line after the previous one succeeds:
+
+<!-- hk-install-runtime:start -->
+```bash
+python -m pip install "git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
+python -m hyperknowledge --help
+```
+<!-- hk-install-runtime:end -->
+
+When help appears, install a Skill only if you need it, choosing your client:
+
+**Codex:**
+
+```bash
+python -m hyperknowledge skill install --platform codex --scope user
+```
+
+**Kimi Code:**
+
+```bash
+python -m hyperknowledge skill install --platform kimi --scope user
+```
+
+Install both if you use both clients; the runtime is shared. Python / Notebook or CLI users do not need a Skill. `hk` is not built in: `python -m hyperknowledge` invokes the selected environment's runtime without assuming the shortcut exists.
+
+[Existing installations and edits](guide/install.md#existing-installation) · [Missing commands and troubleshooting](guide/install.md#installation-check)
+
+</details>
+
+### Install in chat
+
+Choose your client and copy its complete request directly into chat:
+
+**Codex**
+
+```text
+Please follow https://github.com/hanxiangmin/Hyper-Knowledge to install the user-level hyper-knowledge Skill for Codex. An existing Python/Conda environment is fine; ask before overwriting local edits.
+```
+
+**Kimi Code**
+
+```text
+Please follow https://github.com/hanxiangmin/Hyper-Knowledge to install the user-level hyper-knowledge Skill for Kimi Code. An existing Python/Conda environment is fine; ask before overwriting local edits.
+```
+
+You do not need to perform the command-line installation first. Repository instructions cover the details; handle any login or approval request yourself. Start a new session after installation. Web chat without local tool access cannot install software on your computer.
+
+## After installation: one core, three ways to use it
+
+After installation, use any of these entrances in your chosen Python / Conda environment. [Select the environment in a new terminal](guide/install.md#reopen-shell)
+
+<div class="hk-three" markdown>
+<section markdown>
+
+### Python / Notebook
+
+`extract_file()` parses text; `import_graph()` accepts structured input without a model key.
+
+[Python guide](guide/python.md) · [API reference](guide/api.md)
+</section>
+<section markdown>
+
+### Command line
+
+`hk parse` → `hk bundle export` → `hk visualize`.
+Structured input goes directly through `hk bundle import`.
+
+[Commands and examples](guide/commands.md)
+</section>
+<section markdown>
+
+### Agent Skill
+
+Codex and Kimi Code read the same standard Skill and call local Python.
+The default workflow uses the current agent's model, not a second key.
+
+[Install and invoke](guide/agents.md) · [Compatibility](guide/compatibility.md)
+</section>
+</div>
 
 <figure class="hk-media" markdown>
 
@@ -84,9 +192,11 @@ hyperedge with member roles. Deliver a validated bundle and an offline
 workbench, and identify relationships that lack source support.
 ```
 
-The Skill turns the request into an inspectable workflow; `hk` executes it. Explore the workbench with the offline demo before configuring a model. [Install the Skill](guide/install.md)
+The current agent reads the source; local Python imports and renders the result. No second model key is needed for this route. [Understand both workflows](guide/agents.md)
 
 ## Look first, then go deeper
+
+Click a screenshot to fill the screen. Click it again, click the background, or press Esc to return to the same spot.
 
 <div class="hk-gallery" markdown>
 <figure markdown>
@@ -109,8 +219,8 @@ The Skill turns the request into an inspectable workflow; `hk` executes it. Expl
 </figure>
 <figure markdown>
 
-[![The highlighted family enclosure on hover](../assets/showcase-v3/hover-enclosure-en.png)](../assets/showcase-v3/hover-enclosure-en.png)
+[![Su Zhe selected with his four incident hyperedges highlighted](../assets/showcase-v3/node-su-zhe-overview-en.png)](../assets/showcase-v3/node-su-zhe-overview-en.png)
 
-<figcaption>Trace a relationship while the rest fades.</figcaption>
+<figcaption>Select Su Zhe to highlight his four hyperedges while other relationships fade.</figcaption>
 </figure>
 </div>

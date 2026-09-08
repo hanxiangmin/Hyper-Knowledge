@@ -10,7 +10,7 @@
 <h1 align="center">Hyper-Knowledge</h1>
 
 <p align="center">
-  <strong>从文档构建可追溯的高阶知识图谱——既可以交给智能体，也可以直接使用命令行。</strong>
+  <strong>从文档构建可追溯的高阶知识图谱——支持 Python、Notebook、命令行与智能体。</strong>
 </p>
 
 <p align="center">
@@ -31,50 +31,137 @@
 
 [![总览、超边、节点与包络悬停的 GIF 动画导览](./docs/assets/showcase-v3/tour-zh.gif)](./docs/assets/showcase-v3/tour-zh.gif)
 
-## 安装完整 Agent Skill
+## 安装：命令行或聊天
 
-### 在 Codex 聊天框安装（推荐）
+已有 Python / Conda 环境就复用，不要求从头安装 Python。选择一种安装方式即可。
 
-直接将下面这段话复制到本地 Codex 的聊天框，不需要打开终端，也不需要加 `codex` 前缀：
+### 方式一：命令行安装
+
+已有合适的 **Python 3.11+ 环境**，激活后直接安装；Anaconda / Miniconda 用户按下面的 Conda 步骤操作。没有可用环境时，再看[Python / venv 准备步骤](./docs/zh/guide/install.md#command-line)，不用人人从头安装 Python。
+
+<details markdown>
+<summary>Anaconda / Miniconda：展开新建与复用环境的步骤</summary>
+
+Windows 打开 **Anaconda Prompt / Miniconda Prompt**；macOS / Linux 用能运行 `conda` 的终端。
+
+先用 `conda env list` 查看环境。要新建时，确认 `hyper-knowledge` 这个名字尚未使用，再逐行执行，前一步成功后再执行下一步：
+
+<!-- hk-install-conda:start -->
+```bash
+conda create -n hyper-knowledge python=3.12 pip git
+conda activate hyper-knowledge
+```
+<!-- hk-install-conda:end -->
+
+如果已经有合适环境，不创建新环境，直接 `conda activate research`，将 `research` 换成你自己的环境名。检查 Python、pip 和 Git：
+
+```bash
+python --version
+python -c "import sys; print(sys.executable)"
+python -m pip --version
+git --version
+```
+
+Python 应为 3.11+，解释器和 pip 都应属于目标环境。需要补 pip 或 Git 时，在确认可修改该环境后先 `conda install pip git`，再安装本项目。不要往 `base` 或需要保持不变的实验环境里安装，不需要在 Conda 内另建 `.venv`。
+
+每次打开新终端，重新 `conda activate hyper-knowledge`（或自己的环境名），而不是重新安装。[Conda 详细说明、脚本调用和 Notebook](./docs/zh/guide/install.md#reopen-shell)
+
+</details>
+
+在**已经选好的环境**中逐行运行；前一步成功后再执行下一步：
+
+<!-- hk-install-runtime:start -->
+```bash
+python -m pip install "git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
+python -m hyperknowledge --help
+```
+<!-- hk-install-runtime:end -->
+
+帮助页面出现后，需要 Skill 的用户再选择自己的客户端：
+
+**Codex：**
+
+```bash
+python -m hyperknowledge skill install --platform codex --scope user
+```
+
+**Kimi Code：**
+
+```bash
+python -m hyperknowledge skill install --platform kimi --scope user
+```
+
+两个客户端都使用时可以分别安装，共用同一个运行程序。只使用 Python / Notebook 或命令行，不必安装 Skill。`hk` 不是系统内置命令；这里用 `python -m hyperknowledge` 调用选中环境的运行程序，不要求事先识别 `hk`。
+
+[已有安装与本地修改](./docs/zh/guide/install.md#existing-installation) · [找不到命令等问题](./docs/zh/guide/install.md#installation-check)
+
+### 方式二：聊天安装
+
+选择你正在使用的客户端，直接复制对应的完整文案到聊天框：
+
+**Codex**
 
 ```text
-请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。
-已有安装如有本地修改，请先询问再覆盖。
+请按 https://github.com/hanxiangmin/Hyper-Knowledge 的安装说明，为 Codex 安装用户级 hyper-knowledge Skill。可使用已有 Python/Conda 环境，覆盖本地修改前先询问。
 ```
 
-按提示确认联网和写入权限即可。[命令行或手动安装](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/#terminal)
+**Kimi Code**
 
-### 手动安装
+```text
+请按 https://github.com/hanxiangmin/Hyper-Knowledge 的安装说明，为 Kimi Code 安装用户级 hyper-knowledge Skill。可使用已有 Python/Conda 环境，覆盖本地修改前先询问。
+```
 
-使用本地 Python 3.11+ 虚拟环境安装。
-托管安装器会把规范 Skill 复制到 Codex 的发现目录，同时生成一个绑定当前 Python 环境的运行入口：
+不需要先手动执行命令行安装。安装细节按仓库说明处理；需要登录或授权时由你确认。完成后开启新会话使用。普通网页聊天如果没有本地工具权限，不能替电脑安装程序。
+
+[完整安装说明](./docs/zh/guide/install.md) · [实际兼容性记录](./docs/zh/guide/compatibility.md)
+
+## 安装后的三种使用入口
+
+安装后可以选择以下三种用法。命令在你安装时选择的环境中执行；Conda 用户先激活对应环境，Notebook 用户选对应内核。
+
+### 1. Python / Notebook
+
+在已安装 Hyper-Knowledge 的 Python 环境或对应 Notebook 内核中运行：
+
+```python
+from hyperknowledge import extract_file, render_bundle_html
+
+result = extract_file("notes.md", output_dir="output", language="zh")
+render_bundle_html(result.bundle_path, "output/workbench.html")
+```
+
+请将 `notes.md` 换成自己的文档路径。文档自动解析需要先[配置模型服务](./docs/zh/guide/python.md)；结构化导入、校验和画图不需要模型密钥。
+[Python 指南](./docs/zh/guide/python.md) · [API 参考](./docs/zh/guide/api.md) · [无需模型的 Notebook](./examples/python/quickstart.ipynb)
+
+### 2. 命令行
+
+先激活选好的环境，例如 Conda 用户执行 `conda activate hyper-knowledge`（换成自己的环境名）。配置模型后，逐行处理你自己的 `notes.md`：
 
 ```bash
-git clone https://github.com/hanxiangmin/Hyper-Knowledge.git
-cd Hyper-Knowledge
-python -m venv .venv
-# macOS/Linux：source .venv/bin/activate
-# Windows PowerShell：.\.venv\Scripts\Activate.ps1
-python -m pip install -e .
-hk skill install --scope user --json
+python -m hyperknowledge config llm
+python -m hyperknowledge parse notes.md -t general/hypergraph -l zh --no-index -o output/ka
+python -m hyperknowledge bundle export output/ka -o output/bundle
+python -m hyperknowledge visualize output/bundle -o output/workbench.html --no-open
 ```
 
-如果只想安装到当前项目：
+前一步成功后再执行下一步。`--no-index` 不要求向量模型；文档自动解析仍需模型服务。打开 `output/workbench.html` 查看结果，重复运行时换一个输出目录。[无需密钥的结构化导入与批处理](./docs/zh/guide/commands.md)
 
-```bash
-hk skill install --scope project --project-root . --json
+### 3. Codex / Kimi Code Skill
+
+完成上面的 Skill 安装后，新建客户端会话。Codex 中输入：
+
+```text
+$hyper-knowledge 读取我提供的 notes.md，保留高阶关系、成员角色和原文依据，生成本地交互工作台。
 ```
 
-安装后即可使用。遇到启动问题时，可运行[可选的安装自检](https://hanxiangmin.github.io/Hyper-Knowledge/latest/zh/guide/install/#installation-check)。
+Kimi Code 中输入：
 
-如果运行时已经安装，而且 `hk` 已在 `PATH` 中，也可以使用标准 Agent Skills CLI，只复制 Skill 指令包：
-
-```bash
-npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
+```text
+/skill:hyper-knowledge 读取我提供的 notes.md，保留高阶关系、成员角色和原文依据，生成本地交互工作台。
 ```
 
-请注意：这条 Skill-only 命令**不会**安装 Python 运行时。`0.8.0` 已验证的托管集成对象是 Codex；其他智能体可以读取标准 `SKILL.md`，但本项目暂不宣称其运行时集成已经过测试。
+默认由当前 Agent 阅读原文，再调用本地 Python 导入、校验和出图，不需要额外配置 Hyper-Knowledge 模型密钥；客户端本身仍使用自己的模型服务。没有本地工具权限的网页聊天不能执行本地安装或解析。
+[Skill 用法与安装目录](./docs/zh/guide/agents.md) · [实际兼容性记录](./docs/zh/guide/compatibility.md)
 
 ## 实际效果
 
@@ -122,6 +209,8 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 
 ## 构建流程
 
+两条输入路径汇合到同一种 Bundle：当前 Agent 整理原文并通过 `import_graph()` 导入标准表；或使用下方模板引擎，由独立模型抽取 KA。两者共用校验器和渲染器。
+
 ```text
 文档
  │
@@ -143,40 +232,17 @@ npx skills add hanxiangmin/Hyper-Knowledge --skill hyper-knowledge -g
 4. **可视化**——把关联矩阵、关联聚焦、包络或原生二元视图导出到一个离线 HTML 文件。
 5. **追溯与查询**——检查证据来源、检索知识摘要，或基于索引进行问答。
 
-## 快速开始
+## 不配置模型也能运行
 
-### 1. 先运行无需模型服务的演示
-
-下面的命令不调用 LLM，也不访问网络，会生成一组用于比较普通图与超图的合成数据：
+[结构化教程](./examples/python/)为 Python、Notebook 和 CLI 提供同一份输入：
 
 ```bash
-hk skill demo -o hyperknowledge-skill-demo --json
+python examples/python/quickstart.py --output output/tutorial
 ```
 
-合成演示只用于验证流程，不能表述为真实来源证据。
+刚安装完成也可直接运行 `hk skill demo -o output/demo --json`，该演示使用合成数据。
 
-### 2. 抽取真实文档
-
-先把 `.env.example` 复制为 `.env`，配置你实际要使用的模型服务，然后执行：
-
-```bash
-hk list template
-hk parse source.md -o output/ka -t general/hypergraph -l zh
-hk bundle export output/ka -o output/bundle --force --json
-hk bundle validate output/bundle --quality showcase --json
-hk visualize output/bundle -o output/workbench.html --view contour --quality showcase --no-open --json
-```
-
-常用后续命令：
-
-```bash
-hk info output/ka
-hk search output/ka "你的问题" --top-k 5
-hk talk output/ka --query "当前有哪些高阶关联证据？"
-hk benchmark datasets source.md -o output/preflight --json
-```
-
-`hk parse` 可能会调用你配置的远程模型服务。处理敏感文本前，请先确认隐私、费用和数据治理要求。
+每次运行优先选择新的输出目录。导入和解析保护已有产物；校验会报告限制，不补造来源依据。返回值和异常见 [Python API](./docs/zh/guide/api.md)。
 
 ## 在智能体中使用
 
@@ -211,6 +277,7 @@ hyper-knowledge/
 │   ├── graph-hypergraph.md
 │   ├── modes.md
 │   ├── output-contract.md
+│   ├── structured-input.md
 │   ├── quality.md
 │   ├── safety.md
 │   └── visualization.md

@@ -1,14 +1,8 @@
-# 安装：命令行或聊天，二选一
+# 在 Codex / Kimi Code 中安装和使用
 
-**已经有 Python 或 Conda 环境，不需要从头再装一遍 Python。** 这里只区分两种安装方式：自己在命令行完成，或交给聊天中的客户端完成。环境管理方式由你选择。
+一套 Python 运行程序和一份标准 Skill。**Python / Conda / venv 都可作为环境选择，不要求另建一层 venv。** 安装方式仍然只有命令行和聊天两种。
 
-[命令行安装](#command-line) · [聊天安装](#chat-install)
-
-<span id="python"></span>
-<span id="agent-clients"></span>
-<span id="terminal"></span>
-
-## 方式一：命令行安装 { #command-line }
+## 方式一：命令行安装
 
 ### 第 1 步：选好 Python 环境，不必人人新建
 
@@ -151,7 +145,9 @@ python -m hyperknowledge skill install --platform kimi --scope user
 
 用哪个客户端就执行哪条，两者都用可以分别执行，不必重复安装运行程序。安装器返回状态和路径；提示本地修改或冲突时先查看，不自动加 `--force`。成功后在客户端新建会话。
 
-## 方式二：聊天中安装 { #chat-install }
+[重新打开终端与 Conda 脚本调用](install.md#reopen-shell) · [已有安装的处理](install.md#existing-installation)
+
+## 方式二：聊天中安装
 
 选择你正在使用的客户端，直接复制对应的完整文案到聊天框：
 
@@ -169,109 +165,79 @@ python -m hyperknowledge skill install --platform kimi --scope user
 
 不需要先手动执行命令行安装。安装细节按仓库说明处理；需要登录或授权时由你确认。完成后开启新会话使用。普通网页聊天如果没有本地工具权限，不能替电脑安装程序。
 
-## 安装后怎么用？
+## 在聊天中使用
 
-Codex 中输入 `$hyper-knowledge`，Kimi Code 中输入 `/skill:hyper-knowledge`，随后描述任务、提供文件即可。例如：“读取 notes.md，生成带成员角色和原文依据的高阶知识图谱工作台。”
+Codex 显式唤起：
 
-默认由当前客户端的模型读文档，再调用本地 Python；不需要另配一份 Hyper-Knowledge 模型密钥。Python/CLI 的独立自动解析需要[配置模型服务](python.md)，结构化导入和渲染则不需要。
+```text
+$hyper-knowledge 读取 notes.md，保留高阶关系和成员角色，
+在 output/ 下生成校验通过的 Bundle 和离线工作台。
+```
 
-[Python / Notebook](python.md) · [API 参考](api.md) · [CLI 配方](commands.md) · [Skill 用法](agents.md)
+Kimi Code 显式唤起：
 
-## 重新打开终端后怎么办？ { #reopen-shell }
+```text
+/skill:hyper-knowledge 读取 notes.md，保留高阶关系和成员角色，
+在 output/ 下生成校验通过的 Bundle 和离线工作台。
+```
 
-**Conda 环境**：打开 Anaconda Prompt 或能运行 Conda 的终端，激活安装时的环境：
+新会话中的自然语言请求：
+
+```text
+把 notes.md 构建成高阶知识图谱。人物、地点和时间分别建节点，
+展示成员角色和原文依据，生成本地可交互的工作台。
+```
+
+是否自动发现与客户端版本、会话刷新有关。[实测记录](compatibility.md)与安装路径适配分别记录。没有本地工具权限的网页聊天，不会自动获得本地 Python 执行能力。
+
+## 默认流程：由当前 Agent 整理
+
+1. Agent 把原文当数据读取，不执行文档夹带的指令。
+2. 整理节点、超边、成员角色、来源四张标准表。
+3. 使用安装后的启动器调用 bundle import、bundle validate、visualize。
+4. 检查结果，交付路径、数量和警告。
+
+无需再给 Hyper-Knowledge 配置一份模型密钥；客户端本身仍使用自己的模型服务，因此不称为“完全离线理解文档”。
+
+双成员超边、多角色和原文字面证据保留在 Bundle v1 中，哈希及统计由 Python 计算。校验通过不代表事实已被人工确认。
+
+## 可选流程：独立模型服务
+
+用户明确选择时，通过 `hk parse --no-index` 使用[项目模型配置](python.md)。文档会发送给该服务，密钥与 Agent 登录独立。两条流程最终使用同一种 Bundle 和工作台。
+
+## 进阶：安装目录与作用范围
+
+以下内容用于了解安装器的行为，不是第三种安装方式。通常保留前面的用户级安装即可。
+
+维护同一份符合 [Agent Skills 标准](https://agentskills.io/specification) 的 `SKILL.md`；平台差异只在安装目录。只供当前项目使用时，把上述安装命令的 `--scope user` 换成 `--scope project --project-root .`，其中 `.` 是终端当前项目目录。
+
+| 目标 | 用户级目录 | 项目级目录 |
+| --- | --- | --- |
+| codex | 已有 $CODEX_HOME/skills；默认 ~/.codex/skills | .agents/skills |
+| kimi | $KIMI_CODE_HOME/skills；默认 ~/.kimi-code/skills | .kimi-code/skills |
+| shared（可选） | ~/.agents/skills | .agents/skills |
+
+Codex 当前标准发现目录为 `.agents/skills`；本项目的 codex 安装目标保留此前 Codex 路径兼容性，不静默迁移。安装器发现冲突的共享/平台专用副本时会拒绝重复安装，要求先处理已有安装。目录依据：[Codex 说明](https://learn.chatgpt.com/docs/build-skills)、[Kimi 说明](https://www.kimi.com/code/docs/kimi-code-cli/customization/skills.html)。
+
+安装器将 Windows 的 `runtime/hk.cmd` 或 POSIX 的 `runtime/hk` 绑定到安装时的 Python 解释器，请保留该环境。非开发模式安装不依赖保留源码目录。`agents/openai.yaml` 只是可选界面信息，不是 Kimi 的运行条件。
+
+
+## 更新、卸载和排查
+
+先激活安装时的环境；Conda 用户执行 `conda activate 环境名`，或在以下命令前改用 `conda run -n 环境名 python`。不要照搬 venv 的目录路径。
+
+运行程序更新后，用同一环境重新执行对应 Skill 安装命令。更新前检查源码和 Skill 的本地修改；更换解释器会改变 Skill 的运行环境，须先确认。[完整说明](install.md#existing-installation)
+
+只有确实要卸载 Kimi 的用户级 Skill 时才执行：
 
 ```bash
-conda activate hyper-knowledge
-python -m hyperknowledge --help
+python -m hyperknowledge skill uninstall --platform kimi --scope user --json
 ```
 
-如果用了其他环境名，就换成你的名字。也可以不手动激活，明确指定环境执行；这适合脚本调用：
+可选的启动诊断：
 
 ```bash
-conda run -n hyper-knowledge python -m hyperknowledge --help
-conda run -n hyper-knowledge python -m hyperknowledge skill install --platform codex --scope user
+python -m hyperknowledge skill doctor --platform kimi --scope user --deep --json
 ```
 
-第二条只在需要安装或更新 Skill 时执行，不是每次运行都要执行。Kimi 使用 `--platform kimi`。按路径创建的 Conda 环境使用 `conda run -p "环境完整路径"` 替换 `conda run -n hyper-knowledge`。
-
-**venv 环境**：Windows PowerShell 可直接调用固定路径，不必激活：
-
-```powershell
-& "$env:USERPROFILE\.venvs\hyper-knowledge\Scripts\python.exe" -m hyperknowledge --help
-```
-
-macOS / Linux：
-
-```bash
-source "$HOME/.venvs/hyper-knowledge/bin/activate"
-python -m hyperknowledge --help
-```
-
-**其他已有环境**：按原来的方式激活，检查 `python -c "import sys; print(sys.executable)"`，再调用 `python -m hyperknowledge`。
-
-`hk` 是运行程序安装后生成的快捷命令，不是系统内置命令。已激活环境且 `hk --help` 正常时可以用简写，否则继续使用上面的 `python -m hyperknowledge`。Conda 不要照搬 venv 的 `Scripts/python.exe` 路径；推荐激活或用 `conda run`，以保留 Conda 所需的环境设置。
-
-## Notebook 怎样使用同一个 Conda 环境？ { #conda-notebook }
-
-先完成上面的运行程序安装。然后在终端中运行：
-
-```bash
-conda activate hyper-knowledge
-python -m pip install ipykernel
-python -m ipykernel install --user --name hyper-knowledge --display-name "Python (Hyper-Knowledge)"
-```
-
-如果复用了其他环境，第一行改成它的名字。后两行安装并注册内核，不会创建另一套 Python。已有同名内核时，先选择它检查路径；不要覆盖需要保留的内核，必要时换一个 `--name`。
-
-在 Jupyter / VS Code 的 Notebook 内核菜单选择 **Python (Hyper-Knowledge)**，然后运行：
-
-```python
-import sys
-import hyperknowledge
-
-print(sys.executable)
-print(hyperknowledge.__version__)
-```
-
-解释器应指向刚才的 Conda 环境。Notebook 自己的服务器环境可以不同，但执行代码的内核必须选对。[可执行 Notebook 示例与嵌入工作台](python.md#notebook)
-
-## 已有安装与安装中断 { #existing-installation }
-
-不要删除已有环境，也不要直接强制覆盖 Skill。在目标环境中先查看：
-
-```bash
-python -m pip show hyper-knowledge
-python -c "import sys; print(sys.executable)"
-```
-
-这会显示版本、位置和解释器；它不负责判断所有本地修改。发现可编辑源码、被修改的 Skill 或冲突副本时，先看差异并询问，再决定更新。更换 Python 环境时，也应先确认是否要重新绑定已有 Skill，不能静默换掉正在使用的运行程序。
-
-首次安装下载中断时，重新激活**同一个环境**，只重试第 2 步的 pip 安装；不重建环境、不再次 `conda create`。前一步失败就先处理，不继续执行后面的 Skill 命令。
-
-## 需要排查时再看 { #installation-check }
-
-| 问题 | 处理方式 |
-| --- | --- |
-| Windows 找不到 `conda` | 先用 Anaconda / Miniconda Prompt，不必在普通 PowerShell 里反复重装 Python |
-| `conda activate` 在当前终端无效 | 换到已初始化的 Conda 终端，或使用上面的 `conda run`；不要在错误环境里继续 pip 安装 |
-| Python 太旧或 pip 不属于目标环境 | 重新选环境，或新建 Python 3.12 的独立环境，不强行升级原实验环境 |
-| 找不到 `git` | Conda 环境可在安装本项目前用 `conda install git`；也可安装系统 Git |
-| 找不到 `hk` 或 `hyperknowledge` 模块 | 检查是否激活了安装时的环境，以及第 2 步是否成功 |
-| Conda 中命令正常，桌面客户端却报 DLL / 库加载错误 | 可能缺少激活时的环境设置；先在同一个已激活终端中启动客户端，或用 `conda run` 复现，不要重新安装到 base |
-| Notebook 无法 import，但终端可以 | 查看 Notebook 的 `sys.executable`，重新选择正确内核 |
-| Skill 提示本地修改或重复副本 | 检查现有安装，不自行追加 `--force` |
-
-可选诊断（在安装时的环境执行）：
-
-```bash
-python -m hyperknowledge skill doctor --platform codex --scope user --deep --json
-```
-
-Kimi 换成 `--platform kimi`。这不是必须步骤，也不是 Docker；它检查本地安装和合成流程，不代表真实客户端已完整测试通过。
-
-## 给代为安装的客户端
-
-用户只需要上面的短安装请求。实际执行时，请阅读这份说明，确认用户要用的客户端和环境；没有指定环境时，不擅自修改 base、系统 Python 或研究环境。运行程序和 Skill 使用同一个长期保留的解释器；发现已有本地修改先询问。结束时返回安装位置和使用方式，明确未完成项，不绕过登录或权限要求。
-
-环境说明参考 [Conda 环境管理](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)、[在 Conda 中使用 pip](https://www.anaconda.com/docs/getting-started/working-with-conda/packages/pip-install) 和 [conda run](https://docs.conda.io/projects/conda/en/latest/commands/run.html)。[兼容性与实际测试范围](compatibility.md)单独记录；本地尚未推送的代码不包含在 GitHub 安装包中，测试它时把 pip 安装地址换成本地 wheel。
+Codex 使用 `--platform codex`。卸载仅针对对应受管理 Skill，不卸载客户端应用。诊断不是正常安装的必要步骤，也不能代替真实客户端测试。[Conda 激活和 DLL 等常见问题](install.md#installation-check)

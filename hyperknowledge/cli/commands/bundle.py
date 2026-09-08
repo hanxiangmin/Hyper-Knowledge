@@ -11,7 +11,54 @@ from rich.console import Console
 from hyperknowledge.bundle import BundleExportError, export_bundle, validate_bundle
 
 console = Console()
-app = typer.Typer(name="bundle", help="Export versioned graph and hypergraph bundles")
+app = typer.Typer(
+    name="bundle", help="Import, export and validate versioned knowledge bundles"
+)
+
+
+@app.command(name="import")
+def import_command(
+    graph: Path = typer.Argument(..., help="JSON containing Bundle-v1 tables"),
+    output: Path = typer.Option(..., "--output", "-o", help="Bundle output directory"),
+    source: list[str] = typer.Option(
+        [], "--source", help="Allowed source NAME=PATH; repeat for multiple files"
+    ),
+    language: str = typer.Option("zh", "--lang", "-l"),
+    quality: str = typer.Option("standard", help="standard or showcase"),
+    force: bool = typer.Option(
+        False, help="Retain old output as a backup and replace it"
+    ),
+    as_json: bool = typer.Option(False, "--json", help="Emit machine-readable JSON"),
+):
+    """Import structured hypergraph data locally, without a model or vector index."""
+    from hyperknowledge.api import import_graph
+
+    try:
+        sources = {}
+        for item in source:
+            name, separator, path = item.partition("=")
+            if not separator or not name or not path or name in sources:
+                raise ValueError("Use one unique --source NAME=PATH per source file")
+            sources[name] = path
+        result = import_graph(
+            graph,
+            output_dir=output,
+            sources=sources,
+            language=language,
+            quality=quality,
+            force=force,
+        )
+        payload = {"ok": True, **result.to_dict()}
+    except (ValueError, OSError, TypeError) as exc:
+        if as_json:
+            typer.echo(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=True))
+        else:
+            console.print(f"[red]Error:[/red] {exc}")
+        raise typer.Exit(1)
+    if as_json:
+        typer.echo(json.dumps(payload, ensure_ascii=True, indent=2))
+    else:
+        console.print(f"[green]Bundle imported:[/green] {result.bundle_path}")
 
 
 @app.command(name="export")
@@ -51,7 +98,7 @@ def validate(
     except (BundleExportError, OSError, json.JSONDecodeError) as exc:
         receipt = {"status": "error", "error": str(exc)}
     if as_json:
-        typer.echo(json.dumps(receipt, ensure_ascii=False, indent=2))
+        typer.echo(json.dumps(receipt, ensure_ascii=True, indent=2))
     else:
         summary = receipt.get("summary", {})
         console.print(

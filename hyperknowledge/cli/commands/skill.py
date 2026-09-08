@@ -1,4 +1,4 @@
-"""Manage the bundled Codex skill."""
+"""Manage the bundled skill for local agent clients."""
 
 from __future__ import annotations
 
@@ -16,22 +16,21 @@ from hyperknowledge.skill_manager import (
 )
 
 console = Console()
-app = typer.Typer(name="skill", help="Install and verify the Codex skill")
-
-
-def _require_codex(platform: str) -> None:
-    if platform.lower() != "codex":
-        raise typer.BadParameter("Only the 'codex' platform is supported in v0.5")
+app = typer.Typer(
+    name="skill", help="Manage the Skill for Codex, Kimi Code, or shared use"
+)
 
 
 def _emit(payload: dict[str, object], as_json: bool) -> None:
     if as_json:
-        typer.echo(json.dumps(payload, ensure_ascii=False, indent=2))
+        typer.echo(json.dumps(payload, ensure_ascii=True, indent=2))
         return
     status = payload.get("status", "unknown")
     path = payload.get("path", "")
     color = "green" if payload.get("ok") else "yellow"
     console.print(f"[{color}]{status}[/{color}]: {path}")
+    if payload.get("error"):
+        console.print(f"[red]{payload['error']}[/red]")
     for issue in payload.get("issues", []):
         console.print(f"[yellow]- {issue}[/yellow]")
     if payload.get("backup_path"):
@@ -55,7 +54,7 @@ def _run(operation, *, as_json: bool, **kwargs) -> None:
 @app.command(name="install")
 def install(
     platform: str = typer.Option(
-        "codex", help="Target agent platform (currently: codex)"
+        "codex", help="Skill destination: codex, kimi, or shared (.agents/skills)"
     ),
     scope: str = typer.Option("user", help="Installation scope: user or project"),
     project_root: Path | None = typer.Option(
@@ -64,11 +63,11 @@ def install(
     force: bool = typer.Option(False, help="Replace an unmanaged or modified skill"),
     as_json: bool = typer.Option(False, "--json", help="Emit machine-readable JSON"),
 ):
-    """Install the bundled skill into an official Codex discovery directory."""
-    _require_codex(platform)
+    """Install the Skill with a launcher pinned to the current Python environment."""
     _run(
         install_skill,
         as_json=as_json,
+        platform=platform,
         scope=scope,
         project_root=project_root,
         force=force,
@@ -78,7 +77,7 @@ def install(
 @app.command(name="doctor")
 def doctor(
     platform: str = typer.Option(
-        "codex", help="Target agent platform (currently: codex)"
+        "codex", help="Skill destination: codex, kimi, or shared (.agents/skills)"
     ),
     scope: str = typer.Option("user", help="Installation scope: user or project"),
     project_root: Path | None = typer.Option(
@@ -90,10 +89,10 @@ def doctor(
     ),
 ):
     """Check bundled files, installation ownership, version, and drift."""
-    _require_codex(platform)
     _run(
         doctor_skill,
         as_json=as_json,
+        platform=platform,
         scope=scope,
         project_root=project_root,
         deep=deep,
@@ -130,7 +129,7 @@ def demo(
 @app.command(name="uninstall")
 def uninstall(
     platform: str = typer.Option(
-        "codex", help="Target agent platform (currently: codex)"
+        "codex", help="Skill destination: codex, kimi, or shared (.agents/skills)"
     ),
     scope: str = typer.Option("user", help="Installation scope: user or project"),
     project_root: Path | None = typer.Option(
@@ -140,10 +139,10 @@ def uninstall(
     as_json: bool = typer.Option(False, "--json", help="Emit machine-readable JSON"),
 ):
     """Remove only the managed Hyper-Knowledge skill directory."""
-    _require_codex(platform)
     _run(
         uninstall_skill,
         as_json=as_json,
+        platform=platform,
         scope=scope,
         project_root=project_root,
         force=force,

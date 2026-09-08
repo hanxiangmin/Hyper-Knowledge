@@ -6,27 +6,136 @@ hide:
 ---
 
 <div class="hk-hero" markdown>
-<p class="hk-kicker">Hyper-Knowledge / Agent Skill</p>
+<p class="hk-kicker">Hyper-Knowledge / Python · CLI · Agent Skill</p>
 
 # 让关系保留上下文。
 
 <p class="hk-lead">人物、时间、地点和角色，常常共同解释一件事。Hyper-Knowledge 把这样的共同语境组织成超边，交给智能体构建，再用可追溯的数据包和离线工作台检查、阅读与分享。</p>
 
-[安装 Skill](guide/install.md){ .md-button .md-button--primary }
+[开始使用](guide/install.md){ .md-button .md-button--primary }
 [从苏轼案例开始](guide/sushi.md){ .md-button }
 </div>
 
-## 在 Codex 聊天框安装
+## 两种安装方式
 
-直接将下面这段话复制到本地 Codex 的聊天框，不需要打开终端，也不需要加 `codex` 前缀：
+有 Python 或 Conda 环境，直接使用；没有环境，再按教程准备。命令行安装与聊天安装任选其一。
 
-```text
-请帮我安装 https://github.com/hanxiangmin/Hyper-Knowledge 中的 hyper-knowledge。
-请按仓库说明，在本地 Python 虚拟环境中安装运行程序和用户级 Codex Skill。
-已有安装如有本地修改，请先询问再覆盖。
+[命令行安装说明](guide/install.md#command-line){ .md-button .md-button--primary }
+[聊天安装说明](guide/install.md#chat-install){ .md-button }
+
+<details markdown>
+<summary>命令行安装：已有环境 / Anaconda / Miniconda</summary>
+
+已有合适的 **Python 3.11+ 环境**，激活后直接安装；Anaconda / Miniconda 用户按下面的 Conda 步骤操作。没有可用环境时，再看[Python / venv 准备步骤](guide/install.md#command-line)，不用人人从头安装 Python。
+
+<details markdown>
+<summary>Anaconda / Miniconda：展开新建与复用环境的步骤</summary>
+
+Windows 打开 **Anaconda Prompt / Miniconda Prompt**；macOS / Linux 用能运行 `conda` 的终端。
+
+先用 `conda env list` 查看环境。要新建时，确认 `hyper-knowledge` 这个名字尚未使用，再逐行执行，前一步成功后再执行下一步：
+
+<!-- hk-install-conda:start -->
+```bash
+conda create -n hyper-knowledge python=3.12 pip git
+conda activate hyper-knowledge
+```
+<!-- hk-install-conda:end -->
+
+如果已经有合适环境，不创建新环境，直接 `conda activate research`，将 `research` 换成你自己的环境名。检查 Python、pip 和 Git：
+
+```bash
+python --version
+python -c "import sys; print(sys.executable)"
+python -m pip --version
+git --version
 ```
 
-按提示确认联网和写入权限即可。[命令行或手动安装](guide/install.md#terminal)
+Python 应为 3.11+，解释器和 pip 都应属于目标环境。需要补 pip 或 Git 时，在确认可修改该环境后先 `conda install pip git`，再安装本项目。不要往 `base` 或需要保持不变的实验环境里安装，不需要在 Conda 内另建 `.venv`。
+
+每次打开新终端，重新 `conda activate hyper-knowledge`（或自己的环境名），而不是重新安装。[Conda 详细说明、脚本调用和 Notebook](guide/install.md#reopen-shell)
+
+</details>
+
+在**已经选好的环境**中逐行运行；前一步成功后再执行下一步：
+
+<!-- hk-install-runtime:start -->
+```bash
+python -m pip install "git+https://github.com/hanxiangmin/Hyper-Knowledge.git"
+python -m hyperknowledge --help
+```
+<!-- hk-install-runtime:end -->
+
+帮助页面出现后，需要 Skill 的用户再选择自己的客户端：
+
+**Codex：**
+
+```bash
+python -m hyperknowledge skill install --platform codex --scope user
+```
+
+**Kimi Code：**
+
+```bash
+python -m hyperknowledge skill install --platform kimi --scope user
+```
+
+两个客户端都使用时可以分别安装，共用同一个运行程序。只使用 Python / Notebook 或命令行，不必安装 Skill。`hk` 不是系统内置命令；这里用 `python -m hyperknowledge` 调用选中环境的运行程序，不要求事先识别 `hk`。
+
+[已有安装与本地修改](guide/install.md#existing-installation) · [找不到命令等问题](guide/install.md#installation-check)
+
+</details>
+
+### 在聊天中安装
+
+选择你正在使用的客户端，直接复制对应的完整文案到聊天框：
+
+**Codex**
+
+```text
+请按 https://github.com/hanxiangmin/Hyper-Knowledge 的安装说明，为 Codex 安装用户级 hyper-knowledge Skill。可使用已有 Python/Conda 环境，覆盖本地修改前先询问。
+```
+
+**Kimi Code**
+
+```text
+请按 https://github.com/hanxiangmin/Hyper-Knowledge 的安装说明，为 Kimi Code 安装用户级 hyper-knowledge Skill。可使用已有 Python/Conda 环境，覆盖本地修改前先询问。
+```
+
+不需要先手动执行命令行安装。安装细节按仓库说明处理；需要登录或授权时由你确认。完成后开启新会话使用。普通网页聊天如果没有本地工具权限，不能替电脑安装程序。
+
+## 安装后，一套核心、三种用法
+
+安装完成后，在选好的 Python / Conda 环境中使用下面任意入口。[新终端怎样选择环境](guide/install.md#reopen-shell)
+
+<div class="hk-three" markdown>
+<section markdown>
+
+### Python / Notebook
+
+`extract_file()` 解析文本；`import_graph()` 导入结构化结果，不需要模型密钥。
+
+[Python 指南](guide/python.md) · [API 参考](guide/api.md)
+</section>
+<section markdown>
+
+### 命令行
+
+`hk parse` → `hk bundle export` → `hk visualize`。
+已有结构化结果直接使用 `hk bundle import`。
+
+[完整命令与样例](guide/commands.md)
+</section>
+<section markdown>
+
+### Agent Skill
+
+Codex、Kimi Code 读取同一份标准 Skill，调用本地 Python。
+默认使用当前 Agent 的模型，不额外配置一份密钥。
+
+[安装与唤起](guide/agents.md) · [兼容性记录](guide/compatibility.md)
+</section>
+</div>
 
 <figure class="hk-media" markdown>
 
@@ -82,9 +191,11 @@ hide:
 输出可校验的 bundle 和离线工作台，列出缺少来源支持的关系。
 ```
 
-Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型配置也可以先运行离线演示，体验图谱工作台。[安装 Skill](guide/install.md)
+当前 Agent 读取原文，本地 Python 导入并渲染结果；这条流程不额外配置一份模型密钥。[了解两种流程](guide/agents.md)
 
 ## 先看清，再深入
+
+点击图片全屏查看，再点图片、空白处或按 Esc 返回原位置。
 
 <div class="hk-gallery" markdown>
 <figure markdown>
@@ -107,8 +218,8 @@ Skill 负责把需求转成可检查的步骤；`hk` 负责执行。没有模型
 </figure>
 <figure markdown>
 
-[![悬停时突出显示的三苏包络](../assets/showcase-v3/hover-enclosure-zh.png)](../assets/showcase-v3/hover-enclosure-zh.png)
+[![点击苏辙后高亮其参与的四条超边](../assets/showcase-v3/node-su-zhe-overview-zh.png)](../assets/showcase-v3/node-su-zhe-overview-zh.png)
 
-<figcaption>当前关系着色，其余内容淡化。</figcaption>
+<figcaption>点击苏辙，查看其参与的四条超边，其余关系淡化。</figcaption>
 </figure>
 </div>

@@ -9,6 +9,10 @@ from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
 GUIDES = (
+    "python",
+    "api",
+    "agents",
+    "compatibility",
     "install",
     "document",
     "modeling",

@@ -2,7 +2,7 @@
 
 ## Do I need my own server?
 
-The local Skill and exported workbench do not require a website server. Extracting a new document requires a model: use a configured remote service or host and configure a compatible model locally. Remote-service costs and data-handling policies belong to the provider.
+The local runtime and exported workbench need no website server. The default Skill route uses the current agent's model service to understand the document. Independent Python/CLI extraction uses a separately configured model; structured import and rendering need none. [Choose a route](agents.md).
 
 This GitHub Pages site documents and demonstrates the project. It does not offer document upload or hosted parsing.
 
@@ -12,9 +12,27 @@ No. Validate it, then render it. Changing views, inspecting memberships, moving 
 
 ## Why is hk unavailable after installing the Skill?
 
-The instruction package and Python runtime are separate. Check that `hk --version` works in the intended environment, then run `hk skill doctor --deep --json` with the matching scope. Moving the virtual environment requires regenerating the managed launcher.
+Copying Skill files alone does not install the Python runtime. Even an installed runtime may have no `hk` command in a terminal that is not using its environment. Check help through the explicit Python path instead of repeating a missing command.
 
-Do not conceal environment problems by disabling validation or arbitrarily editing generated path files.
+**Conda users:** select the environment without guessing its Python path. Replace the environment name if different:
+
+```bash
+conda run -n hyper-knowledge python -m hyperknowledge --help
+```
+
+**venv users**, Windows PowerShell after following the tutorial:
+
+```powershell
+& "$env:USERPROFILE\.venvs\hyper-knowledge\Scripts\python.exe" -m hyperknowledge --help
+```
+
+macOS / Linux after following the venv tutorial:
+
+```bash
+"$HOME/.venvs/hyper-knowledge/bin/python" -m hyperknowledge --help
+```
+
+For other existing environments, activate as usual and run `python -m hyperknowledge --help`. If help appears, you do not need to reinstall; [prepare the shortcut in this terminal](commands.md#prepare-shell). If the module or path is missing, follow the [complete setup](install.md). Use [optional diagnostics](install.md#installation-check) for persistent failures; do not hide problems by disabling checks or editing paths arbitrarily.
 
 ## Can I pass a PDF or scan directly?
 

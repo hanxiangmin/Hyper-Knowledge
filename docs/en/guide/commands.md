@@ -1,58 +1,111 @@
 # Command recipes
 
-Use the command that fits your task; you do not need to learn an entire SDK first. Complete [installation](install.md) and activate the environment. Relative paths start at your current working directory.
+Complete [command-line or chat installation](install.md) first. Paths below are relative to the terminal's current directory; supply or download the example inputs before using them.
 
-## Check the Skill's runtime connection
+## Make `hk` available in this terminal { #prepare-shell }
+
+`hk` is an installed shortcut, not a built-in command. Choose the case matching your installation environment.
+
+**Anaconda / Miniconda users:** open a Conda terminal and activate the installation environment, substituting its name if different:
 
 ```bash
-hk --version
-hk skill doctor --scope user --deep --json
+conda activate hyper-knowledge
+python -c "import sys; print(sys.executable)"
+hk --help
 ```
 
-For a project-scoped installation:
+Without manual activation, replace each leading `hk` with `conda run -n hyper-knowledge python -m hyperknowledge`.
 
-```bash
-hk skill doctor --scope project --project-root . --deep --json
+**Windows users who created the tutorial's venv:** add its command directory to **this PowerShell window's** PATH without changing execution policy. This is not a Conda directory:
+
+```powershell
+$hkScripts = Join-Path $env:USERPROFILE ".venvs\hyper-knowledge\Scripts"
+if (-not (Test-Path -LiteralPath (Join-Path $hkScripts "hk.exe"))) {
+    throw "Hyper-Knowledge is not installed at this path. Follow the installation guide first."
+}
+$env:PATH = "$hkScripts;$env:PATH"
+hk --help
 ```
 
-The doctor checks installation and runtime health, not a model's understanding of your document.
-
-## Try a synthetic demo without a model
+**macOS / Linux users who created the tutorial's venv:**
 
 ```bash
-hk skill demo -o output/local-demo --json
+source "$HOME/.venvs/hyper-knowledge/bin/activate"
+hk --help
 ```
 
-The receipt identifies the bundle, validation, and workbench outputs. Preserve previous results and use a new directory for another run.
+**Other existing environments:** activate as usual and run `python -m hyperknowledge --help`. Continue after help appears, and select the environment again in a new terminal. If `hk` is missing, substitute `python -m hyperknowledge` in the selected environment. [Environment and full-path instructions](install.md#reopen-shell)
 
-## Start from a document
+## Document → KA → Bundle → workbench
+
+After [configuring a chat model](python.md):
 
 ```bash
-hk config init
-hk list template
-hk parse notes.md -t general/hypergraph -l en --no-index -o output/notes-ka
-hk bundle export output/notes-ka -o output/notes-bundle --json
+hk parse notes.md -t general/hypergraph -l en --no-index -o output/ka
+hk bundle export output/ka -o output/bundle
+hk visualize output/bundle -o output/workbench.html --no-open
 ```
 
-Extraction requires a working model configuration. A template constrains the output structure but does not guarantee correct entities, roles, or event boundaries. Keep credentials out of commits and public command screenshots.
+`--no-index` skips indexing and does not require an embedder. Parsing still uses your model service.
 
-## Start from an existing bundle
+## Structured input, no model key
+
+The same [fixture](https://github.com/hanxiangmin/Hyper-Knowledge/tree/main/examples/python) is used by the Python and Notebook examples:
 
 ```bash
-hk bundle validate output/notes-bundle --quality showcase --json
-hk visualize output/notes-bundle -o output/notes-workbench.html --view contour --no-open --json
+hk bundle import examples/python/graph.json --source notes.md=examples/python/notes.md -o output/cli-bundle --json
+hk bundle validate output/cli-bundle --quality showcase --json
+hk visualize output/cli-bundle -o output/cli-workbench.html --no-open --json
 ```
 
-Use `--view incidence` instead of `--view contour` to open the incidence view initially. Access the matrix through its separate button in the workbench.
+`bundle import` shares implementation with `import_graph()`. Repeat `--source NAME=PATH` for multiple explicitly allowed source files; quote arguments containing spaces.
+`--quality` is standard by default; showcase applies stricter evidence checks.
+`--force` is opt-in and preserves a sibling backup; use a new output directory normally.
 
-## Check options instead of guessing
+## Batch document processing
+
+Bash:
 
 ```bash
+for file in notes/*.md; do
+  name="$(basename "$file" .md)"
+  hk parse "$file" -t general/hypergraph -l en --no-index -o "output/$name/ka" &&
+  hk bundle export "output/$name/ka" -o "output/$name/bundle" &&
+  hk visualize "output/$name/bundle" -o "output/$name/workbench.html" --no-open || exit 1
+done
+```
+
+PowerShell:
+
+```powershell
+Get-ChildItem notes -Filter *.md | ForEach-Object {
+  $target = Join-Path output $_.BaseName
+  hk parse $_.FullName -t general/hypergraph -l en --no-index -o "$target/ka"
+  if ($LASTEXITCODE) { throw "Parse failed" }
+  hk bundle export "$target/ka" -o "$target/bundle"
+  if ($LASTEXITCODE) { throw "Export failed" }
+  hk visualize "$target/bundle" -o "$target/workbench.html" --no-open
+  if ($LASTEXITCODE) { throw "Render failed" }
+}
+```
+
+Each document keeps its own output and provenance. These loops stop on failure; they are not an implicit graph merge.
+
+## Machine calls and error handling
+
+Import/export/validate/visualize support `--json`; it is not a universal CLI flag.
+Import success returns `ok=true`, paths, counts and warnings with exit code 0.
+Import failures return `ok=false`, error text and exit code 1; argument parsing errors use the CLI's nonzero usage code.
+Validation callers must check the process exit code and receipt status.
+Dependency logs can appear on stderr; parse JSON from stdout, not the combined stream.
+
+## Optional checks and help
+
+```bash
+hk skill doctor --platform codex --scope user --deep --json
+hk bundle import --help
 hk parse --help
-hk bundle export --help
-hk bundle validate --help
 hk visualize --help
-hk skill --help
 ```
 
-`--json` returns a machine-readable receipt for commands that support it; it is not a universal option. UI actions, command options, and raw data fields are not interchangeable names.
+Doctor is optional installation diagnosis. Match its platform/scope to your installation.

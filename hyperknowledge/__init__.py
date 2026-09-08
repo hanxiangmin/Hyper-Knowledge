@@ -45,6 +45,11 @@ from .utils.logging import configure_logging, get_logger, set_log_level
 # Template engine API
 from .utils.template_engine import Template
 
+# File-oriented public workflows. These do not initialize provider clients.
+from .api import GraphResult, extract_file, extract_text, import_graph
+from .bundle import export_bundle, read_bundle, validate_bundle
+from .visualization import render_bundle_html
+
 try:
     __version__ = version("hyper-knowledge")
 except PackageNotFoundError:
@@ -52,6 +57,14 @@ except PackageNotFoundError:
 __author__ = "hanxiangmin"
 
 __all__ = [
+    "GraphResult",
+    "extract_file",
+    "extract_text",
+    "import_graph",
+    "export_bundle",
+    "read_bundle",
+    "validate_bundle",
+    "render_bundle_html",
     # Graph types
     "AutoGraph",
     "AutoHypergraph",

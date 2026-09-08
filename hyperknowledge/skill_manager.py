@@ -1,4 +1,4 @@
-"""Install and verify the bundled Hyper-Knowledge Codex skill."""
+"""Manage a portable Hyper-Knowledge skill backed by one Python runtime."""
 
 from __future__ import annotations
 
@@ -18,10 +18,20 @@ OWNERSHIP_MANIFEST = ".hyperknowledge-skill.json"
 RUNTIME_MANIFEST = ".hyperknowledge-runtime.json"
 MANIFEST_SCHEMA = "hyperknowledge.skill-install/v1"
 RUNTIME_SCHEMA = "hyperknowledge.skill-runtime/v1"
+SKILL_PLATFORMS = ("codex", "kimi", "shared")
 
 
 class SkillInstallError(RuntimeError):
     """Raised when a skill installation cannot be completed safely."""
+
+
+def normalize_platform(platform: str) -> str:
+    platform = platform.lower()
+    if platform not in SKILL_PLATFORMS:
+        raise SkillInstallError(
+            f"Unsupported platform {platform!r}; choose {', '.join(SKILL_PLATFORMS)}"
+        )
+    return platform
 
 
 def bundled_skill_path() -> Path:
@@ -176,21 +186,29 @@ def _find_project_root(start: Path) -> Path:
 
 
 def install_root(
-    scope: str, *, project_root: str | Path | None = None, user_home: Path | None = None
+    scope: str,
+    *,
+    platform: str = "codex",
+    project_root: str | Path | None = None,
+    user_home: Path | None = None,
 ) -> Path:
+    platform = normalize_platform(platform)
     if scope == "user":
-        # ``user_home`` is an explicit override used by embedders and tests.  For
-        # normal CLI use, honour Codex's configured home before falling back to
-        # the standard per-user Codex directory.
+        # Explicit homes isolate embedders/tests from the host configuration.
+        directory = {"codex": ".codex", "kimi": ".kimi-code", "shared": ".agents"}[
+            platform
+        ]
         if user_home is not None:
-            return user_home / ".codex" / "skills"
-        codex_home = os.environ.get("CODEX_HOME", "").strip()
-        if codex_home:
-            return Path(codex_home).expanduser() / "skills"
-        return Path.home() / ".codex" / "skills"
+            return user_home / directory / "skills"
+        env_key = {"codex": "CODEX_HOME", "kimi": "KIMI_CODE_HOME"}.get(platform)
+        configured_home = os.environ.get(env_key, "").strip() if env_key else ""
+        if configured_home:
+            return Path(configured_home).expanduser() / "skills"
+        return Path.home() / directory / "skills"
     if scope == "project":
         root = Path(project_root) if project_root else _find_project_root(Path.cwd())
-        return root.resolve() / ".agents" / "skills"
+        directory = ".kimi-code" if platform == "kimi" else ".agents"
+        return root.resolve() / directory / "skills"
     raise SkillInstallError("scope must be 'user' or 'project'")
 
 
@@ -262,6 +280,8 @@ def inspect_installation(target: Path) -> dict[str, object]:
         if issues
         else "healthy",
         "path": str(target),
+        "platform": manifest.get("platform", "codex"),
+        "scope": manifest.get("scope"),
         "package_version": current_version,
         "installed_version": installed_version,
         "locally_modified": locally_modified,
@@ -275,18 +295,41 @@ def inspect_installation(target: Path) -> dict[str, object]:
 
 def install_skill(
     *,
+    platform: str = "codex",
     scope: str = "user",
     project_root: str | Path | None = None,
     force: bool = False,
     user_home: Path | None = None,
 ) -> dict[str, object]:
+    platform = normalize_platform(platform)
     source = bundled_skill_path()
     if not (source / "SKILL.md").is_file():
         raise SkillInstallError(f"Bundled skill is incomplete: {source}")
 
-    root = install_root(scope, project_root=project_root, user_home=user_home)
-    root.mkdir(parents=True, exist_ok=True)
+    root = install_root(
+        scope, platform=platform, project_root=project_root, user_home=user_home
+    )
     target = root / SKILL_NAME
+    # Shared and client-specific directories can be scanned by the same client.
+    # Refuse a second copy rather than silently changing ownership or migrating it.
+    alternatives = ("codex", "kimi") if platform == "shared" else ("shared",)
+    for alternative in alternatives:
+        other = (
+            install_root(
+                scope,
+                platform=alternative,
+                project_root=project_root,
+                user_home=user_home,
+            )
+            / SKILL_NAME
+        )
+        if other.resolve() != target.resolve() and other.exists():
+            raise SkillInstallError(
+                f"A potentially duplicate Skill already exists at {other}. "
+                f"Use --platform {alternative} to inspect/update it, or explicitly "
+                "resolve the existing installation before choosing another destination."
+            )
+    root.mkdir(parents=True, exist_ok=True)
     previous = inspect_installation(target)
     if (
         target.exists()
@@ -309,7 +352,9 @@ def install_skill(
             "skill": SKILL_NAME,
             "package_version": _package_version(),
             "installed_at": datetime.now(UTC).isoformat(),
+            "platform": platform,
             "scope": scope,
+            "project_root": str(root.parent.parent) if scope == "project" else None,
             "runtime": runtime,
             "bundled_files": _skill_content(_managed_files(source)),
             "files": _managed_files(staged),
@@ -345,21 +390,27 @@ def install_skill(
 
 def doctor_skill(
     *,
+    platform: str = "codex",
     scope: str = "user",
     project_root: str | Path | None = None,
     user_home: Path | None = None,
     deep: bool = False,
 ) -> dict[str, object]:
+    platform = normalize_platform(platform)
     source = bundled_skill_path()
     bundled_issues = []
-    for required in ("SKILL.md", "agents/openai.yaml"):
+    for required in ("SKILL.md",):
         if not (source / required).is_file():
             bundled_issues.append(f"bundled file missing: {required}")
 
     target = (
-        install_root(scope, project_root=project_root, user_home=user_home) / SKILL_NAME
+        install_root(
+            scope, platform=platform, project_root=project_root, user_home=user_home
+        )
+        / SKILL_NAME
     )
     result = inspect_installation(target)
+    result["platform"] = platform
     result["scope"] = scope
     result["bundled_skill_path"] = str(source)
     result["deep"] = deep
@@ -378,21 +429,38 @@ def doctor_skill(
 
 def uninstall_skill(
     *,
+    platform: str = "codex",
     scope: str = "user",
     project_root: str | Path | None = None,
     force: bool = False,
     user_home: Path | None = None,
 ) -> dict[str, object]:
+    platform = normalize_platform(platform)
     target = (
-        install_root(scope, project_root=project_root, user_home=user_home) / SKILL_NAME
+        install_root(
+            scope, platform=platform, project_root=project_root, user_home=user_home
+        )
+        / SKILL_NAME
     )
     state = inspect_installation(target)
     if state.get("status") == "not_installed":
-        return {"ok": True, "status": "not_installed", "path": str(target)}
+        return {
+            "ok": True,
+            "status": "not_installed",
+            "path": str(target),
+            "platform": platform,
+            "scope": scope,
+        }
     if state.get("status") in {"unmanaged", "drifted"} and not force:
         raise SkillInstallError(
             f"Refusing to remove {state.get('status')} skill at {target}; "
             "inspect it first or pass --force."
         )
     shutil.rmtree(target)
-    return {"ok": True, "status": "uninstalled", "path": str(target)}
+    return {
+        "ok": True,
+        "status": "uninstalled",
+        "path": str(target),
+        "platform": platform,
+        "scope": scope,
+    }

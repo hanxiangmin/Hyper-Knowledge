@@ -142,7 +142,7 @@ def get_template_from_ka(ka_path: Path) -> tuple[str, str]:
     raise ValueError("No template specified in metadata.json")
 
 
-def validate_config() -> "ConfigManager":
+def validate_config(*, require_embeddings: bool = True) -> "ConfigManager":
     """Validate configuration.
 
     Returns:
@@ -153,7 +153,7 @@ def validate_config() -> "ConfigManager":
     """
 
     config = ConfigManager()
-    valid, msg = config.validate()
+    valid, msg = config.validate(require_embeddings=require_embeddings)
 
     if not valid:
         console.print(f"[red]Error:[/red] {msg}")

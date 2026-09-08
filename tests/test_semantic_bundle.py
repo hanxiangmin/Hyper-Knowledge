@@ -65,6 +65,12 @@ def bundle(tmp_path):
     ka = write_ka(tmp_path / "ka")
     output = tmp_path / "bundle"
     export_bundle(ka, output)
+    # These fixtures deliberately edit tables to isolate semantic validation.
+    # Immutable-table integrity is covered independently in test_public_api.py.
+    manifest_path = output / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest.pop("table_sha256", None)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     return output
 
 

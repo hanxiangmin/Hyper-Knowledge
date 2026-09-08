@@ -247,7 +247,7 @@ class ConfigManager:
             "embedder": self.get_embedder_config().to_dict(),
         }
 
-    def validate(self) -> tuple[bool, str]:
+    def validate(self, *, require_embeddings: bool = True) -> tuple[bool, str]:
         """Validate configuration."""
         llm_config = self.get_llm_config()
         embedder_config = self.get_embedder_config()
@@ -261,6 +261,9 @@ class ConfigManager:
                 False,
                 "LLM API key is not configured. Run 'hk config llm --api-key YOUR_KEY'",
             )
+
+        if not require_embeddings:
+            return True, "Configuration is valid"
 
         if embedder_config.provider == "vllm":
             if not embedder_config.base_url:

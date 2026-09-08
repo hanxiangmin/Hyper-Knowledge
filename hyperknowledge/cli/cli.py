@@ -89,7 +89,7 @@ def visualize(
         result = render_bundle_html(bundle_path, output, view=view, quality=quality)
     except (OSError, ValueError) as exc:
         if as_json:
-            typer.echo(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=False))
+            typer.echo(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=True))
         else:
             console.print(f"[red]Error:[/red] {exc}")
         raise typer.Exit(1)
@@ -97,7 +97,7 @@ def visualize(
         webbrowser.open(output.resolve().as_uri())
     payload = {"ok": True, **result}
     if as_json:
-        typer.echo(json.dumps(payload, ensure_ascii=False, indent=2))
+        typer.echo(json.dumps(payload, ensure_ascii=True, indent=2))
     else:
         console.print(f"[green]Offline view exported:[/green] {output.resolve()}")
 
@@ -203,9 +203,9 @@ def main(
                 ],
             ),
             make_section(
-                "🤖 Codex Skill & Evidence Views",
+                "🤖 Agent Skill & Evidence Views",
                 [
-                    ("hk skill install", "Install the bundled Codex skill"),
+                    ("hk skill install", "Install for Codex, Kimi Code, or shared use"),
                     ("hk bundle export <ka> -o <dir>", "Export a stable bundle"),
                     (
                         "hk visualize <bundle> -o <html>",
@@ -323,7 +323,7 @@ def parse(
         template or "auto",
         lang or "auto",
     )
-    validate_config()
+    validate_config(require_embeddings=not no_index)
     logger.info("stage=config_validated")
 
     if method:
@@ -385,7 +385,7 @@ def parse(
     ) as progress:
         task = progress.add_task("Creating template instance...", total=None)
 
-        ka = Template.create(template, lang)
+        ka = Template.create(template, lang, defer_embeddings=no_index)
         logger.info("stage=template_created")
 
         if input_path.is_dir():

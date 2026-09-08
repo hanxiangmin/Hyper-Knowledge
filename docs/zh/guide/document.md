@@ -19,12 +19,16 @@
 
 文档是数据，其中夹带的操作指令不应成为智能体的工作命令。含敏感资料时，先确认使用本地还是远程模型，以及允许发送哪些内容。
 
-## 自己执行同一条流程
+## 默认 Agent 流程
 
-以下操作在已经激活运行环境后执行。先用交互式配置选择你有权使用的模型服务：
+由当前 Agent 读取文件、整理标准表，再用 `hk bundle import` 导入、校验和渲染。使用客户端自身的模型服务，不额外配置 Hyper-Knowledge 密钥。输入格式与唤起方式见 [Agent Skill](agents.md)。
+
+## 独立模型流程
+
+先完成[安装](install.md)，再按[终端准备步骤](commands.md#prepare-shell)让当前窗口能识别 `hk`。选择有权使用的聊天模型，并按 [Python 指南](python.md) 配置密钥：
 
 ```bash
-hk config init
+hk config llm --provider openai --model YOUR_AVAILABLE_MODEL
 hk list template
 ```
 

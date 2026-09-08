@@ -1,6 +1,6 @@
 site_name: Hyper-Knowledge
 site_url: https://hanxiangmin.github.io/Hyper-Knowledge/
-site_description: An Agent Skill for modeling relationships in context, tracing evidence, and exploring higher-order knowledge graphs offline.
+site_description: One Python core for notebooks, CLI workflows and Agent Skills, with provenance-aware higher-order knowledge graphs and an offline workbench.
 site_author: hanxiangmin
 repo_name: hanxiangmin/Hyper-Knowledge
 repo_url: https://github.com/hanxiangmin/Hyper-Knowledge
@@ -25,6 +25,9 @@ theme:
 
 extra_css:
   - stylesheets/knowledge.css
+
+extra_javascript:
+  - javascripts/gallery.js
 
 # The public handbook is authored around this Skill's own workflows.
 # Retain historical runtime manuals in Git, but do not publish or index them.
@@ -69,9 +72,13 @@ plugins:
           build: true
           nav:
             - Overview: index.md
-            - Use the Skill:
-                - Install the Skill: guide/install.md
+            - Get started:
+                - "Install: terminal or chat": guide/install.md
                 - Your first document: guide/document.md
+                - Python and Notebook: guide/python.md
+                - Python API: guide/api.md
+                - Codex and Kimi Code: guide/agents.md
+                - Compatibility: guide/compatibility.md
             - Model in context:
                 - Entities, events, and roles: guide/modeling.md
                 - Evidence and bundles: guide/artifacts.md
@@ -87,9 +94,13 @@ plugins:
           build: true
           nav:
             - 概览: index.md
-            - 使用 Skill:
-                - 安装 Skill: guide/install.md
+            - 开始使用:
+                - 安装：命令行或聊天: guide/install.md
                 - 处理第一份文档: guide/document.md
+                - Python 与 Notebook: guide/python.md
+                - Python API: guide/api.md
+                - Codex 与 Kimi Code: guide/agents.md
+                - 兼容性记录: guide/compatibility.md
             - 关系建模:
                 - 实体、事件与角色: guide/modeling.md
                 - 证据与数据包: guide/artifacts.md

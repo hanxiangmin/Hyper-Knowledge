@@ -161,16 +161,53 @@ async function galleryChecks(page, locale, device) {
   }
   const overflow = await assertNoOverflow(page);
   await screenshot(page, `gallery-open-${locale}-${device}`);
-  const first = images.first();
-  const target = await first.evaluate(img => img.closest("a").href);
-  await first.click();
-  await page.waitForURL(target);
-  await page.waitForFunction(() => [...document.images].some(img => img.complete && img.naturalWidth > 0));
-  const original = await page.locator("img").first().evaluate(img => ({ width: img.naturalWidth, height: img.naturalHeight }));
-  check(original.width === metadata[0].width, "Click-through did not open the original resolution");
-  await page.goBack({ waitUntil: "domcontentloaded" });
-  await settle(page);
-  return { toggles, images: metadata, open_all_overflow: overflow, original_image_click_verified: true };
+  const lightbox = await lightboxChecks(page, locale, device, "workbench", 10);
+  return { toggles, images: metadata, open_all_overflow: overflow, lightbox };
+}
+async function lightboxChecks(page, locale, device, name, expectedCount) {
+  const links = page.locator(".hk-gallery a:has(img)");
+  check(await links.count() === expectedCount, `Expected ${expectedCount} screenshots on ${name}`);
+  const originalUrl = page.url();
+  const tabs = page.context().pages().length;
+  const checks = [];
+  for (let i = 0; i < expectedCount; i++) {
+    const link = links.nth(i);
+    await link.scrollIntoViewIfNeeded();
+    const before = await page.evaluate(() => ({ x: scrollX, y: scrollY, overflow: document.documentElement.style.overflow }));
+    const target = await link.getAttribute("href");
+    if (i === 0) {
+      await link.focus();
+      await page.keyboard.press("Enter");
+    } else await link.click();
+    const viewer = page.locator("dialog.hk-image-viewer[open]");
+    await viewer.waitFor({ state: "visible" });
+    await page.waitForFunction(() => {
+      const img = document.querySelector("dialog[open] .hk-image-stage img");
+      return img?.complete && img.naturalWidth > 0;
+    });
+    const enlarged = await viewer.locator("img").evaluate(img => {
+      const box = img.getBoundingClientRect();
+      return { src: img.src, width: img.naturalWidth, height: img.naturalHeight,
+        fits: box.left >= 0 && box.top >= 0 && box.right <= innerWidth + 1 && box.bottom <= innerHeight + 1 };
+    });
+    check(enlarged.src === new URL(target, originalUrl).href, "Viewer did not load the linked original");
+    check(enlarged.fits, "Enlarged image is clipped by the viewport");
+    check(await viewer.locator("button").innerText() === (locale === "zh" ? "关闭 ×" : "Close ×"), "Viewer language mismatch");
+    check(page.url() === originalUrl && page.context().pages().length === tabs, "Image navigation opened another page");
+    if (i === 0) await screenshot(page, `lightbox-${name}-${locale}-${device}`, false);
+    const closeMethod = ["image", "escape", "button", "background"][i % 4];
+    if (closeMethod === "image") await viewer.locator("img").click();
+    else if (closeMethod === "escape") await page.keyboard.press("Escape");
+    else if (closeMethod === "button") await viewer.locator("button").click();
+    else await viewer.click({ position: { x: 2, y: 2 } });
+    await viewer.waitFor({ state: "hidden" });
+    check(await link.evaluate(el => document.activeElement === el), "Focus did not return to the thumbnail");
+    const after = await page.evaluate(() => ({ x: scrollX, y: scrollY, overflow: document.documentElement.style.overflow }));
+    check(Math.abs(before.x - after.x) <= 1 && Math.abs(before.y - after.y) <= 1
+      && before.overflow === after.overflow, "Closing changed the page position or scroll lock");
+    checks.push({ image: i + 1, close_method: closeMethod, ...enlarged });
+  }
+  return { passed: true, checks };
 }
 async function gifCheck(page, locale, device, pageName) {
   check(await page.locator('.md-content video, .md-content a[href$=".mp4"]').count() === 0,
@@ -253,6 +290,7 @@ try {
           result.overflow = await assertNoOverflow(page);
           result.screenshot = await screenshot(page, `${name}-${locale}-${device}`);
           await gifCheck(page, locale, device, name);
+          if (name === "home") result.lightbox = await lightboxChecks(page, locale, device, name, 4);
           if (name === "workbench") {
             result.gallery = await galleryChecks(page, locale, device);
             await searchCheck(page, locale, device);
@@ -302,7 +340,8 @@ report.status = report.passed
   ? (report.optional_metadata_verified ? "passed" : "core_passed_optional_metadata_unverified") : "failed";
 report.summary = {
   page_checks: report.pages.length, passed_pages: report.pages.filter(item => item.passed).length,
-  original_image_click_checks: report.pages.filter(item => item.gallery?.original_image_click_verified).length,
+  lightbox_image_checks: report.pages.reduce((sum, item) => sum
+    + (item.lightbox?.checks.length || 0) + (item.gallery?.lightbox?.checks.length || 0), 0),
   embedded_gif_checks: report.gif_checks.length,
   original_gif_click_checks: report.gif_checks.filter(item => item.original_gif_click_verified).length,
   search_click_checks: report.searches.length,

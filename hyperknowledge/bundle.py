@@ -127,6 +127,46 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def _write_bundle_tables(
+    destination: Path, manifest: dict[str, Any], tables: dict[str, list[dict[str, Any]]]
+) -> dict[str, Any]:
+    """Shared writer for KA exports and validated structured imports."""
+    nodes, assertions, members = (
+        tables[key] for key in ("nodes", "assertions", "members")
+    )
+    manifest["counts"] = {
+        "nodes": len(nodes),
+        "assertions": len(assertions),
+        "members": len(members),
+        "unresolved_members": sum(not row["resolved"] for row in members),
+        "assertions_with_evidence": sum(
+            bool(row.get("evidence_refs")) for row in assertions
+        ),
+    }
+    destination.mkdir(parents=True, exist_ok=True)
+    for name, rows in tables.items():
+        _write_jsonl(destination / f"{name}.jsonl", rows)
+    manifest["table_sha256"] = {
+        f"{name}.jsonl": hashlib.sha256(
+            (destination / f"{name}.jsonl").read_bytes()
+        ).hexdigest()
+        for name in tables
+    }
+    (destination / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    counts = manifest["counts"]
+    report = "# Hyper-Knowledge Bundle Report\n\n"
+    report += f"- Bundle: `{manifest['bundle_id']}`\n"
+    report += "".join(f"- {key}: {value}\n" for key, value in counts.items())
+    report += "\nEvidence-reference coverage is not factual verification.\n"
+    report += "\nHyperedges are preserved through the members table and are not flattened into pairwise facts.\n"
+    for limitation in manifest.get("limitations", []):
+        report += f"\n- {limitation}\n"
+    (destination / "REPORT.md").write_text(report, encoding="utf-8")
+    return manifest
+
+
 def export_bundle(
     ka_path: str | Path, output_path: str | Path, *, force: bool = False
 ) -> dict[str, Any]:
@@ -278,25 +318,16 @@ def export_bundle(
         ),
     }
 
-    (destination / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    return _write_bundle_tables(
+        destination,
+        manifest,
+        {
+            "nodes": nodes,
+            "assertions": assertions,
+            "members": members,
+            "evidence": evidence_items,
+        },
     )
-    _write_jsonl(destination / "nodes.jsonl", nodes)
-    _write_jsonl(destination / "assertions.jsonl", assertions)
-    _write_jsonl(destination / "members.jsonl", members)
-    _write_jsonl(destination / "evidence.jsonl", evidence_items)
-    report = (
-        "# Hyper-Knowledge Bundle Report\n\n"
-        f"- Bundle: `{bundle_id}`\n"
-        f"- Nodes: {len(nodes)}\n"
-        f"- Assertions: {len(assertions)}\n"
-        f"- Members: {len(members)}\n"
-        f"- Unresolved members: {unresolved}\n"
-        f"- Assertions with evidence references: {assertions_with_evidence}/{len(assertions)}; reference coverage is not factual verification\n\n"
-        "Hyperedges are preserved through the members table and are not flattened into pairwise facts.\n"
-    )
-    (destination / "REPORT.md").write_text(report, encoding="utf-8")
-    return manifest
 
 
 def read_bundle(bundle_path: str | Path) -> dict[str, Any]:
@@ -751,6 +782,21 @@ def validate_bundle(
         name: hashlib.sha256((bundle / name).read_bytes()).hexdigest()
         for name in required
     }
+    # Older v1 bundles may not declare table hashes. New writers always do.
+    declared_hashes = manifest.get("table_sha256", {})
+    if not isinstance(declared_hashes, dict):
+        check(
+            "bundle.table_hashes", False, "manifest.table_sha256", "Expected an object"
+        )
+    else:
+        for table, declared in declared_hashes.items():
+            filename = table if table.endswith(".jsonl") else f"{table}.jsonl"
+            check(
+                "bundle.table_sha256",
+                filename in file_hashes and file_hashes[filename] == declared,
+                filename,
+                "Table SHA256 matches the manifest",
+            )
     errors = sum(item["severity"] == "error" for item in diagnostics)
     warnings = sum(item["severity"] == "warning" for item in diagnostics)
     return {

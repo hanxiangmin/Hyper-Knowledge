@@ -43,6 +43,7 @@ class Template:
         language: str | None = None,
         llm_client: BaseChatModel | None = None,
         embedder: Embeddings | None = None,
+        defer_embeddings: bool = False,
         **kwargs: Any,
     ) -> "BaseAutoType":
         """Create template instance.
@@ -54,6 +55,7 @@ class Template:
                 - Ignored for method templates (always uses "en")
             llm_client: LLM client (reads from global config if not provided)
             embedder: Embedder client (reads from global config if not provided)
+            defer_embeddings: Resolve embedding configuration only when used.
             **kwargs: Additional parameters
 
         Returns:
@@ -80,7 +82,17 @@ class Template:
         """
         from .factory import TemplateFactory
 
-        if llm_client is None or embedder is None:
+        if defer_embeddings:
+            from hyperknowledge.runtime_clients import (
+                DeferredEmbeddings,
+                configured_llm,
+            )
+
+            if llm_client is None:
+                llm_client = configured_llm()
+            if embedder is None:
+                embedder = DeferredEmbeddings()
+        elif llm_client is None or embedder is None:
             from hyperknowledge.utils import get_client
 
             default_llm, default_emb = get_client()

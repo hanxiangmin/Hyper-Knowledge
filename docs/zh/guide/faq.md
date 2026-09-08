@@ -2,7 +2,7 @@
 
 ## 我需要搭建服务器吗？
 
-使用本地 Skill 和打开导出的工作台不需要自建网站服务器。抽取新文档需要模型能力：可以使用你配置的远程服务，或自行部署、配置兼容的本地模型。远程服务的费用、数据处理政策由其提供方决定。
+本地运行程序和导出的工作台不需要网站服务器。默认 Skill 流程使用当前 Agent 的模型理解文档；独立 Python/CLI 解析使用单独配置的模型；结构化导入和画图不需要模型服务。[选择执行流程](agents.md)。
 
 这个 GitHub Pages 站点用于说明和展示，不提供文档上传解析服务。
 
@@ -12,9 +12,27 @@
 
 ## 为什么 Skill 装好了，却找不到 hk？
 
-Skill 指令包与 Python 运行时是两个部分。先确认 `hk --version` 在所用环境里可执行，再检查对应作用域的 `hk skill doctor --deep --json`。移动虚拟环境后，需要重新生成托管安装的启动器。
+只复制 Skill 文件并不等于安装了 Python 运行程序。即使运行程序已装好，终端不在对应环境中也可能找不到 `hk`。请先用明确的 Python 路径查看帮助，而不是再执行一次找不到的命令。
 
-不要通过关闭校验或随意修改生成的路径文件来掩盖运行环境问题。
+**Conda 用户**：不必猜 Python 的安装路径，指定环境即可；如果环境名不同，请替换：
+
+```bash
+conda run -n hyper-knowledge python -m hyperknowledge --help
+```
+
+**venv 用户**，按教程创建环境后的 Windows PowerShell 命令：
+
+```powershell
+& "$env:USERPROFILE\.venvs\hyper-knowledge\Scripts\python.exe" -m hyperknowledge --help
+```
+
+按教程创建 venv 后的 macOS / Linux 命令：
+
+```bash
+"$HOME/.venvs/hyper-knowledge/bin/python" -m hyperknowledge --help
+```
+
+其他已有环境按原方式激活，再执行 `python -m hyperknowledge --help`。帮助能显示时，不必重装；[准备当前终端的快捷命令](commands.md#prepare-shell)即可。提示模块或路径不存在时，回到[完整安装步骤](install.md)。仍无法启动再使用[可选诊断](install.md#installation-check)，不要靠关闭检查或随意改路径掩盖问题。
 
 ## 能直接读 PDF 和扫描件吗？
 

@@ -1,0 +1,42 @@
+name: Installed package
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["hyperknowledge/**", "hyper-knowledge/**", "examples/python/**", "tools/verify_package.py", "pyproject.toml", ".github/workflows/package-test.yml"]
+  push:
+    branches: [main]
+    paths: ["hyperknowledge/**", "hyper-knowledge/**", "examples/python/**", "tools/verify_package.py", "pyproject.toml", ".github/workflows/package-test.yml"]
+permissions:
+  contents: read
+jobs:
+  installed:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Build wheel from sdist
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check dist/*
+      - name: Install non-editable wheel
+        shell: bash
+        run: |
+          python -m pip install dist/*.whl ipykernel nbformat nbclient
+      - name: Test outside the checkout
+        shell: bash
+        run: |
+          cd "$RUNNER_TEMP"
+          python "$GITHUB_WORKSPACE/tools/verify_package.py" --notebook "$GITHUB_WORKSPACE/examples/python/quickstart.ipynb" --report "$RUNNER_TEMP/package-receipt.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: package-${{ matrix.os }}-${{ matrix.python }}
+          path: ${{ runner.temp }}/package-receipt.json
